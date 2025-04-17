@@ -1,0 +1,32 @@
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+#calendar .encabezado-dia {
+    font-weight: bold;
+    background-color: #f2f2f2;
+    text-align: center;
+    padding: 8px 0;
+    border: 1px solid #ddd;
+}
+
+#calendar .celda-dia {
+    text-align: center;
+    padding: 10px 0;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: white;
+}
+
+#calendar .celda-dia:hover {
+    background-color: #f9e79f;
+}
+
+#calendar .active {
+    background-color: goldenrod;
+    color: white;
+    font-weight: bold;
+}
