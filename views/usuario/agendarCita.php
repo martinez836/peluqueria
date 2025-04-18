@@ -9,10 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Tu estilo personalizado -->
-    <link rel="stylesheet" href="./agendar.css">
+    <link rel="stylesheet" href="../../assets/css/estilo.css">
 </head>
 
-<body class="fondo-agendar" style="background-color: #f8f8f8;">
+<body class="fondo" style="background-color: #f8f8f8;">
 
     <!-- Header -->
     <header class="text-center py-4" style="background-color: #111; color: gold;">
@@ -22,10 +22,8 @@
 
     <!-- Navbar -->
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
-        <a href="servicios.php" style="color: gold; text-decoration: none;">Servicios</a>
-        <a href="productos.php" style="color: gold; text-decoration: none;">Productos</a>
-        <a href="../usuario/agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
-        <a href="contacto.php" style="color: gold; text-decoration: none;">Contacto</a>
+        <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
+        <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
     </nav>
 
     <!-- Contenido principal -->
@@ -91,7 +89,7 @@
         </div>
     </div>
 
-    <script src="./agendar.js"></script>
+    <script src="../../assets/js/agendar.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -16,7 +16,7 @@ $resultado = $consultas->traerProducto();
   <!-- Tu estilo personalizado -->
   <link rel="stylesheet" href="../../assets/css/productos.css">
 </head>
-<body>
+<body class="fondo">
 
 <!-- Header -->
 <header class="text-center py-4" style="background-color: #111; color: gold;">
@@ -26,10 +26,8 @@ $resultado = $consultas->traerProducto();
 
 <!-- Navbar personalizada con estilo propio -->
 <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
-  <a href="servicios.php" style="color: gold; text-decoration: none;">Servicios</a>
-  <a href="productos.php" style="color: gold; text-decoration: none;">Productos</a>
-  <a href="../usuario/agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
-  <a href="contacto.php" style="color: gold; text-decoration: none;">Contacto</a>
+  <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
+  <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
 </nav>
 
 <!-- Contenedor principal -->

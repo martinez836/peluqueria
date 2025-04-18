@@ -4,7 +4,7 @@
         padding: 0;
         box-sizing: border-box;
     }
-    body.fondo-index {
+    body.fondo {
         background-image: url('../../assets/images/fondo-marmol.png');
         background-size: cover;
         background-position: center;
@@ -63,35 +63,37 @@
         border-radius: 10px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    
-    /* Calendario simple */
-    .calendar {
+    #calendar {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 10px;
-        margin-top: 20px;
+        gap: 5px;
     }
     
-    .calendar div {
-        padding: 15px;
+    #calendar .encabezado-dia {
+        font-weight: bold;
+        background-color: #f2f2f2;
         text-align: center;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        padding: 8px 0;
+        border: 1px solid #ddd;
     }
     
-    .calendar .available {
-        background-color: #d4af37;
-        color: white;
+    #calendar .celda-dia {
+        text-align: center;
+        padding: 10px 0;
+        border: 1px solid #ddd;
         cursor: pointer;
+        transition: all 0.2s ease;
+        background-color: white;
     }
     
-    .calendar .unavailable {
-        background-color: #e0e0e0;
-        color: #999;
+    #calendar .celda-dia:hover {
+        background-color: #f9e79f;
     }
     
-    .calendar .available:hover {
-        background-color: #c29928;
+    #calendar .active {
+        background-color: goldenrod;
+        color: white;
+        font-weight: bold;
     }
     
     /* Footer */

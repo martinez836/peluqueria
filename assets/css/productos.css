@@ -1,10 +1,14 @@
-body {
+* {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #fefefe;
-    color: #111;
+    padding: 0;
+    box-sizing: border-box;
 }
-
+body.fondo {
+    background-image: url('../../assets/images/fondo-marmol.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 header {
     background-color: #1c1c1c;
     color: #d4af37;
@@ -35,11 +39,11 @@ nav a:hover {
     color: #fff3b0;
 }
 
-.productos-section {
+/* .productos-section {
     padding: 40px;
     text-align: center;
     background-color: #fafafa;
-}
+} */
 
 .productos-section h1 {
     margin-bottom: 40px;
