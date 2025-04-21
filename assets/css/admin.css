@@ -1,0 +1,134 @@
+body {
+    background-color: #1e1e1e;
+    color: #f8f8f8;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: black;
+    color: #f1c40f;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+nav {
+    background-color: #222;
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+nav a {
+    color: #f1c40f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+section {
+    padding: 20px;
+}
+
+.card {
+    background-color: #6c757d;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.btn {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-editar {
+    background-color: #f1c40f;
+    color: black;
+}
+
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-agregar {
+    background-color: #27ae60;
+    color: white;
+    float: right;
+}
+.admin-bg {
+    background-color: #1e1e1e;
+    color: #fff;
+    font-family: sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-form-container {
+    background-color: #333;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 0 15px #000;
+    border: 2px solid gold;
+}
+
+.admin-form h2 {
+    text-align: center;
+    color: gold;
+    margin-bottom: 20px;
+}
+
+.admin-form label {
+    display: block;
+    margin-top: 15px;
+    color: #ddd;
+}
+
+.admin-form input,
+.admin-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: none;
+    background-color: #555;
+    color: #fff;
+}
+
+.btn-guardar {
+    background-color: gold;
+    color: #000;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #ccc;
+    text-decoration: none;
+}
