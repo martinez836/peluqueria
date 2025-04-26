@@ -30,9 +30,9 @@ class consultas
     public function traerProducto()
     {
         $this->mysql->conectar();
-        $consulta = "SELECT nombre, descripcion, precio, imagen FROM productos";
+        $consulta = "SELECT idproductos as id, nombre, descripcion, precio, imagen FROM productos";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
-            return $resultado;
+        return $resultado;
     }
 }
