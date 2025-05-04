@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    require_once '../../models/consultas.php';
+    $consultas = new consultas();
+    $servicios = $consultas->traer_servicios();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,8 +28,16 @@
 
     <!-- Navbar -->
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
-        <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
-        <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
+        <?php if(isset($_SESSION['documento'])) {?>
+            <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
+            <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
+            <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+            <a href="../../controllers/logOut.php">Cerrar Sesion</a>
+        <?php }else{?>
+            <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
+            <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
+            <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+        <?php }?>
     </nav>
 
     <!-- Contenido principal -->
@@ -35,11 +49,12 @@
                 <div class="calendar" id="calendar"></div>
             </div>
             <div class="col-6">
+            <?php if(isset($_SESSION['documento'])){ ?>
             <div class="formulario-cita bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
                     <h2 class="text-center mb-4" style="color: goldenrod;">Agendar Cita</h2>
                     <p class="text-center">Has seleccionado la fecha: <span id="fecha-seleccionada" class="fw-bold text-dark"></span></p>
 
-                    <form action="../usuario/index.php" method="post" class="agenda-form mt-4">
+                    <form action="../../controllers/crear_cita.php" method="POST" class="agenda-form mt-4">
                         <input type="hidden" name="fecha" id="input-fecha">
 
                         <div class="mb-3">
@@ -75,9 +90,13 @@
                         <div class="mb-4">
                             <label for="servicio" class="form-label">Servicio:</label>
                             <select name="servicio" class="form-select" required>
-                                <option value="">Seleccione el servicio</option>
-                                <option value="">fsds</option>
-                                <!-- Puedes agregar más opciones desde PHP si lo necesitas -->
+                                <?php
+                                    while ($row = mysqli_fetch_assoc($servicios))
+                                    {
+                                        ?><option value="<?php echo $row['idservicios']; ?>"><?php echo $row['nombreServicio']; ?></option>
+                                        <?php   
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div class="text-center">
@@ -85,6 +104,28 @@
                         </div>
                     </form>
                 </div>
+                <?php }else{ ?>
+                <!-- Formulario Inicio de Sesión -->
+                <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
+                    <h2 class="text-center mb-4" style="color: goldenrod;">Iniciar Sesión</h2>
+                    <form  action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form mt-4">
+                        <div class="mb-3">
+                            <label for="documento" class="form-label">Documento:</label>
+                            <input type="number" name="documento" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contrasena" class="form-label">Contrasena:</label>
+                            <input type="password" name="contrasena" class="form-control" required>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">
+                        ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a>
+                    </p>
+                </div>
+                <?php } ?>
             </div>
         </div>
     </div>

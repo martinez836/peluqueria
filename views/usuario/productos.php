@@ -1,4 +1,9 @@
-<?php require_once '../../models/consultas.php'; $consultas = new consultas(); $resultado = $consultas->traerProducto(); ?>
+<?php 
+  session_start();
+  require_once '../../models/consultas.php'; 
+  $consultas = new consultas(); 
+  $resultado = $consultas->traerProducto(); 
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -79,8 +84,16 @@
 
 <!-- Navbar personalizada con estilo propio -->
 <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
-  <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
-  <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+  <?php if(isset($_SESSION['documento'])) {?>
+      <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
+      <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
+      <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+      <a href="../../controllers/logOut.php">Cerrar Sesion</a>
+  <?php }else{?>
+      <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
+      <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
+      <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+  <?php }?>
 </nav>
 
 <!-- Contenedor principal -->
