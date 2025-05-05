@@ -100,6 +100,7 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
+    
 
 
 }

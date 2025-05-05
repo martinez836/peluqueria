@@ -1,5 +1,7 @@
 // Archivo: carrito.js
 
+localStorage.removeItem('carrito'); // borrar los datos del carrito
+
 // Inicializar el carrito como un array vacío o recuperarlo del localStorage
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -18,7 +20,8 @@ if (productoExistente) {
     nombre: nombre,
     precio: precio,
     imagen: imagen,
-    cantidad: cantidad
+    cantidad: cantidad,
+    subTotal: cantidad*precio
     });
 }
 
@@ -46,8 +49,8 @@ badge.style.display = totalItems > 0 ? 'inline-block' : 'none';
 
 // Función para mostrar la modal del carrito
 function mostrarCarrito() {
-    console.log('Mostrando carrito...');
-    console.log('Carrito actual:', carrito);
+/*     console.log('Mostrando carrito...');
+    console.log('Carrito actual:', carrito); */
 
     const modalBody = document.querySelector('#carritoModal .modal-body');
     modalBody.innerHTML = '';
@@ -86,7 +89,7 @@ function mostrarCarrito() {
     tbody.id = 'items-carrito';
 
     carrito.forEach((item, index) => {
-        console.log(`Procesando producto ${index}:`, item);
+        /* console.log(`Procesando producto ${index}:`, item); */
         const total = item.precio * item.cantidad;
         totalGeneral += total;
         
@@ -127,11 +130,11 @@ function mostrarCarrito() {
         btnMenos.className = 'btn btn-outline-secondary btn-sm';
         btnMenos.textContent = '-';
         btnMenos.onclick = function() {
-            console.log('Botón menos clickeado');
+            /* console.log('Botón menos clickeado'); */
             const productoId = parseInt(this.closest('tr').dataset.productoId);
-            console.log('ID del producto:', productoId);
+            /* console.log('ID del producto:', productoId); */
             const producto = carrito.find(p => p.id === productoId);
-            console.log('Producto encontrado:', producto);
+            /* console.log('Producto encontrado:', producto); */
             if (producto) {
                 cambiarCantidad(productoId, producto.cantidad - 1);
             }
@@ -147,11 +150,11 @@ function mostrarCarrito() {
         btnMas.className = 'btn btn-outline-secondary btn-sm';
         btnMas.textContent = '+';
         btnMas.onclick = function() {
-            console.log('Botón más clickeado');
+/*             console.log('Botón más clickeado'); */
             const productoId = parseInt(this.closest('tr').dataset.productoId);
-            console.log('ID del producto:', productoId);
+/*             console.log('ID del producto:', productoId); */
             const producto = carrito.find(p => p.id === productoId);
-            console.log('Producto encontrado:', producto);
+/*             console.log('Producto encontrado:', producto); */
             if (producto) {
                 cambiarCantidad(productoId, producto.cantidad + 1);
             }
@@ -225,14 +228,14 @@ function mostrarCarrito() {
 
 // Función para cambiar la cantidad de un producto
 function cambiarCantidad(id, nuevaCantidad) {
-    console.log('Cambiando cantidad. ID:', id, 'Nueva cantidad:', nuevaCantidad);
+/*     console.log('Cambiando cantidad. ID:', id, 'Nueva cantidad:', nuevaCantidad); */
     if (nuevaCantidad <= 0) {
         eliminarDelCarrito(id);
         return;
     }
 
     const item = carrito.find(producto => producto.id === id);
-    console.log('Producto encontrado para cambiar cantidad:', item);
+/*     console.log('Producto encontrado para cambiar cantidad:', item); */
     if (item) {
         item.cantidad = nuevaCantidad;
         guardarCarrito();
@@ -243,7 +246,7 @@ function cambiarCantidad(id, nuevaCantidad) {
 
 // Función para eliminar un producto del carrito
 function eliminarDelCarrito(id) {
-    console.log('Eliminando producto. ID:', id);
+/*     console.log('Eliminando producto. ID:', id); */
     carrito = carrito.filter(item => item.id !== id);
     guardarCarrito();
     actualizarBadgeCarrito();
@@ -267,9 +270,24 @@ document.getElementById('btn-finalizar-compra').disabled = true;
 function finalizarCompra() {
 // Aquí podrías redirigir a una página de checkout o enviar los datos al servidor
 alert('¡Gracias por tu compra! Total: $' + carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0).toLocaleString());
+const pedido = localStorage.getItem("carrito");
+const pedidoTotal = JSON.parse(pedido);
+const arregloId = [];
+let contador = 0;
+pedidoTotal.forEach(producto => {
+    arregloId.push(producto.id);
+    contador += producto.subTotal
+});
+console.log(contador)
+console.log(arregloId);
+
+//console.log(pedidoTotal)
+//console.log(arregloId);
 vaciarCarrito();
 // Cerrar el modal
 bootstrap.Modal.getInstance(document.getElementById('carritoModal')).hide();
+
+
 }
 
 // Función para mostrar notificaciones
