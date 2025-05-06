@@ -269,25 +269,39 @@ document.getElementById('btn-finalizar-compra').disabled = true;
 // Función para finalizar la compra
 function finalizarCompra() {
 // Aquí podrías redirigir a una página de checkout o enviar los datos al servidor
-alert('¡Gracias por tu compra! Total: $' + carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0).toLocaleString());
-const pedido = localStorage.getItem("carrito");
-const pedidoTotal = JSON.parse(pedido);
-const arregloId = [];
-let contador = 0;
-pedidoTotal.forEach(producto => {
-    arregloId.push(producto.id);
-    contador += producto.subTotal
-});
-console.log(contador)
-console.log(arregloId);
+    const pedido = localStorage.getItem("carrito");
+    const pedidoTotal = JSON.parse(pedido);
 
-//console.log(pedidoTotal)
-//console.log(arregloId);
-vaciarCarrito();
-// Cerrar el modal
-bootstrap.Modal.getInstance(document.getElementById('carritoModal')).hide();
+    const total = pedidoTotal.reduce((total, item) => total + (item.precio * item.cantidad), 0);
 
+    // 👉 Preparar el objeto completo que se enviará
+    const datosPedido = {
+        productos: pedidoTotal,
+        total: total
+    };
 
+    fetch("../../controllers/agregarPedido.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(datosPedido)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("Respuesta del servidor:", data);
+        // Aquí podrías mostrar un mensaje de éxito si quieres
+    })
+    .catch(error => {
+        console.error("Error al enviar el pedido:", error);
+    });
+
+    alert('¡Gracias por tu compra! Total: $' + pedidoTotal.reduce((total, item) => total + (item.precio * item.cantidad), 0).toLocaleString());
+
+    vaciarCarrito();
+
+    // Cerrar el modal
+    bootstrap.Modal.getInstance(document.getElementById('carritoModal')).hide();
 }
 
 // Función para mostrar notificaciones

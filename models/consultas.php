@@ -100,7 +100,29 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
-    
-
-
+    public function agregarDetallePedido($idPedido, $idProducto, $cantidad, $subTotal)
+    {
+        $this->mysql->conectar();
+        $consulta = "insert into detallePedidos (cantidad,subtotal,pedidos_idpedidos,productos_idproductos) values (
+            $cantidad,
+            $subTotal,
+            $idPedido,
+            $idProducto
+        )";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+    public function  agregarPedido($total,$documento)
+    {
+        $this->mysql->conectar();
+        $consulta = "insert into pedidos (fecha,total,estado,clientes_documento) values (
+            now(),
+            $total,
+            1,
+            $documento
+        )";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        return $resultado;
+    }
 }
