@@ -1,318 +1,330 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Panel de Administración - Estilos Dairo</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/admin.css">
+    <meta charset="UTF-8">
+    <title>Panel de Administración - Estilos Dairo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <style>
+        
+    </style>
 </head>
-<body class="bg-dark text-light">
+<body>
 
-<!-- HEADER -->
-<header class="py-4 bg-black text-center text-warning">
-<h1>Panel de Administración</h1>
-<p class="text-light">Bienvenido, Admin</p>
+<!-- Header -->
+<header class="main-header">
+    <button id="sidebarToggle" class="d-flex align-items-center">
+        <i class="fas fa-bars"></i>
+    </button>
+    <h1 class="mb-0 fs-4">Panel de Administración - Estilos Dairo</h1>
+    <div class="dropdown">
+        <button class="btn btn-link text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-circle me-1"></i> Admin
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item text-light" href="#"><i class="fas fa-user me-2"></i> Perfil</a></li>
+            <li><a class="dropdown-item text-light" href="#"><i class="fas fa-cog me-2"></i> Configuración</a></li>
+            <li><hr class="dropdown-divider bg-secondary"></li>
+            <li><a class="dropdown-item text-light" href="../usuario/index.php"><i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión</a></li>
+        </ul>
+    </div>
 </header>
 
-<!-- NAV -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-warning">
-<div class="container-fluid">
-    <a class="navbar-brand text-warning" href="#">Estilos Dairo</a>
-    <div class="collapse navbar-collapse">
-    <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link text-light" href="./citas.php">Citas</a></li>
-        <li class="nav-item"><a class="nav-link text-light" href="./pedidos.php">Pedidos</a></li>
-        <li class="nav-item"><a class="nav-link text-light" href="./productos.php">Productos</a></li>
-        <li class="nav-item"><a class="nav-link text-light" href="../usuario/index.php">Salir</a></li>
-    </ul>
+<!-- Sidebar -->
+<nav id="sidebar" class="bg-dark">
+    <div class="user-info">
+        <img src="/api/placeholder/150/150" alt="Admin">
+        <h5>Administrador</h5>
+        <p>Administrador Principal</p>
     </div>
-</div>
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-cut"></i> Servicios</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-users"></i> Clientes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Reportes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-cog"></i> Configuración</a>
+        </li>
+        <li class="nav-item mt-3">
+            <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
+        </li>
+    </ul>
 </nav>
 
-<!-- CONTENIDO PRINCIPAL -->
-<div class="container py-4">
-<div class="row g-4">
-    <!-- Citas -->
-    <div class="col-md-6">
-    <div class="card bg-secondary text-light">
-        <div class="card-header bg-warning text-dark">
-        <h5 class="mb-0">Citas Pendientes</h5>
-        </div>
-        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
-        <div class="border-bottom pb-2 mb-2" data-id="1">
-            <strong>Juan Pérez</strong><br>
-            <small>Tel: 123-456-7890 - Corte de Cabello</small><br>
-            <small>Fecha: 2024-03-20</small>
-            <div class="mt-2">
-            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarCitaModal">Editar</button>
-            <button class="btn btn-sm btn-danger">Eliminar</button>
+<!-- Main Content -->
+<main class="main-content">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-light">Dashboard</h2>
+            <div>
+                <span class="text-light me-2"><i class="far fa-calendar-alt me-1"></i> Hoy: <?php echo date('d/m/Y'); ?></span>
             </div>
         </div>
-        </div>
-    </div>
-    </div>
-    <!-- Gestión de Pedidos -->
-    <div class="col-md-6">
-    <div class="card bg-secondary text-light">
-        <div class="card-header bg-warning text-dark">
-        <h5 class="mb-0">Ultimo Pedido</h5>
-        </div>
-        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
-        <div class="border-bottom pb-2 mb-2" data-id="1">
-            <strong>Juan Pérez</strong><br>
-            <small>Tel: 123-456-7890 - Corte de Cabello</small><br>
-            <small>Fecha: 2024-03-20</small>
-            <div class="mt-2">
-            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editarCitaModal">Editar</button>
-            <button class="btn btn-sm btn-danger">Eliminar</button>
+        
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>24</h3>
+                <p>Citas Pendientes</p>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>12</h3>
+                <p>Nuevos Pedidos</p>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3>156</h3>
+                <p>Clientes Activos</p>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign"></i>
+                <h3>$2.5M</h3>
+                <p>Ventas Mensuales</p>
             </div>
         </div>
-        </div>
-    </div>
-    </div>
-    <!-- Gestión de Productos -->
-    <div class="col-6">
-    <div class="card bg-secondary text-light">
-        <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Gestión de Productos</h5>
-        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#crearProductoModal">Agregar Producto</button>
-        </div>
-        <div class="card-body">
-        <div class="row align-items-center border-bottom pb-2 mb-2" data-id="1" data-stock="10">
-            <div class="col-md-2">
-            <img src="../../assets/images/producto1.jpg" class="img-fluid rounded" alt="Producto">
+        
+        <div class="row">
+            <!-- Actividad Reciente -->
+            <div class="col-lg-8">
+                <div class="dashboard-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title"><i class="fas fa-history me-2"></i> Actividad Reciente</h5>
+                        <div>
+                            <button class="btn btn-sm btn-gold"><i class="fas fa-sync-alt me-1"></i> Actualizar</button>
+                        </div>
+                    </div>
+                    <div class="recent-table">
+                        <div class="table-responsive">
+                            <table class="table table-dark">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Actividad</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>María López</td>
+                                        <td>Cita - Corte y Color</td>
+                                        <td>10/05/2025</td>
+                                        <td><span class="badge bg-warning">Pendiente</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Juan Pérez</td>
+                                        <td>Pedido #1082</td>
+                                        <td>09/05/2025</td>
+                                        <td><span class="badge bg-success">Entregado</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Carlos Sánchez</td>
+                                        <td>Cita - Barbería</td>
+                                        <td>09/05/2025</td>
+                                        <td><span class="badge bg-success">Completada</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Laura Gómez</td>
+                                        <td>Pedido #1081</td>
+                                        <td>08/05/2025</td>
+                                        <td><span class="badge bg-danger">Cancelado</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sofía Martínez</td>
+                                        <td>Cita - Manicure</td>
+                                        <td>08/05/2025</td>
+                                        <td><span class="badge bg-success">Completada</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-            <strong>Shampoo</strong><br>
-            <small>$25000</small><br>
-            <small>Shampoo para cabello seco</small>
-            </div>
-            <div class="col-md-4 text-end">
-            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarProductoModal">Editar</button>
-            <button class="btn btn-danger btn-sm">Eliminar</button>
-            </div>
-        </div>
-        </div>
-    </div>
-    </div>
-
-    <!-- Gestión de Servicios -->
-    <div class="col-6">
-    <div class="card bg-secondary text-light">
-        <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Gestión de Servicios</h5>
-        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#crearServicioModal">Agregar Servicio</button>
-        </div>
-        <div class="card-body">
-        <div class="row align-items-center border-bottom pb-2 mb-2" data-id="1">
-            <div class="col-md-2">
-            <img src="../../assets/images/servicio1.jpg" class="img-fluid rounded" alt="Servicio">
-            </div>
-            <div class="col-md-6">
-            <strong>Corte de Cabello</strong><br>
-            <small>$30000</small><br>
-            <small>Corte y peinado profesional</small>
-            </div>
-            <div class="col-md-4 text-end">
-            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editarServicioModal">Editar</button>
-            <button class="btn btn-danger btn-sm">Eliminar</button>
-            </div>
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
-</div>
-
-<!-- Modal Crear Producto -->
-<div class="modal fade" id="crearProductoModal" tabindex="-1" aria-labelledby="crearProductoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-            <div class="modal-header border-warning">
-                <h5 class="modal-title" id="crearProductoModalLabel">Crear Nuevo Producto</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="../../controllers/crear_producto.php" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control bg-secondary text-light" id="nombre" name="nombre" required>
+            
+            <!-- Citas de Hoy -->
+            <div class="col-lg-4">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h5 class="card-title"><i class="fas fa-calendar-day me-2"></i> Citas de Hoy</h5>
                     </div>
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción:</label>
-                        <textarea class="form-control bg-secondary text-light" id="descripcion" name="descripcion" rows="3" required></textarea>
+                    <div class="list-group list-group-flush bg-transparent">
+                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1 text-gold">Ana Herrera</h6>
+                                <small>10:00 AM</small>
+                            </div>
+                            <p class="mb-1">Corte de cabello</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Tel: 123-456-7890</small>
+                                <span class="badge bg-warning">Pendiente</span>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1 text-gold">Luis Mendoza</h6>
+                                <small>11:30 AM</small>
+                            </div>
+                            <p class="mb-1">Barba y bigote</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Tel: 123-456-7890</small>
+                                <span class="badge bg-warning">Pendiente</span>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1 text-gold">Carmen Diaz</h6>
+                                <small>2:00 PM</small>
+                            </div>
+                            <p class="mb-1">Coloración</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Tel: 123-456-7890</small>
+                                <span class="badge bg-warning">Pendiente</span>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent text-light p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1 text-gold">Roberto Paz</h6>
+                                <small>4:30 PM</small>
+                            </div>
+                            <p class="mb-1">Corte y afeitado</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Tel: 123-456-7890</small>
+                                <span class="badge bg-warning">Pendiente</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="precio" class="form-label">Precio:</label>
-                        <input type="number" class="form-control bg-secondary text-light" id="precio" name="precio" required min="0" step="100">
+                    <div class="card-footer bg-transparent border-top border-secondary p-3">
+                        <a href="./citas.php" class="btn btn-gold w-100">
+                            <i class="fas fa-calendar me-1"></i> Ver todas las citas
+                        </a>
                     </div>
-                    <div class="mb-3">
-                        <label for="stock" class="form-label">Stock:</label>
-                        <input type="number" class="form-control bg-secondary text-light" id="stock" name="stock" required min="0">
-                    </div>
-                    <div class="mb-3">
-                        <label for="imagen" class="form-label">Imagen:</label>
-                        <input type="file" class="form-control bg-secondary text-light" id="imagen" name="imagen" accept=".jpg, .jpeg, .png" required>
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-warning">Crear Producto</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Editar Producto -->
-<div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-            <div class="modal-header border-warning">
-                <h5 class="modal-title" id="editarProductoModalLabel">Editar Producto</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form >
-                    <input type="hidden" name="id_producto" id="edit_id_producto">
-                    <div class="mb-3">
-                        <label for="edit_nombre" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control bg-secondary text-light" id="edit_nombre" name="nombre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_descripcion" class="form-label">Descripción:</label>
-                        <textarea class="form-control bg-secondary text-light" id="edit_descripcion" name="descripcion" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_precio" class="form-label">Precio:</label>
-                        <input type="number" class="form-control bg-secondary text-light" id="edit_precio" name="precio" required min="0" step="100">
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_stock" class="form-label">Stock:</label>
-                        <input type="number" class="form-control bg-secondary text-light" id="edit_stock" name="stock" required min="0">
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_imagen" class="form-label">Imagen:</label>
-                        <input type="file" class="form-control bg-secondary text-light" id="edit_imagen" name="imagen" accept=".jpg, .jpeg, .png">
-                        <small class="text-muted">Deja vacío para mantener la imagen actual</small>
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-warning">Guardar Cambios</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Modal Crear Servicio -->
-<div class="modal fade" id="crearServicioModal" tabindex="-1" aria-labelledby="crearServicioModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-            <div class="modal-header border-warning">
-                <h5 class="modal-title" id="crearServicioModalLabel">Crear Nuevo Servicio</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        
+        <!-- Stock Bajo y Últimos Productos -->
+        <div class="row mt-4">
+            <div class="col-lg-6">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h5 class="card-title"><i class="fas fa-exclamation-triangle me-2"></i> Productos con Stock Bajo</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Categoría</th>
+                                    <th>Stock Actual</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Shampoo Hidratante</td>
+                                    <td>Cabello</td>
+                                    <td><span class="text-danger">2 uds</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-gold">Reponer</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aceite para Barba</td>
+                                    <td>Cuidado Facial</td>
+                                    <td><span class="text-danger">3 uds</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-gold">Reponer</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tinte Color #5</td>
+                                    <td>Coloración</td>
+                                    <td><span class="text-danger">1 ud</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-gold">Reponer</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form action="../../controllers/crear_servicio.php" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="nombre_servicio" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control bg-secondary text-light" id="nombre_servicio" name="nombre" required>
+            
+            <div class="col-lg-6">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h5 class="card-title"><i class="fas fa-bell me-2"></i> Recordatorios</h5>
                     </div>
-                    <div class="mb-3">
-                        <label for="descripcion_servicio" class="form-label">Descripción:</label>
-                        <textarea class="form-control bg-secondary text-light" id="descripcion_servicio" name="descripcion" rows="3" required></textarea>
+                    <div class="list-group list-group-flush bg-transparent">
+                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <i class="fas fa-truck text-warning fa-2x"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="text-gold">Pedido de productos</h6>
+                                    <p class="mb-0">Confirmar llegada del pedido #A245 para mañana</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <i class="fas fa-money-bill-wave text-success fa-2x"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="text-gold">Pago de servicios</h6>
+                                    <p class="mb-0">Recordatorio de pago servicios básicos - vence 15/05</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item bg-transparent text-light p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0 me-3">
+                                    <i class="fas fa-user-friends text-info fa-2x"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="text-gold">Reunión de equipo</h6>
+                                    <p class="mb-0">Programada para el 12/05 a las 9:00 AM</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-warning">Crear Servicio</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Editar Servicio -->
-<div class="modal fade" id="editarServicioModal" tabindex="-1" aria-labelledby="editarServicioModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-            <div class="modal-header border-warning">
-                <h5 class="modal-title" id="editarServicioModalLabel">Editar Servicio</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <input type="hidden" name="id_servicio" id="edit_id_servicio">
-                    <div class="mb-3">
-                        <label for="edit_nombre_servicio" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control bg-secondary text-light" id="edit_nombre_servicio" name="nombre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_descripcion_servicio" class="form-label">Descripción:</label>
-                        <textarea class="form-control bg-secondary text-light" id="edit_descripcion_servicio" name="descripcion" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_precio_servicio" class="form-label">Precio:</label>
-                        <input type="number" class="form-control bg-secondary text-light" id="edit_precio_servicio" name="precio" required min="0" step="100">
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_imagen_servicio" class="form-label">Imagen:</label>
-                        <input type="file" class="form-control bg-secondary text-light" id="edit_imagen_servicio" name="imagen" accept=".jpg, .jpeg, .png">
-                        <small class="text-muted">Deja vacío para mantener la imagen actual</small>
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-warning">Guardar Cambios</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Editar Cita -->
-<div class="modal fade" id="editarCitaModal" tabindex="-1" aria-labelledby="editarCitaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-            <div class="modal-header border-warning">
-                <h5 class="modal-title" id="editarCitaModalLabel">Editar Cita</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <input type="hidden" name="id_cita" id="edit_id_cita">
-                    <div class="mb-3">
-                        <label for="edit_nombre_cliente" class="form-label">Nombre del Cliente:</label>
-                        <input type="text" class="form-control bg-secondary text-light" id="edit_nombre_cliente" name="nombre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_telefono" class="form-label">Teléfono:</label>
-                        <input type="tel" class="form-control bg-secondary text-light" id="edit_telefono" name="telefono" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_servicio" class="form-label">Servicio:</label>
-                        <input type="text" class="form-control bg-secondary text-light" id="edit_servicio" name="servicio" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_fecha" class="form-label">Fecha:</label>
-                        <input type="date" class="form-control bg-secondary text-light" id="edit_fecha" name="fecha" required>
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-warning">Guardar Cambios</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../assets/js/dashboard.js"></script>
+<script src="../../assets/js/dashboard.php"></script>
 </body>
 </html>

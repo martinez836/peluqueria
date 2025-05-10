@@ -122,7 +122,8 @@
                         </div>
                     </form>
                     <p class="text-center mt-3">
-                        ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a>
+                        ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a><br>
+                        ¿Olvidaste tu contraseña? <a href="../formulario.php" style="color: goldenrod;">Recuperar </a>
                     </p>
                 </div>
                 <?php } ?>

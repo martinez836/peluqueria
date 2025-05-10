@@ -98,6 +98,7 @@
 
 <!-- Contenedor principal -->
 <section class="container my-5 productos-section text-center">
+  <?php if(isset($_SESSION['documento'])) {?>
   <h2 style="color: goldenrod;" class="mb-4">Nuestros Productos</h2>
   <div class="row justify-content-center g-4">
     <?php while ($producto = $resultado->fetch_assoc()) { ?>
@@ -115,6 +116,28 @@
       </div>
     <?php } ?>
   </div>
+  <?php }else{?>
+      <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
+                    <h2 class="text-center mb-4" style="color: goldenrod;">Iniciar Sesión</h2>
+                    <form  action="../../controllers/iniciar_sesionProductos.php" method="POST" class="agenda-form mt-4">
+                        <div class="mb-3">
+                            <label for="documento" class="form-label">Documento:</label>
+                            <input type="number" name="documento" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contrasena" class="form-label">Contrasena:</label>
+                            <input type="password" name="contrasena" class="form-control" required>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">
+                        ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a><br>
+                        ¿Olvidaste tu contraseña? <a href="../formulario.php" style="color: goldenrod;">Recuperar </a>
+                    </p>
+                </div>
+    <?php }?>
 </section>
 
 <!-- Botón flotante para mostrar el carrito -->
