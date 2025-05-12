@@ -93,7 +93,7 @@
                                 <?php
                                     while ($row = mysqli_fetch_assoc($servicios))
                                     {
-                                        ?><option value="<?php echo $row['idservicios']; ?>"><?php echo $row['nombreServicio']; ?></option>
+                                        ?><option value="<?php echo $row['idservicios']; ?>"><?php echo $row['nombre']; ?></option>
                                         <?php   
                                     }
                                 ?>

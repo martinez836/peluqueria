@@ -125,4 +125,5 @@ class consultas
         $resultado = $this->mysql->efectuarConsulta($consulta);
         return $resultado;
     }
+    
 }

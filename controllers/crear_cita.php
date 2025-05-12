@@ -31,7 +31,6 @@ if(
     $fecha = filter_var(trim($_POST["fecha"]), FILTER_SANITIZE_SPECIAL_CHARS);
 
     // Aquí puedes llamar a tu método de la clase consultas para guardar la cita
-
     
     if($resultado) {
         header("Location: ../views/usuario/index.php");
