@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Conectar a la base de datos
-$mysqli = new mysqli('localhost', 'root', '', 'SERVIPLUS');
+$mysqli = new mysqli('localhost', 'root', '', 'peluqueria');
 if ($mysqli->connect_error) {
     die('Conexión fallida: ' . $mysqli->connect_error);
 }

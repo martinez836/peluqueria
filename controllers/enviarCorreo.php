@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     //verificacion de la direccion sea valida
     if(filter_var($correoDestino, FILTER_SANITIZE_EMAIL)){
         //instancia de la clase
-        $correo = new correo();
+        $correo = new Correo();
 
         //llamar al metodo para manejar la recuperacion de la contraseña
 

@@ -117,6 +117,7 @@
                             <label for="contrasena" class="form-label">Contrasena:</label>
                             <input type="password" name="contrasena" class="form-control" required>
                         </div>
+                        <br><a href="../recuperar.php" class="recuperar-link" style="color: goldenrod;">¿Olvidaste tu contraseña?</a><br><br><!-- Enlace para recuperar contraseña -->
                         <div class="text-center mb-3">
                             <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
                         </div>
@@ -124,6 +125,7 @@
                     <p class="text-center mt-3">
                         ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a>
                     </p>
+                    
                 </div>
                 <?php } ?>
             </div>

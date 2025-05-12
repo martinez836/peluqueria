@@ -64,7 +64,7 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Insert into servicios (nombreServicio,descripcion) values 
+            Insert into servicios (nombre,descripcion) values 
             (
                 '$nombre',
                 '$descripcion'
@@ -78,7 +78,7 @@ class consultas
     public function traer_servicios()
     {
         $this->mysql->conectar();
-        $consulta = "SELECT nombreServicio,idservicios from servicios;";
+        $consulta = "SELECT nombre, idservicios from servicios;";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
