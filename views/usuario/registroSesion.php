@@ -75,7 +75,7 @@
                         </div>
                     </form>
                     <p class="text-center mt-3">
-                        ¿Ya tienes cuenta? <a href="./login.php" style="color: goldenrod;">Inicia sesión aquí</a>
+                        ¿Ya tienes cuenta? <a href="./agendarCita.php" style="color: goldenrod;">Inicia sesión aquí</a>
                     </p>
                 </div>
             </div>
