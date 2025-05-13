@@ -100,6 +100,7 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
+    
     public function agregarDetallePedido($idPedido, $idProducto, $cantidad, $subTotal)
     {
         $this->mysql->conectar();

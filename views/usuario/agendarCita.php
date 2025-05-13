@@ -33,6 +33,7 @@
             <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
             <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
             <a href="../../controllers/logOut.php">Cerrar Sesion</a>
+            <h4>Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
         <?php }else{?>
             <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
             <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
@@ -59,27 +60,27 @@
 
                         <div class="mb-3">
                             <label for="cedula" class="form-label">Cédula:</label>
-                            <input type="number" name="cedula" class="form-control" required>
+                            <input type="number" name="cedula" class="form-control" value="<?php echo $_SESSION['documento'] ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre:</label>
-                            <input type="text" name="nombre" class="form-control" required>
+                            <input type="text" name="nombre" class="form-control" value="<?php echo $_SESSION['nombres']; ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido:</label>
-                            <input type="text" name="apellido" class="form-control" required>
+                            <input type="text" name="apellido" class="form-control" value="<?php echo $_SESSION['apellidos']; ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Teléfono:</label>
-                            <input type="tel" name="telefono" class="form-control" required>
+                            <input type="tel" name="telefono" class="form-control" value="<?php echo $_SESSION['telefono']; ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="correo" class="form-label">Correo Electrónico:</label>
-                            <input type="email" name="correo" class="form-control" required>
+                            <input type="email" name="correo" class="form-control" value="<?php echo $_SESSION['correo']; ?>" required>
                         </div>
 
                         <div class="mb-3">
