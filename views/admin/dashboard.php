@@ -5,9 +5,10 @@
     <title>Panel de Administración - Estilos Dairo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/admin.css">
     <style>
         
@@ -35,7 +36,7 @@
 </header>
 
 <!-- Sidebar -->
-<nav id="sidebar" class="bg-dark">
+<nav id="sidebar" >
     <div class="user-info">
         <img src="/api/placeholder/150/150" alt="Admin">
         <h5>Administrador</h5>
@@ -43,7 +44,7 @@
     </div>
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
@@ -53,18 +54,6 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-cut"></i> Servicios</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-users"></i> Clientes</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Reportes</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-cog"></i> Configuración</a>
         </li>
         <li class="nav-item mt-3">
             <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>

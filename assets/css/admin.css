@@ -30,50 +30,7 @@
             align-items: center;
             justify-content: space-between;
         }
-        
-        /* Sidebar */
-        #sidebar {
-            background-color: var(--darker-bg);
-            width: var(--sidebar-width);
-            height: 100vh;
-            position: fixed;
-            top: var(--header-height);
-            left: 0;
-            transition: all 0.3s;
-            z-index: 999;
-            padding-top: 20px;
-            border-right: 1px solid rgba(241, 196, 15, 0.2);
-            overflow-y: auto;
-        }
-        
-        #sidebar.collapsed {
-            left: calc(-1 * var(--sidebar-width) + 50px);
-        }
-        
-        .nav-pills .nav-link {
-            color: #fff;
-            border-radius: 0;
-            padding: 12px 20px;
-            margin: 5px 0;
-            transition: all 0.3s;
-        }
-        
-        .nav-pills .nav-link:hover {
-            background-color: rgba(241, 196, 15, 0.1);
-            color: var(--gold-color);
-        }
-        
-        .nav-pills .nav-link.active {
-            background-color: var(--gold-color);
-            color: #000;
-        }
 
-        .nav-pills .nav-link i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-        
         /* Main content */
         .main-content {
             margin-left: var(--sidebar-width);
@@ -125,46 +82,6 @@
             background-color: #d4ac0d;
             color: #000;
         }
-
-        /* Toggle button */
-        #sidebarToggle {
-            background: none;
-            border: none;
-            color: var(--gold-color);
-            font-size: 20px;
-            cursor: pointer;
-            padding: 0;
-        }
-        
-        /* User info in sidebar */
-        .user-info {
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
-            text-align: center;
-        }
-        
-        .user-info img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 2px solid var(--gold-color);
-            padding: 2px;
-            margin-bottom: 10px;
-        }
-        
-        .user-info h5 {
-            color: var(--gold-color);
-            margin: 0;
-            font-size: 1rem;
-        }
-        
-        .user-info p {
-            color: #aaa;
-            font-size: 0.8rem;
-            margin: 5px 0 0;
-        }
-        
         /* Dashboard summary stats */
         .stats-container {
             display: grid;
@@ -254,6 +171,7 @@
             background-color: #e74c3c;
             color: #fff;
         }
+        
         
         /* Media queries para responsividad */
         @media (max-width: 768px) {
