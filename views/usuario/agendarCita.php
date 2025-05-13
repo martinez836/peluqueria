@@ -27,6 +27,7 @@
     </header>
 
     <!-- Navbar -->
+     
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
         <?php if(isset($_SESSION['documento'])) {?>
             <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
