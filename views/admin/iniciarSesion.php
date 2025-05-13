@@ -48,7 +48,7 @@
                 <!-- Formulario Inicio de Sesión Administrador -->
                 <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
                     <h2 class="text-center mb-4" style="color: goldenrod;">Inicio de Sesión Administradores</h2>
-                    <form  action="../../views/admin/dashboard.php" method="POST" class="agenda-form mt-4">
+                    <form  action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form mt-4">
                         <div class="mb-3">
                             <label for="documento" class="form-label">Documento:</label>
                             <input type="number" name="documento" class="form-control" required>

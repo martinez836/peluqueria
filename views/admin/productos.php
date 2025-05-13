@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Admin - Productos</title>
     <link rel="stylesheet" href="../../assets/css/admin.css">
-</head>
+</head> 
 <body>
 <header>Estilos Dairo - Gestión de Productos</header>
 <nav>
