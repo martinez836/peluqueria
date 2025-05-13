@@ -142,10 +142,10 @@
                                     <td>Shampoo</td>
                                     <td class="actions">
                                         <button class="btn btn-primary btn-sm" onclick="editarProducto(1)">
-                                            <i class="fas fa-edit">Editar</i>
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-danger btn-sm" onclick="eliminarProducto(1)">
-                                            <i class="fas fa-trash">Eliminar</i>
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>

@@ -29,7 +29,7 @@
     </div>
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link " href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link " href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
