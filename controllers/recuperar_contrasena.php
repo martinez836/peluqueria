@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'recuperacionContrasenas03@gmail.com';  // Tu correo SMTP
-            $mail->Password = 'zomt rueu ombj blav';  // Contraseña de la aplicación serviplus para Gmail
+            $mail->Password = 'xctk wzlm wuhr gisd';  // Contraseña de la aplicación serviplus para Gmail
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 

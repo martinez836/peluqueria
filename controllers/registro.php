@@ -37,8 +37,9 @@
         $correo = filter_var(trim($_POST['correo']), FILTER_SANITIZE_EMAIL, FILTER_VALIDATE_EMAIL);
         $contrasena = filter_var($_POST['contrasena'], FILTER_SANITIZE_SPECIAL_CHARS);
         $contrasenaEncriptada = password_hash($contrasena,PASSWORD_DEFAULT);
-
-        $resultado = $consultas->crear_cliente($documento,$nombres,$apellidos,$ciudad,$direccion,$barrio,$telefono,$correo,$contrasenaEncriptada);
+        $rol = "cliente";
+        $fechaNacimiento = filter_var(trim($_POST['fechaNacimiento']), FILTER_SANITIZE_SPECIAL_CHARS);
+        $resultado = $consultas->crear_cliente($documento,$nombres,$apellidos,$ciudad,$direccion,$barrio,$telefono,$correo,$contrasenaEncriptada, $rol, $fechaNacimiento);
         if($resultado)
         {
             header("Location: ../views/usuario/agendarCita.php");

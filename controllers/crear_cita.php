@@ -7,7 +7,6 @@ if(
     isset($_POST["apellido"]) &&
     isset($_POST["telefono"]) &&
     isset($_POST["correo"]) &&
-    isset($_POST["fechaNacimiento"]) &&
     isset($_POST["servicio"]) && 
     isset($_POST["fecha"]) &&
     !empty($_POST["cedula"]) &&
@@ -15,7 +14,6 @@ if(
     !empty($_POST["apellido"]) &&
     !empty($_POST["telefono"]) &&
     !empty($_POST["correo"]) &&
-    !empty($_POST["fechaNacimiento"]) &&
     !empty($_POST["servicio"]) &&
     !empty($_POST["fecha"])
 )
@@ -26,15 +24,17 @@ if(
     $apellido = filter_var(trim($_POST["apellido"]), FILTER_SANITIZE_SPECIAL_CHARS);
     $telefono = filter_var(trim($_POST["telefono"]), FILTER_SANITIZE_NUMBER_INT);
     $correo = filter_var(trim($_POST["correo"]), FILTER_SANITIZE_EMAIL);
-    $fechaNacimiento = filter_var(trim($_POST["fechaNacimiento"]), FILTER_SANITIZE_SPECIAL_CHARS);
     $servicio = filter_var(trim($_POST["servicio"]), FILTER_SANITIZE_SPECIAL_CHARS);
     $fecha = filter_var(trim($_POST["fecha"]), FILTER_SANITIZE_SPECIAL_CHARS);
 
     // Aquí puedes llamar a tu método de la clase consultas para guardar la cita
-
-    
+    $resultado = $consultas->registrar_cita($cedula, $nombre, $apellido, $telefono, $correo, $servicio, $fecha);
+    // Verificar si la cita se creó correctamente
+    // Redirigir a la página de citas o mostrar un mensaje de éxito
     if($resultado) {
+        
         header("Location: ../views/usuario/index.php");
+        
     } else {
         echo "Error al crear la cita";
     }

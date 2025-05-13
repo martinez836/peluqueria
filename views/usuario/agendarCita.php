@@ -27,12 +27,14 @@
     </header>
 
     <!-- Navbar -->
+     
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
         <?php if(isset($_SESSION['documento'])) {?>
             <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
             <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
             <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
             <a href="../../controllers/logOut.php">Cerrar Sesion</a>
+            <h4>Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
         <?php }else{?>
             <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
             <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
@@ -59,41 +61,35 @@
 
                         <div class="mb-3">
                             <label for="cedula" class="form-label">Cédula:</label>
-                            <input type="number" name="cedula" class="form-control" required>
+                            <input type="number" name="cedula" class="form-control" value="<?php echo $_SESSION['documento'] ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre:</label>
-                            <input type="text" name="nombre" class="form-control" required>
+                            <input type="text" name="nombre" class="form-control" value="<?php echo $_SESSION['nombres']; ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido:</label>
-                            <input type="text" name="apellido" class="form-control" required>
+                            <input type="text" name="apellido" class="form-control" value="<?php echo $_SESSION['apellidos']; ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Teléfono:</label>
-                            <input type="tel" name="telefono" class="form-control" required>
+                            <input type="tel" name="telefono" class="form-control" value="<?php echo $_SESSION['telefono']; ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="correo" class="form-label">Correo Electrónico:</label>
-                            <input type="email" name="correo" class="form-control" required>
+                            <input type="email" name="correo" class="form-control" value="<?php echo $_SESSION['correo']; ?>" required>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-                            <input type="date" name="fechaNacimiento" class="form-control" required>
-                        </div>
-
                         <div class="mb-4">
                             <label for="servicio" class="form-label">Servicio:</label>
                             <select name="servicio" class="form-select" required>
                                 <?php
                                     while ($row = mysqli_fetch_assoc($servicios))
                                     {
-                                        ?><option value="<?php echo $row['idservicios']; ?>"><?php echo $row['nombreServicio']; ?></option>
+                                        ?><option value="<?php echo $row['idservicios']; ?>"><?php echo $row['nombre']; ?></option>
                                         <?php   
                                     }
                                 ?>
@@ -117,6 +113,7 @@
                             <label for="contrasena" class="form-label">Contrasena:</label>
                             <input type="password" name="contrasena" class="form-control" required>
                         </div>
+                        <br><a href="../recuperar.php" class="recuperar-link" style="color: goldenrod;">¿Olvidaste tu contraseña?</a><br><br><!-- Enlace para recuperar contraseña -->
                         <div class="text-center mb-3">
                             <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
                         </div>
@@ -125,6 +122,7 @@
                         ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a><br>
                         ¿Olvidaste tu contraseña? <a href="../formulario.php" style="color: goldenrod;">Recuperar </a>
                     </p>
+                    
                 </div>
                 <?php } ?>
             </div>

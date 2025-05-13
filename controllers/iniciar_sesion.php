@@ -14,18 +14,29 @@ session_start();
         $resultado = $consultas->traerCliente($documento);
         if($cliente = mysqli_fetch_assoc($resultado))
         {
+            
             if(password_verify($contrasena,$cliente["contrasena"]))
             {
-                $_SESSION['documento'] = $cliente['documento'];
-                $_SESSION['nombres'] = $cliente['nombres'];
-                $_SESSION['apellidos'] = $cliente['apellidos'];
-                $_SESSION['direccion'] = $cliente['direccion'];
-                $_SESSION['ciudad'] = $cliente['ciudad'];
-                $_SESSION['barrio'] = $cliente['barrio'];
-                $_SESSION['correo'] = $cliente['correo'];
-                $_SESSION['telefono'] = $cliente['telefono'];
-                header("Location: ../views/usuario/agendarCita.php");
-                exit();
+                
+                if ($cliente['rol'] === "administrador") {
+                    $_SESSION['documento'] = $cliente['documento'];
+                    $_SESSION['nombres'] = $cliente['nombres'];
+                    header("Location: ../views/admin/dashboard.php");
+                    exit();
+                } 
+                else {
+                    $_SESSION['documento'] = $cliente['documento'];
+                    $_SESSION['nombres'] = $cliente['nombres'];
+                    $_SESSION['apellidos'] = $cliente['apellidos'];
+                    $_SESSION['direccion'] = $cliente['direccion'];
+                    $_SESSION['ciudad'] = $cliente['ciudad'];
+                    $_SESSION['barrio'] = $cliente['barrio'];
+                    $_SESSION['correo'] = $cliente['correo'];
+                    $_SESSION['telefono'] = $cliente['telefono'];
+                    header("Location: ../views/usuario/agendarCita.php");
+                    exit();
+                }
+                
             }
         }
         header("Location: ../views/usuario/agendarCita.php?error=1");

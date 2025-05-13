@@ -6,12 +6,10 @@ session_start();
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Peluquería Elegante</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"> 
-
+<title>Peluquería Elegante</title> 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/estilo.css">
 </head>
 
@@ -23,20 +21,21 @@ session_start();
     <p>¡Reserva tu cita con estilo!</p>
 </header>
 
+<nav class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-4 py-3 text-center" style="background-color: #222;">
+    <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
+    <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
+    <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
 
-<nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
-        <?php if(isset($_SESSION['documento'])) {?>
-            <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
-            <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
-            <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
-            <a href="../../controllers/logOut.php">Cerrar Sesion</a>
-        <?php }else{?>
-            <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
-            <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
-            <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
-        <?php }?>   
+    <?php if (isset($_SESSION['documento'])) { ?>
+        <a href="../../controllers/logOut.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+        </a>
+    <?php } else { ?>
+        <a href="../admin/iniciarSesion.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-person-circle"></i> Sesión Administrador
+        </a>
+    <?php } ?>
 </nav>
-
 
 <main class="container my-5">
     <section class="text-center">

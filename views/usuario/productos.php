@@ -89,6 +89,7 @@
       <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
       <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
       <a href="../../controllers/logOut.php">Cerrar Sesion</a>
+      <h4>Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
   <?php }else{?>
       <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
       <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>

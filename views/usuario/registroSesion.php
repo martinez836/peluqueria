@@ -7,6 +7,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
 
     <!-- Tu estilo personalizado -->
     <link rel="stylesheet" href="../../assets/css/estilo.css">
@@ -67,15 +68,23 @@
                             <input type="email" name="correo" id="correo" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label for="telefono" class="form-label">Contraseña:</label>
-                            <input type="password" name="contrasena" id="contrasena" class="form-control" required>
+                            <label for="contrasena" class="form-label">Contraseña:</label>
+                            <div class="input-group">
+                                <input type="password" name="contrasena" id="contrasena" class="form-control" required>
+                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">👁</button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+                            <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" required>
                         </div>
                         <div class="text-center mb-3">
                             <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Registrarse</button>
                         </div>
+                        
                     </form>
                     <p class="text-center mt-3">
-                        ¿Ya tienes cuenta? <a href="./login.php" style="color: goldenrod;">Inicia sesión aquí</a>
+                        ¿Ya tienes cuenta? <a href="./agendarCita.php" style="color: goldenrod;">Inicia sesión aquí</a>
                     </p>
                 </div>
             </div>
@@ -84,6 +93,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/contrasena.js"></script>
 </body>
 
 </html>
