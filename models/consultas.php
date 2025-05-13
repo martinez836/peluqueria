@@ -28,7 +28,7 @@ class consultas
             $this->mysql->desconectar();
             return $resultado;
     }
-    public function crear_cliente($documento,$nombres,$apellidos,$ciudad,$direccion,$barrio,$telefono,$correo,$contrasenaEncriptada)
+    public function crear_cliente($documento,$nombres,$apellidos,$ciudad,$direccion,$barrio,$telefono,$correo,$contrasenaEncriptada, $rol,$fechaNacimiento)
     {
         $this->mysql->conectar();
         $consulta = 
@@ -41,7 +41,9 @@ class consultas
                 barrio,
                 telefono,
                 correo,
-                contrasena
+                contrasena,
+                rol,
+                fechaNacimiento
             ) values
             (
                 $documento,
@@ -52,7 +54,9 @@ class consultas
                 '$barrio',
                 '$telefono',
                 '$correo',
-                '$contrasenaEncriptada'
+                '$contrasenaEncriptada',
+                '$rol',
+                '$fechaNacimiento'
             );
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
@@ -124,6 +128,27 @@ class consultas
             $documento
         )";
         $resultado = $this->mysql->efectuarConsulta($consulta);
+        return $resultado;
+    }
+
+    public function registrar_cita($cedula, $nombre, $apellido, $telefono, $correo, $servicio, $fecha)
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Insert into citas (clientes_documento,nombre,apellido,telefono,correo,servicios_idservicios,fecha) values 
+            (
+                '$cedula',
+                '$nombre',
+                '$apellido',
+                '$telefono',
+                '$correo',
+                '$servicio',
+                '$fecha'
+            );
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
         return $resultado;
     }
     

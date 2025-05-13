@@ -29,27 +29,26 @@
     <!-- Navbar -->
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
         <?php if(isset($_SESSION['documento'])) {?>
-            <a href="../usuario/index.php" style="color: gold; text-decoration: none;">Inicio</a>
+            <a href="./dashboard.php" style="color: gold; text-decoration: none;">Inicio</a>
             <a href="../usuario/productos.php" style="color: gold; text-decoration: none;">Productos</a>
             <a href="../usuario/agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
             <a href="../../controllers/logOut.php">Cerrar Sesion</a>
         <?php }else{?>
-            <a href="../usuario/index.php" style="color: gold; text-decoration: none;">Inicio</a>
+            <!-- <a href="../usuario/index.php" style="color: gold; text-decoration: none;">Inicio</a>
             <a href="../usuario/productos.php" style="color: gold; text-decoration: none;">Productos</a>
-            <a href="../usuario/agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+            <a href="../usuario/agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a> -->
+            <a href="../../controllers/logOut.php">Regresar</a>
         <?php }?>
     </nav>
     <!-- Contenido principal -->
     <div class="container my-5">
-        <div class="row">
-            <div class="col-6">
-            <img src="" alt="LOGO">
-            </div>
+        <div class="row justify-content-center">
+            
             <div class="col-6">
                 <!-- Formulario Inicio de Sesión Administrador -->
                 <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
                     <h2 class="text-center mb-4" style="color: goldenrod;">Inicio de Sesión Administradores</h2>
-                    <form  action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form mt-4">
+                    <form  action="../../views/admin/dashboard.php" method="POST" class="agenda-form mt-4">
                         <div class="mb-3">
                             <label for="documento" class="form-label">Documento:</label>
                             <input type="number" name="documento" class="form-control" required>

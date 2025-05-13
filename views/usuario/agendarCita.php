@@ -82,12 +82,6 @@
                             <label for="correo" class="form-label">Correo Electrónico:</label>
                             <input type="email" name="correo" class="form-control" value="<?php echo $_SESSION['correo']; ?>" required>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-                            <input type="date" name="fechaNacimiento" class="form-control" required>
-                        </div>
-
                         <div class="mb-4">
                             <label for="servicio" class="form-label">Servicio:</label>
                             <select name="servicio" class="form-select" required>
