@@ -128,7 +128,7 @@ class consultas
             $documento
         )";
         $resultado = $this->mysql->efectuarConsulta($consulta);
-        return $resultado;
+        return $resultad;
     }
 
     public function registrar_cita($fecha,$cedula, $servicio)

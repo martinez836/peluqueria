@@ -228,48 +228,6 @@ document.getElementById('sidebarToggle').addEventListener('click', function() {
                 }
             }
         }
-        
-        // Función para confirmar una cita
-        function confirmarCita(id) {
-            cambiarEstado(id, 'confirmed');
-            alert(`Se ha enviado una confirmación al cliente para la cita #${id}`);
-        }
-        
-        // Función para cancelar una cita
-        function cancelarCita(id) {
-            if (confirm(`¿Estás seguro de que deseas cancelar la cita #${id}?`)) {
-                cambiarEstado(id, 'cancelled');
-            }
-        }
-        
-        // Función para reprogramar una cita
-        function reprogramarCita(id) {
-            // Aquí se podría abrir un modal para reprogramar la cita
-            alert(`Reprogramando cita #${id}`);
-            // En un entorno real, aquí abrirías un modal para seleccionar nueva fecha/hora
-        }
-        
-        // Función para crear una nueva cita
-        function nuevaCita() {
-            // Aquí se podría abrir un modal para crear una nueva cita
-            alert('Creando nueva cita');
-            // En un entorno real, aquí abrirías un modal o redirigirías a una página de creación
-        }
-        
-        // Función para crear una nueva cita para un cliente existente
-        function nuevaCitaCliente() {
-            // Aquí se podría abrir un modal para crear una nueva cita para el cliente actual
-            alert('Creando nueva cita para el cliente');
-            // En un entorno real, aquí abrirías un modal con datos del cliente prellenados
-        }
-        
-        // Función para exportar citas
-        function exportarCitas() {
-            // Aquí se haría la exportación de las citas
-            alert('Exportando citas...');
-            // En un entorno real, aquí exportarías las citas a un archivo CSV o Excel
-        }
-        
         // Función para buscar citas
         function buscarCitas() {
             const filtro = document.getElementById('buscarCita').value.toLowerCase();
