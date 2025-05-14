@@ -28,7 +28,7 @@ if(
     $fecha = filter_var(trim($_POST["fecha"]), FILTER_SANITIZE_SPECIAL_CHARS);
 
     // Aquí puedes llamar a tu método de la clase consultas para guardar la cita
-    $resultado = $consultas->registrar_cita($cedula, $nombre, $apellido, $telefono, $correo, $servicio, $fecha);
+    $resultado = $consultas->registrar_cita($fecha,$cedula, $servicio);
     // Verificar si la cita se creó correctamente
     // Redirigir a la página de citas o mostrar un mensaje de éxito
     if($resultado) {
