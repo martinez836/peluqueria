@@ -4,17 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Productos</title>
-<<<<<<< HEAD
         <link rel="stylesheet" href="../../assets/css/crear_producto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         
     </style>
 </head>
-=======
-    <link rel="stylesheet" href="../../assets/css/admin.css">
-</head> 
->>>>>>> 0bc484daa6a9670af00affeb722e4f0d18a134c4
 <body>
     <!-- Header -->
     <header class="main-header">

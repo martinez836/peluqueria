@@ -304,6 +304,27 @@ function finalizarCompra() {
     bootstrap.Modal.getInstance(document.getElementById('carritoModal')).hide();
 }
 
+// Función para verificar si el usuario ha iniciado sesión y realizar la compra
+function verificarSesionYComprar() {
+    const btnFinalizarCompra = document.getElementById('btn-finalizar-compra');
+    const haySesion = btnFinalizarCompra.getAttribute('data-sesion') === '1';
+    
+    if (haySesion) {
+        // Si hay sesión, continuar con la compra
+        finalizarCompra();
+    } else {
+        // Si no hay sesión, cerrar el modal del carrito y abrir el modal de login
+        const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+        carritoModal.hide();
+        
+        // Esperar a que se cierre el modal del carrito antes de abrir el de login
+        setTimeout(() => {
+            const modalLogin = new bootstrap.Modal(document.getElementById('modalLogin'));
+            modalLogin.show();
+        }, 500);
+    }
+}
+
 // Función para mostrar notificaciones
 function mostrarNotificacion(mensaje) {
     // Crear el contenedor del toast
@@ -384,5 +405,11 @@ document.addEventListener('DOMContentLoaded', function() {
         carritoModal.addEventListener('show.bs.modal', function () {
             mostrarCarrito();
         });
+    }
+    
+    // Añadir evento al botón de finalizar compra
+    const btnFinalizarCompra = document.getElementById('btn-finalizar-compra');
+    if (btnFinalizarCompra) {
+        btnFinalizarCompra.addEventListener('click', verificarSesionYComprar);
     }
 });

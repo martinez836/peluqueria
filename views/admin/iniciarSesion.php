@@ -41,34 +41,61 @@
         <?php }?>
     </nav>
     <!-- Contenido principal -->
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            
-            <div class="col-6">
-                <!-- Formulario Inicio de Sesión Administrador -->
-                <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
-                    <h2 class="text-center mb-4" style="color: goldenrod;">Inicio de Sesión Administradores</h2>
-                    <form  action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form mt-4">
-                        <div class="mb-3">
-                            <label for="documento" class="form-label">Documento:</label>
-                            <input type="number" name="documento" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contrasena" class="form-label">Contrasena:</label>
-                            <input type="password" name="contrasena" class="form-control" required>
-                        </div>
-                        <br><a href="../recuperar.php" class="recuperar-link" style="color: goldenrod;">¿Olvidaste tu contraseña?</a><br><br><!-- Enlace para recuperar contraseña -->
-                        <div class="text-center mb-3">
-                            <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
-                        </div>
-                    </form>                    
+    <!-- Contenido principal -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <!-- Formulario de Inicio de Sesión Administrador -->
+            <div class="bg-white rounded shadow mx-auto px-0 pb-5 pt-0" style="max-width: 700px; overflow: hidden;">
+                <!-- Encabezado dentro del formulario -->
+                <div class="py-3 px-4" style="background-color: #1c1c1c; color: white; border-bottom: 2px solid goldenrod;">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <i class="bi bi-shield-lock me-2" style="color: goldenrod; font-size: 1.5rem;"></i>
+                        <h4 class="mb-0 fw-bold">Inicio de Sesión - Administrador</h4>
+                    </div>
                 </div>
-                <!-- Fin del formulario de inicio de sesión -->
+
+                <!-- Formulario -->
+                <div class="px-4 pt-4">
+                    <form action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form">
+                        <!-- Documento -->
+                        <div class="mb-4">
+                            <label for="documento" class="form-label fw-semibold">Documento:</label>
+                            <div class="input-group">
+                                <input type="number" name="documento" id="documento" class="form-control" required placeholder="Ingresa tu número de documento">
+                            </div>
+                        </div>
+
+                        <!-- Contraseña -->
+                        <div class="mb-4">
+                            <label for="contrasena" class="form-label fw-semibold">Contraseña:</label>
+                            <div class="input-group">
+                                <input type="password" name="contrasena" id="contrasena" class="form-control" required placeholder="Ingresa tu contraseña">
+                                <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordAdmin()" title="Mostrar/Ocultar contraseña">👁</button>
+                            </div>
+                        </div>
+                        <!-- Recuperar contraseña -->
+                        <div class="mb-4 text-end">
+                            <a href="../recuperar.php" class="text-decoration-none fw-semibold" style="color: goldenrod;">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+
+                        <!-- Botón de ingreso -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg w-100" style="background-color: goldenrod; color: white; border: none;">
+                                Ingresar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
     <script src="../../assets/js/agendar.js"></script>
+    <script src="../../assets/js/contrasena.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

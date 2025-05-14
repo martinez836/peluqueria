@@ -101,29 +101,86 @@
                     </form>
                 </div>
                 <?php }else{ ?>
-                <!-- Formulario Inicio de Sesión -->
-                <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
-                    <h2 class="text-center mb-4" style="color: goldenrod;">Iniciar Sesión</h2>
-                    <form  action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form mt-4">
-                        <div class="mb-3">
-                            <label for="documento" class="form-label">Documento:</label>
-                            <input type="number" name="documento" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contrasena" class="form-label">Contrasena:</label>
-                            <input type="password" name="contrasena" class="form-control" required>
-                        </div>
-                        <br><a href="../recuperar.php" class="recuperar-link" style="color: goldenrod;">¿Olvidaste tu contraseña?</a><br><br><!-- Enlace para recuperar contraseña -->
-                        <div class="text-center mb-3">
-                            <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
-                        </div>
-                    </form>
-                    <p class="text-center mt-3">
-                        ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a><br>
-                        ¿Olvidaste tu contraseña? <a href="../formulario.php" style="color: goldenrod;">Recuperar </a>
-                    </p>
-                    
+                <!-- Formulario Inicio de Sesión Refactorizado -->
+<div class="bg-white rounded shadow mx-auto" style="max-width: 600px; overflow: hidden; border: none;">
+    <!-- Encabezado con estilo similar al modal -->
+    <div class="py-3 px-4" style="background-color: #1c1c1c; color: white; border-bottom: 2px solid goldenrod;">
+        <div class="d-flex align-items-center justify-content-center">
+            <i class="bi bi-scissors me-2" style="color: goldenrod; font-size: 1.5rem;"></i>
+            <h4 class="mb-0 fw-bold">Iniciar Sesión</h4>
+        </div>
+    </div>
+    
+    <div class="p-4 p-md-5">
+        <!-- Mensaje de bienvenida -->
+        <div class="text-center mb-4">
+            <h5 style="color: #333;">Bienvenido a Estilos Dairo</h5>
+            <p class="text-muted">Accede a tu cuenta para disfrutar de nuestros servicios</p>
+        </div>
+        
+        <form action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form">
+            <!-- Campos de formulario con iconos -->
+            <div class="mb-4">
+                <label for="documento" class="form-label fw-semibold">Documento de identidad</label>
+                <div class="input-group">
+                    <span class="input-group-text" style="background-color: #f8f8f8;">
+                        <i class="bi bi-person" style="color: goldenrod;"></i>
+                    </span>
+                    <input type="number" name="documento" id="documento" class="form-control form-control-lg border-start-0" 
+                           placeholder="Ingresa tu número de documento" required>
                 </div>
+            </div>
+            
+            <div class="mb-4">
+                <label for="contrasena" class="form-label fw-semibold">Contraseña</label>
+                <div class="input-group">
+                    <span class="input-group-text" style="background-color: #f8f8f8;">
+                        <i class="bi bi-lock" style="color: goldenrod;"></i>
+                    </span>
+                    <input type="password" name="contrasena" id="contrasena" class="form-control form-control-lg border-start-0" 
+                           placeholder="Ingresa tu contraseña" required>
+                </div>
+            </div>
+            
+            <!-- Enlaces de ayuda -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="recordarme" style="border-color: goldenrod;">
+                    <label class="form-check-label" for="recordarme">Recordarme</label>
+                </div>
+                <a href="../recuperar.php" style="color: goldenrod; text-decoration: none; font-weight: 500;">
+                    ¿Olvidaste tu contraseña?
+                </a>
+            </div>
+            
+            <!-- Botón de inicio de sesión -->
+            <button type="submit" class="btn btn-lg w-100 mb-3" style="background-color: goldenrod; color: white; border: none;">
+                Iniciar Sesión
+            </button>
+        </form>
+        
+        <!-- Separador -->
+        <div class="d-flex align-items-center my-3">
+            <div class="flex-grow-1 border-bottom"></div>
+            <span class="mx-2 text-muted">O</span>
+            <div class="flex-grow-1 border-bottom"></div>
+        </div>
+        
+        <!-- Enlace para registro -->
+        <div class="text-center">
+            <p class="mb-0">¿No tienes una cuenta? 
+                <a href="./registroSesion.php" style="color: goldenrod; text-decoration: none; font-weight: bold;">
+                    Regístrate aquí
+                </a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Footer con branding discreto -->
+    <div class="py-3 text-center bg-light" style="border-top: 1px solid #eee;">
+        <small class="text-muted">© 2025 Estilos Dairo - Todos los derechos reservados</small>
+    </div>
+</div>
                 <?php } ?>
             </div>
         </div>

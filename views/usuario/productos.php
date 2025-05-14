@@ -99,7 +99,6 @@
 
 <!-- Contenedor principal -->
 <section class="container my-5 productos-section text-center">
-  <?php if(isset($_SESSION['documento'])) {?>
   <h2 style="color: goldenrod;" class="mb-4">Nuestros Productos</h2>
   <div class="row justify-content-center g-4">
     <?php while ($producto = $resultado->fetch_assoc()) { ?>
@@ -117,28 +116,112 @@
       </div>
     <?php } ?>
   </div>
-  <?php }else{?>
-      <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
-                    <h2 class="text-center mb-4" style="color: goldenrod;">Iniciar Sesión</h2>
-                    <form  action="../../controllers/iniciar_sesionProductos.php" method="POST" class="agenda-form mt-4">
-                        <div class="mb-3">
-                            <label for="documento" class="form-label">Documento:</label>
-                            <input type="number" name="documento" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contrasena" class="form-label">Contrasena:</label>
-                            <input type="password" name="contrasena" class="form-control" required>
-                        </div>
-                        <div class="text-center mb-3">
-                            <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
-                        </div>
-                    </form>
-                    <p class="text-center mt-3">
-                        ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a><br>
-                        ¿Olvidaste tu contraseña? <a href="../formulario.php" style="color: goldenrod;">Recuperar </a>
-                    </p>
-                </div>
-    <?php }?>
+      <!-- <div class="bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
+        <h2 class="text-center mb-4" style="color: goldenrod;">Iniciar Sesión</h2>
+        <form  action="../../controllers/iniciar_sesionProductos.php" method="POST" class="agenda-form mt-4">
+          <div class="mb-3">
+            <label for="documento" class="form-label">Documento:</label>
+            <input type="number" name="documento" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="contrasena" class="form-label">Contrasena:</label>
+            <input type="password" name="contrasena" class="form-control" required>
+          </div>
+          <div class="text-center mb-3">
+            <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Ingresar</button>
+          </div>
+          </form>
+            <p class="text-center mt-3">
+              ¿No tienes cuenta? <a href="./registroSesion.php" style="color: goldenrod;">Regístrate aquí</a><br>
+              ¿Olvidaste tu contraseña? <a href="../formulario.php" style="color: goldenrod;">Recuperar </a>
+            </p>
+        </div> -->
+        <!-- Botón para abrir el modal -->
+<!-- Modal de Inicio de Sesión Refactorizado -->
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <!-- Encabezado con logo y título estilizado -->
+      <div class="modal-header" style="background-color: #1c1c1c; color: white; border-bottom: 2px solid goldenrod;">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-scissors me-2" style="color: goldenrod; font-size: 1.5rem;"></i>
+          <h5 class="modal-title fw-bold" id="modalLoginLabel">Iniciar Sesión</h5>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      
+      <form action="../../controllers/iniciar_sesionProductos.php" method="POST">
+        <div class="modal-body px-4 py-4">
+          <!-- Mensaje de bienvenida -->
+          <div class="text-center mb-4">
+            <h4 style="color: #333;">Bienvenido a Estilos Dairo</h4>
+            <p class="text-muted">Inicia sesión para continuar con tu compra</p>
+          </div>
+          
+          <!-- Campos de formulario con iconos -->
+          <div class="mb-4">
+            <label for="documento" class="form-label fw-semibold">Documento de identidad</label>
+            <div class="input-group">
+              <span class="input-group-text" style="background-color: #f8f8f8;">
+                <i class="bi bi-person" style="color: goldenrod;"></i>
+              </span>
+              <input type="number" name="documento" id="documento" class="form-control form-control-lg border-start-0" 
+                     placeholder="Ingresa tu número de documento" required>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="contrasena" class="form-label fw-semibold">Contraseña</label>
+            <div class="input-group">
+              <span class="input-group-text" style="background-color: #f8f8f8;">
+                <i class="bi bi-lock" style="color: goldenrod;"></i>
+              </span>
+              <input type="password" name="contrasena" id="contrasena" class="form-control form-control-lg border-start-0" 
+                     placeholder="Ingresa tu contraseña" required>
+            </div>
+          </div>
+          
+          <!-- Enlaces de ayuda -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="recordarme" style="border-color: goldenrod;">
+              <label class="form-check-label" for="recordarme">Recordarme</label>
+            </div>
+            <a href="../formulario.php" style="color: goldenrod; text-decoration: none; font-weight: 500;">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+          
+          <!-- Botón de inicio de sesión -->
+          <button type="submit" class="btn btn-lg w-100 mb-3" style="background-color: goldenrod; color: white; border: none;">
+            Iniciar Sesión
+          </button>
+          
+          <!-- Separador -->
+          <div class="d-flex align-items-center my-3">
+            <div class="flex-grow-1 border-bottom"></div>
+            <span class="mx-2 text-muted">O</span>
+            <div class="flex-grow-1 border-bottom"></div>
+          </div>
+          
+          <!-- Enlace para registro -->
+          <div class="text-center">
+            <p class="mb-0">¿No tienes una cuenta? 
+              <a href="./registroSesion.php" style="color: goldenrod; text-decoration: none; font-weight: bold;">
+                Regístrate aquí
+              </a>
+            </p>
+          </div>
+        </div>
+      </form>
+      
+      <!-- Footer con branding discreto -->
+      <div class="modal-footer justify-content-center bg-light" style="border-top: 1px solid #eee;">
+        <small class="text-muted">© 2025 Estilos Dairo - Todos los derechos reservados</small>
+      </div>
+    </div>
+  </div>
+</div>
 </section>
 
 <!-- Botón flotante para mostrar el carrito -->
@@ -161,7 +244,10 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
         <button type="button" class="btn btn-danger" onclick="vaciarCarrito()">Vaciar Carrito</button>
-        <button type="button" class="btn btn-primary" id="btn-finalizar-compra" onclick="finalizarCompra()" disabled>Finalizar Compra</button>
+        <button 
+          type="button" class="btn btn-primary" id="btn-finalizar-compra" data-sesion="<?= isset($_SESSION['documento']) ? '1' : '0' ?>"
+          > Finalizar Compra
+        </button>
       </div>
     </div>
   </div>
