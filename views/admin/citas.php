@@ -53,9 +53,6 @@
         <div class="content-header">
             <h1>Gestión de Citas</h1>
             <div>
-                <button class="btn btn-gold" onclick="exportarCitas()">
-                    <i class="fas fa-download"></i> Exportar
-                </button>
                 <button class="btn btn-primary" onclick="nuevaCita()">
                     <i class="fas fa-plus"></i> Nueva Cita
                 </button>
@@ -101,7 +98,6 @@
                                     <th>#</th>
                                     <th>Cliente</th>
                                     <th>Fecha</th>
-                                    <th>Hora</th>
                                     <th>Servicio</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
@@ -113,7 +109,6 @@
                                     <td>1001</td>
                                     <td>Carmen Díaz</td>
                                     <td>15/05/2025</td>
-                                    <td>10:00 AM</td>
                                     <td>Corte y Peinado</td>
                                     <td><span class="badge badge-confirmed">Confirmada</span></td>
                                     <td class="actions">
@@ -129,7 +124,6 @@
                                     <td>1002</td>
                                     <td>Roberto Fernández</td>
                                     <td>15/05/2025</td>
-                                    <td>11:30 AM</td>
                                     <td>Corte de Cabello</td>
                                     <td><span class="badge badge-pending">Pendiente</span></td>
                                     <td class="actions">
@@ -145,7 +139,6 @@
                                     <td>1003</td>
                                     <td>Patricia García</td>
                                     <td>15/05/2025</td>
-                                    <td>2:00 PM</td>
                                     <td>Tinte y Peinado</td>
                                     <td><span class="badge badge-confirmed">Confirmada</span></td>
                                     <td class="actions">
@@ -161,7 +154,6 @@
                                     <td>1004</td>
                                     <td>Javier Ramírez</td>
                                     <td>16/05/2025</td>
-                                    <td>9:15 AM</td>
                                     <td>Corte de Barba</td>
                                     <td><span class="badge badge-completed">Completada</span></td>
                                     <td class="actions">
@@ -177,7 +169,6 @@
                                     <td>1005</td>
                                     <td>Luisa Martínez</td>
                                     <td>16/05/2025</td>
-                                    <td>3:30 PM</td>
                                     <td>Tratamiento Capilar</td>
                                     <td><span class="badge badge-cancelled">Cancelada</span></td>
                                     <td class="actions">
@@ -213,16 +204,13 @@
                             <h3>Servicios Solicitados</h3>
                             <div class="servicio-item">
                                 <div>Corte de Cabello</div>
-                                <div>$35.000</div>
                             </div>
                             <div class="servicio-item">
                                 <div>Peinado</div>
-                                <div>$25.000</div>
                             </div>
                             
                             <div style="display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold;">
                                 <div>Total</div>
-                                <div>$60.000</div>
                             </div>
                         </div>
                         

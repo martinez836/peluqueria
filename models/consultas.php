@@ -128,7 +128,7 @@ class consultas
             $documento
         )";
         $resultado = $this->mysql->efectuarConsulta($consulta);
-        return $resultado;
+        return $resultad;
     }
 
     public function registrar_cita($cedula, $nombre, $apellido, $telefono, $correo, $servicio, $fecha)
@@ -136,7 +136,7 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Insert into citas (clientes_documento,nombre,apellido,telefono,correo,servicios_idservicios,fecha,estado) values 
+            Insert into citas (clientes_documento,nombres,apellidos,telefono,correo,servicios_idservicios,fecha,estado) values 
             (
                 '$cedula',
                 '$nombre',
