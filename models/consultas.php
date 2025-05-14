@@ -136,7 +136,7 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Insert into citas (clientes_documento,nombre,apellido,telefono,correo,servicios_idservicios,fecha) values 
+            Insert into citas (clientes_documento,nombre,apellido,telefono,correo,servicios_idservicios,fecha,estado) values 
             (
                 '$cedula',
                 '$nombre',
@@ -144,7 +144,8 @@ class consultas
                 '$telefono',
                 '$correo',
                 '$servicio',
-                '$fecha'
+                '$fecha',
+                'pendiente'
             );
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);

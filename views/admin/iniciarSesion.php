@@ -71,7 +71,7 @@
                             <label for="contrasena" class="form-label fw-semibold">Contraseña:</label>
                             <div class="input-group">
                                 <input type="password" name="contrasena" id="contrasena" class="form-control" required placeholder="Ingresa tu contraseña">
-                                <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordAdmin()" title="Mostrar/Ocultar contraseña">👁</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()" title="Mostrar/Ocultar contraseña">👁</button>
                             </div>
                         </div>
                         <!-- Recuperar contraseña -->
@@ -98,6 +98,7 @@
     <script src="../../assets/js/contrasena.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/contrasena.js"></script>
 </body>
 
 </html>
