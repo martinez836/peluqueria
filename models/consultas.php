@@ -82,7 +82,7 @@ class consultas
     public function traer_servicios()
     {
         $this->mysql->conectar();
-        $consulta = "SELECT nombre, idservicios from servicios;";
+        $consulta = "SELECT nombreServicio, idservicios from servicios;";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
