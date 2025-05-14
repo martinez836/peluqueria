@@ -53,49 +53,87 @@ if (isset($_GET['correo']) && isset($_GET['codigo'])) {
     if ($resultado->num_rows > 0) {
         ?>
         <!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <title>Formulario Nueva Contraseña</title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-            <link rel="stylesheet" href="../../assets/css/estilo.css">
-        </head>
-        <body>
-            <header class="text-center py-4" style="background-color: #111; color: gold;">
-                <h1>Estilos Dairo</h1>
-                <p>¡Crea tu cuenta y reserva con estilo!</p>
-            </header>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Contraseña - Estilos Dairo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Iconos (opcional si ya lo usas) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Estilo personalizado -->
+    <link rel="stylesheet" href="../../assets/css/estilo.css">
+</head>
+<body class="fondo" style="background-color: #f8f8f8;">
 
-            <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
-                <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
-                <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
-                <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
-            </nav>
+    <!-- Header -->
+    <header class="text-center py-4" style="background-color: #111; color: gold;">
+        <h1>Estilos Dairo</h1>
+        <p>¡Crea tu cuenta y reserva con estilo!</p>
+    </header>
 
-            <div class="container my-5">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="bg-white p-4 rounded shadow">
-                            <h2 class="text-center mb-4" style="color: goldenrod;">Recuperar Contraseña</h2>
-                            <form action="../controllers/actualizar_contrasena.php" method="POST" class="form-actualizar">
-                                <input type="hidden" name="correo" value="<?php echo htmlspecialchars($correo); ?>">
-                                <input type="hidden" name="codigo" value="<?php echo htmlspecialchars($codigo); ?>">
-                                <div class="mb-3">
-                                    <label for="nueva_contrasena">Nueva Contraseña:</label>
-                                    <input type="password" name="nueva_contrasena" id="nueva_contrasena" class="form-control" required>
-                                </div>
-                                <div class="text-center mb-3">
-                                    <button type="submit" class="btn btn-dark px-4" style="background-color: goldenrod; border: none;">Actualizar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+    <!-- Navbar -->
+    <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
+        <a href="./index.php" class="text-decoration-none" style="color: gold;">Inicio</a>
+        <a href="./productos.php" class="text-decoration-none" style="color: gold;">Productos</a>
+        <a href="./agendarCita.php" class="text-decoration-none" style="color: gold;">Agendar Cita</a>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container py-5">
+        <div class="bg-white rounded shadow mx-auto" style="max-width: 600px;">
+            
+            <!-- Encabezado del formulario -->
+            <div class="w-100 py-3 px-4" style="background-color: #1c1c1c; color: white; border-bottom: 2px solid goldenrod;">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="bi bi-key-fill me-2" style="color: goldenrod; font-size: 1.5rem;"></i>
+                    <h4 class="mb-0 fw-bold">Recuperar Contraseña</h4>
                 </div>
             </div>
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>            
-        </body>
-        </html>
+            <!-- Cuerpo del formulario -->
+            <div class="px-4 py-5">
+                <form action="../controllers/actualizar_contrasena.php" method="POST" class="form-actualizar">
+                    <input type="hidden" name="correo" value="<?php echo htmlspecialchars($correo); ?>">
+                    <input type="hidden" name="codigo" value="<?php echo htmlspecialchars($codigo); ?>">
+
+                    <div class="mb-4">
+                        <label for="nueva_contrasena" class="form-label fw-semibold">Nueva Contraseña:</label>
+                        <div class="input-group">
+                            <input type="password" name="nueva_contrasena" id="nueva_contrasena" class="form-control" required>
+                            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()" title="Mostrar/Ocultar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-lg w-100" style="background-color: goldenrod; color: white; border: none;">
+                            Actualizar Contraseña
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5" style="background-color: #111; color: gold;">
+        &copy; 2025 Peluquería Elegante - Todos los derechos reservados
+    </footer>
+
+    <!-- Bootstrap JS y script para contraseña -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePassword() {
+            const input = document.getElementById("nueva_contrasena");
+            input.type = input.type === "password" ? "text" : "password";
+        }
+    </script>
+</body>
+</html>
+
         <?php
     } else {
         echo "El enlace de recuperación ha expirado o es inválido.";
