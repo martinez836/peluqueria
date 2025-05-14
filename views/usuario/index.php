@@ -46,11 +46,11 @@ session_start();
 
     <div class="row justify-content-center">
         <div class="col-md-4 mb-3">
-        <img src="../../assets/images/corteHombre.jpeg" alt="Corte masculino moderno" class="img-fluid rounded shadow">
+        <img src="../../assets/images/corteHombre.jpeg" alt="Corte masculino moderno" width="290" class="img-fluid rounded shadow">
         <p class="mt-2">Barbería y cortes clásicos o urbanos.</p>
         </div>
         <div class="col-md-4 mb-3">
-        <img src="../../assets/images/corteDama.jpeg" alt="Corte para dama elegante" class="img-fluid rounded shadow">
+        <img src="../../assets/images/estilismo.jpg" alt="Corte para dama elegante" width="290" class="img-fluid rounded shadow">
         <p class="mt-2">Estilismo femenino con las últimas tendencias.</p>
         </div>
         <div class="col-md-4 mb-3">
