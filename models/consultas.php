@@ -28,14 +28,6 @@ class consultas
             $this->mysql->desconectar();
             return $resultado;
     }
-    /* public function verificarDocumentoExistente($documento) {
-        $this->mysql->conectar();
-        $consulta = "SELECT COUNT(*) as cantidad FROM clientes WHERE documento = $documento;";
-        $resultado = $this->mysql->efectuarConsulta($consulta);
-        $row = mysqli_fetch_assoc($resultado);
-        return $row['cantidad'] > 0;
-        
-    } */
     public function crear_cliente($documento,$nombres,$apellidos,$ciudad,$direccion,$barrio,$telefono,$correo,$contrasenaEncriptada, $rol,$fechaNacimiento)
     {
         $this->mysql->conectar();

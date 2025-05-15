@@ -93,7 +93,9 @@
         </div>
     </div>
 </div>
-
+<footer>
+    &copy; 2025 Peluquería Elegante - Todos los derechos reservados
+</footer>
     <script src="../../assets/js/agendar.js"></script>
     <script src="../../assets/js/contrasena.js"></script>
     <!-- Bootstrap JS -->

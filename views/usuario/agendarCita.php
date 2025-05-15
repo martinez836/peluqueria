@@ -123,25 +123,18 @@
             <div class="mb-4">
                 <label for="documento" class="form-label fw-semibold">Documento de identidad</label>
                 <div class="input-group">
-                    <span class="input-group-text" style="background-color: #f8f8f8;">
-                        <i class="bi bi-person" style="color: goldenrod;"></i>
-                    </span>
                     <input type="number" name="documento" id="documento" class="form-control form-control-lg border-start-0" 
-                           placeholder="Ingresa tu número de documento" required>
+                    placeholder="Ingresa tu número de documento" required>
                 </div>
             </div>
             
             <div class="mb-4">
                 <label for="contrasena" class="form-label fw-semibold">Contraseña</label>
                 <div class="input-group">
-                    <span class="input-group-text" style="background-color: #f8f8f8;">
-                        <i class="bi bi-lock" style="color: goldenrod;"></i>
-                    </span>
                     <input type="password" name="contrasena" id="contrasena" class="form-control form-control-lg border-start-0" 
-                           placeholder="Ingresa tu contraseña" required>
+                    placeholder="Ingresa tu contraseña" required>
                 </div>
-            </div>
-            
+            </div>            
             <!-- Enlaces de ayuda -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div class="form-check">
@@ -185,6 +178,9 @@
             </div>
         </div>
     </div>
+    <footer>
+    &copy; 2025 Peluquería Elegante - Todos los derechos reservados
+</footer>
 
     <script src="../../assets/js/agendar.js"></script>
     <!-- Bootstrap JS -->

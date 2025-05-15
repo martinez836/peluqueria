@@ -143,6 +143,10 @@
             </div>
         </div>
     </div>
+    <footer class="text-center py-4 mt-5" style="background-color: #111; color: gold;">
+    &copy; 2025 Peluquería Elegante - Todos los derechos reservados
+    </footer>
+
 
     <!-- Bootstrap JS y script de contraseña -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
