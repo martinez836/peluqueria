@@ -309,3 +309,264 @@
                 left: 0;
             }
         }
+        /* Responsive CSS para la gestión de citas */
+
+/* Fix para toda la pantalla */
+body, html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* Resetear margin-left en móviles */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 0;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        padding: 70px 10px 10px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* Ajustes generales para dispositivos medianos */
+@media (max-width: 1200px) {
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .citas-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+/* Ajustes para tablets y dispositivos pequeños */
+@media (max-width: 992px) {
+    .main-header {
+        width: 100%;
+        left: 0;
+    }
+    
+    #sidebar {
+        left: -250px;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+    }
+    
+    #sidebar.active {
+        left: 0;
+        width: 250px;
+    }
+    
+    .stat-card {
+        padding: 12px 10px;
+    }
+    
+    .stat-card .number {
+        font-size: 1.5rem;
+    }
+    
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .table th, .table td {
+        padding: 8px 10px;
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .acciones-cita {
+        flex-wrap: wrap;
+    }
+}
+
+/* Ajustes para móviles */
+@media (max-width: 576px) {
+    .stats-row {
+        grid-template-columns: 1fr;
+        margin: 0 -5px 20px;
+        width: calc(100% + 10px);
+    }
+    
+    .search-bar {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .search-bar .btn {
+        width: 100%;
+    }
+    
+    .table-responsive {
+        overflow-x: auto;
+        width: 100%;
+        margin: 0 -10px;
+        padding: 0 10px;
+    }
+    
+    .table {
+        min-width: 300px;
+        width: 100%;
+        table-layout: fixed;
+    }
+    
+    /* Ocultar columnas menos importantes en móvil */
+    .table th:nth-child(3),
+    .table td:nth-child(3),
+    .table th:nth-child(4),
+    .table td:nth-child(4),
+    .table th:nth-child(6),
+    .table td:nth-child(6) {
+        display: none;
+    }
+    
+    /* Ajustar anchos de columnas restantes */
+    .table th:nth-child(1),
+    .table td:nth-child(1) {
+        width: 20%;
+    }
+    
+    .table th:nth-child(2),
+    .table td:nth-child(2) {
+        width: 50%;
+    }
+    
+    .table th:nth-child(5),
+    .table td:nth-child(5) {
+        width: 30%;
+    }
+    
+    .detalles-section {
+        padding: 15px 10px;
+        margin-top: 20px;
+    }
+    
+    .cita-detalles h2 {
+        font-size: 1.2rem;
+    }
+    
+    .cliente-info strong {
+        display: block;
+        margin-bottom: 2px;
+    }
+    
+    .cliente-info p {
+        margin: 10px 0;
+    }
+    
+    .servicio-info h3,
+    .notas-cita h3 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    /* Mejorar visualización de servicios */
+    .servicio-info {
+        margin-top: 15px;
+    }
+    
+    .servicio-item {
+        padding: 10px 0;
+        display: block;
+    }
+    
+    /* Distribuir botones de acciones */
+    .acciones-cita {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
+    }
+    
+    .acciones-cita button {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+/* Ajustes para administrar el sidebar en modo responsive */
+@media (max-width: 768px) {
+    #sidebarToggle {
+        display: block;
+    }
+    
+    body.sidebar-active {
+        overflow: hidden;
+    }
+    
+    body.sidebar-active::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 998;
+    }
+    
+    #sidebar.active + .main-content {
+        filter: blur(3px);
+        pointer-events: none;
+    }
+}
+
+/* Correcciones generales para móviles */
+@media (max-width: 576px) {
+    .main-content {
+        padding: 70px 10px 10px;
+    }
+    
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .content-header button {
+        width: 100%;
+    }
+    
+    /* Forzar que las tablas quepan en el ancho de la pantalla */
+    .citas-table {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+}
+
+/* Forzar estilo más adecuado para pantallas pequeñas */
+@media (max-width: 375px) {
+    .stat-card {
+        padding: 10px 5px;
+    }
+    
+    .stat-card .number {
+        font-size: 1.3rem;
+    }
+    
+    .stat-card .label {
+        font-size: 0.8rem;
+    }
+    
+    .table td, .table th {
+        padding: 8px 5px;
+        font-size: 0.85rem;
+    }
+    
+    .badge {
+        padding: 3px 5px;
+        font-size: 0.7rem;
+    }
+}
