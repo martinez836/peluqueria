@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Citas</title>
+
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/citas.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         
     </style>
@@ -23,30 +26,30 @@
     </header>
     
     <!-- Sidebar -->
-    <nav id="sidebar" class="bg-dark">
-        <div class="user-info">
-            <img src="/api/placeholder/150/150" alt="Admin">
-            <h5>Administrador</h5>
-            <p>Administrador Principal</p>
-        </div>
-        <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
-            </li>
-            <li class="nav-item mt-3">
-                <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
-            </li>
-        </ul>
-    </nav>
+<nav id="sidebar" >
+    <div class="user-info">
+        <img src="/api/placeholder/150/150" alt="Admin">
+        <h5>Administrador</h5>
+        <p>Administrador Principal</p>
+    </div>
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
+        </li>
+        <li class="nav-item mt-3">
+            <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
+        </li>
+    </ul>
+</nav>
     
     <!-- Main Content -->
     <div class="main-content">
@@ -92,7 +95,7 @@
                 
                 <div class="citas-table">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>

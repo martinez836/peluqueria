@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Productos</title>
-        <link rel="stylesheet" href="../../assets/css/crear_producto.css">
+    <link rel="stylesheet" href="../../assets/css/sidebar.css">
+    <link rel="stylesheet" href="../../assets/css/crear_producto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         
@@ -23,35 +24,30 @@
     </header>
     
     <!-- Sidebar -->
-    <div id="sidebar">
-        <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="dashboard.php" class="nav-link">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="citas.php" class="nav-link">
-                    <i class="fas fa-calendar"></i> Citas
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="productos.php" class="nav-link active">
-                    <i class="fas fa-box"></i> Productos
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="pedidos.php" class="nav-link">
-                    <i class="fas fa-shopping-cart"></i> Pedidos
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="../../logout.php" class="nav-link">
-                    <i class="fas fa-sign-out-alt"></i> Salir
-                </a>
-            </li>
-        </ul>
+<nav id="sidebar" >
+    <div class="user-info">
+        <img src="/api/placeholder/150/150" alt="Admin">
+        <h5>Administrador</h5>
+        <p>Administrador Principal</p>
     </div>
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
+        </li>
+        <li class="nav-item mt-3">
+            <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
+        </li>
+    </ul>
+</nav>
     
     <!-- Main Content -->
     <div class="main-content">
@@ -66,7 +62,7 @@
                     <div class="form-header">
                         <h2><i class="fas fa-plus-circle"></i> Crear Producto</h2>
                     </div>
-                    <form action="agregar_producto.php" method="POST" enctype="multipart/form-data">
+                    <form action="../../controllers/crear_producto.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="nombre">Nombre del Producto</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" required>
@@ -85,19 +81,7 @@
                         <div class="form-group">
                             <label for="stock">Stock</label>
                             <input type="number" id="stock" name="stock" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="categoria">Categoría</label>
-                            <select id="categoria" name="categoria" class="form-control" required>
-                                <option value="">Seleccione una categoría</option>
-                                <option value="shampoo">Shampoo</option>
-                                <option value="acondicionador">Acondicionador</option>
-                                <option value="tratamiento">Tratamiento</option>
-                                <option value="styling">Styling</option>
-                            </select>
-                        </div>
-                        
+                        </div>                         
                         <div class="form-group">
                             <label for="imagen">Imagen del Producto</label>
                             <input type="file" id="imagen" name="imagen" class="form-control">

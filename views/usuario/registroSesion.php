@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -39,6 +42,19 @@
 
             <!-- Cuerpo del formulario -->
             <div class="px-4 py-5">
+                <?php if (isset($_SESSION['mensaje_error'])): ?>
+                    <div class="alert alert-danger text-center fw-semibold">
+                        <?= $_SESSION['mensaje_error']; ?>
+                    </div>
+                    <?php unset($_SESSION['mensaje_error']); ?>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['mensaje_exito'])): ?>
+                    <div class="alert alert-success text-center fw-semibold">
+                        <?= $_SESSION['mensaje_exito']; ?>
+                    </div>
+                    <?php unset($_SESSION['mensaje_exito']); ?>
+                <?php endif; ?>
                 <!-- Mensaje de bienvenida -->
                 <div class="text-center mb-4">
                     <h5 style="color: #333;">Bienvenido a Estilos Dairo</h5>

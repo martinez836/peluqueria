@@ -28,6 +28,14 @@ class consultas
             $this->mysql->desconectar();
             return $resultado;
     }
+    /* public function verificarDocumentoExistente($documento) {
+        $this->mysql->conectar();
+        $consulta = "SELECT COUNT(*) as cantidad FROM clientes WHERE documento = $documento;";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        return $row['cantidad'] > 0;
+        
+    } */
     public function crear_cliente($documento,$nombres,$apellidos,$ciudad,$direccion,$barrio,$telefono,$correo,$contrasenaEncriptada, $rol,$fechaNacimiento)
     {
         $this->mysql->conectar();
@@ -108,7 +116,7 @@ class consultas
     public function agregarDetallePedido($idPedido, $idProducto, $cantidad, $subTotal)
     {
         $this->mysql->conectar();
-        $consulta = "insert into detallePedidos (cantidad,subtotal,pedidos_idpedidos,productos_idproductos) values (
+        $consulta = "insert into detallePedido (cantidad,subtotal,pedidos_idpedidos,productos_idproductos) values (
             $cantidad,
             $subTotal,
             $idPedido,
@@ -128,7 +136,7 @@ class consultas
             $documento
         )";
         $resultado = $this->mysql->efectuarConsulta($consulta);
-        return $resultad;
+        return $resultado;
     }
 
     public function registrar_cita($fecha,$cedula, $servicio)

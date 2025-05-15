@@ -18,22 +18,14 @@
 
 <!-- Header -->
 <header class="main-header">
-    <button id="sidebarToggle" class="d-flex align-items-center">
-        <i class="fas fa-bars"></i>
-    </button>
-    <h1 class="mb-0 fs-4">Panel de Administración - Estilos Dairo</h1>
-    <div class="dropdown">
-        <button class="btn btn-link text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user-circle me-1"></i> Admin
+        <button id="sidebarToggle">
+            <i class="fas fa-bars"></i>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item text-light" href="#"><i class="fas fa-user me-2"></i> Perfil</a></li>
-            <li><a class="dropdown-item text-light" href="#"><i class="fas fa-cog me-2"></i> Configuración</a></li>
-            <li><hr class="dropdown-divider bg-secondary"></li>
-            <li><a class="dropdown-item text-light" href="../usuario/index.php"><i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión</a></li>
-        </ul>
-    </div>
-</header>
+        <div class="logo">Estilos Dairo</div>
+        <div>
+            <span>Admin</span>
+        </div>
+    </header>
 
 <!-- Sidebar -->
 <nav id="sidebar" >
@@ -44,7 +36,7 @@
     </div>
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
@@ -314,6 +306,6 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../assets/js/dashboard.php"></script>
+<script src="../../assets/js/dashboard.js"></script>
 </body>
 </html>

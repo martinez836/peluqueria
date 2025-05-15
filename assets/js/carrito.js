@@ -287,14 +287,16 @@ function finalizarCompra() {
         },
         body: JSON.stringify(datosPedido)
     })
-    .then(res => res.json())
-    .then(data => {
-        console.log("Respuesta del servidor:", data);
-        // Aquí podrías mostrar un mensaje de éxito si quieres
-    })
-    .catch(error => {
-        console.error("Error al enviar el pedido:", error);
-    });
+    .then(res => res.text())
+.then(texto => {
+    console.log("Respuesta cruda del servidor:", texto);
+    try {
+        const data = JSON.parse(texto);
+        console.log("Respuesta parseada como JSON:", data);
+    } catch (e) {
+        console.error("Error al parsear JSON:", e.message);
+    }
+})
 
     alert('¡Gracias por tu compra! Total: $' + pedidoTotal.reduce((total, item) => total + (item.precio * item.cantidad), 0).toLocaleString());
 

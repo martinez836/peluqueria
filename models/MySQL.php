@@ -50,7 +50,9 @@ class MySql
         $resultado = mysqli_query($this->conexion, $consulta);
 
         if (!$resultado) {
-            echo "Error en la consulta: " . mysqli_errno($this->conexion);
+            $codigoError = mysqli_errno($this->conexion);
+            $mensajeError = mysqli_error($this->conexion);
+            throw new Exception("Error en la consulta: $mensajeError", $codigoError);
         }
 
         return $resultado;
