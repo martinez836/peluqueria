@@ -29,23 +29,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Días del mes
     for (let dia = 1; dia <= totalDias; dia++) {
-        const fecha = new Date(anioActual, mesActual, dia);
-        const celda = document.createElement('div');
-        celda.className = 'celda-dia';
-        celda.textContent = dia;
+    const fecha = new Date(anioActual, mesActual, dia);
+    const celda = document.createElement('div');
+    celda.className = 'celda-dia';
+    celda.textContent = dia;
 
-        celda.addEventListener('click', () => {
-            // Formato yyyy-mm-dd
-            const fechaTexto = `${anioActual}-${String(mesActual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
-            document.getElementById('fecha-seleccionada').textContent = fecha.toLocaleDateString('es-ES', {
-                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-            });
-            document.getElementById('input-fecha').value = fechaTexto;
-
-            document.querySelectorAll('.celda-dia').forEach(c => c.classList.remove('active'));
-            celda.classList.add('active');
-        });
-
-        calendar.appendChild(celda);
+    // Deshabilitar visualmente si la fecha es anterior a hoy
+    const hoySinHora = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+    if (fecha < hoySinHora) {
+        celda.classList.add('deshabilitado');
     }
+
+    celda.addEventListener('click', () => {
+        const fechaSeleccionada = new Date(anioActual, mesActual, dia);
+        if (fechaSeleccionada < hoySinHora) {
+            // No hacer nada si la fecha es anterior a hoy
+            return;
+        }
+
+        const fechaTexto = `${anioActual}-${String(mesActual + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+        document.getElementById('fecha-seleccionada').textContent = fecha.toLocaleDateString('es-ES', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+        document.getElementById('input-fecha').value = fechaTexto;
+
+        document.querySelectorAll('.celda-dia').forEach(c => c.classList.remove('active'));
+        celda.classList.add('active');
+    });
+
+    calendar.appendChild(celda);
+}
+
 });

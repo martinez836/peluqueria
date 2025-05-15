@@ -34,7 +34,6 @@
             <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
             <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
             <a href="../../controllers/logOut.php">Cerrar Sesion</a>
-            <h4>Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
         <?php }else{?>
             <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
             <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
@@ -54,34 +53,14 @@
             <?php if(isset($_SESSION['documento'])){ ?>
             <div class="formulario-cita bg-white p-4 rounded shadow mx-auto" style="max-width: 600px;">
                     <h2 class="text-center mb-4" style="color: goldenrod;">Agendar Cita</h2>
-                    <p class="text-center">Has seleccionado la fecha: <span id="fecha-seleccionada" class="fw-bold text-dark"></span></p>
+                    <h4 class="text-center">Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
+                    <p class="text-center">Fecha: <span id="fecha-seleccionada" class="fw-bold text-dark"></span></p>
 
                     <form action="../../controllers/crear_cita.php" method="POST" class="agenda-form mt-4">
                         <input type="hidden" name="fecha" id="input-fecha">
 
                         <div class="mb-3">
-                            <label for="cedula" class="form-label">Cédula:</label>
-                            <input type="number" name="cedula" class="form-control" value="<?php echo $_SESSION['documento'] ?>" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre:</label>
-                            <input type="text" name="nombre" class="form-control" value="<?php echo $_SESSION['nombres']; ?>" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="apellido" class="form-label">Apellido:</label>
-                            <input type="text" name="apellido" class="form-control" value="<?php echo $_SESSION['apellidos']; ?>" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono:</label>
-                            <input type="tel" name="telefono" class="form-control" value="<?php echo $_SESSION['telefono']; ?>" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico:</label>
-                            <input type="email" name="correo" class="form-control" value="<?php echo $_SESSION['correo']; ?>" required>
+                            <input type="hidden" name="cedula" class="form-control" value="<?php echo $_SESSION['documento'] ?>" required>
                         </div>
                         <div class="mb-4">
                             <label for="servicio" class="form-label">Servicio:</label>

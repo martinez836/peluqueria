@@ -24,7 +24,7 @@ class Correo {
             $this->mail->Host = 'smtp.gmail.com';  // Dirección SMTP de Gmail
             $this->mail->SMTPAuth = true;
             $this->mail->Username = 'recuperacionContrasenas03@gmail.com';  // Tu correo SMTP
-            $this->mail->Password = 'zomt rueu ombj blav';  // Contraseña de la aplicación serviplus para Gmail
+            $this->mail->Password = 'zomt rueu ombj blav';  // Contraseña de la aplicación  para Gmail
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port = 587;
 
