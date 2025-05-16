@@ -182,4 +182,5 @@
         </div>
     </div>
 </body>
+<script src="../../assets/js/pedidos.js"></script>
 </html>

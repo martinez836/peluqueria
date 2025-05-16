@@ -124,7 +124,7 @@ class consultas
         $consulta = "insert into pedidos (fecha,total,estado,clientes_documento) values (
             now(),
             $total,
-            1,
+            'pendiente',
             $documento
         )";
         $resultado = $this->mysql->efectuarConsulta($consulta);
@@ -148,5 +148,40 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
-    
+    public function traerCitaPendiente()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as citasPendientes from citas where estado = 'pendiente';
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['citasPendientes'];
+    }
+    public function traerPedidoPendiente()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as pedidoPendiente from pedidos where estado = 'pendiente';
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['pedidoPendiente'];
+    }
+    public function traerConteoCliente()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as Clientes from clientes where rol = 'cliente';;
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['Clientes'];
+    }
 }

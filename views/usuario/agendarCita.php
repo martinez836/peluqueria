@@ -108,10 +108,17 @@
         <div class="d-flex align-items-center justify-content-center">
             <i class="bi bi-scissors me-2" style="color: goldenrod; font-size: 1.5rem;"></i>
             <h4 class="mb-0 fw-bold">Iniciar Sesión</h4>
+            
         </div>
     </div>
     
     <div class="p-4 p-md-5">
+        <?php if (isset($_SESSION['mensaje_error'])): ?>
+                    <div class="alert alert-danger text-center fw-semibold">
+                        <?= $_SESSION['mensaje_error']; ?>
+                    </div>
+                    <?php unset($_SESSION['mensaje_error']); ?>
+                <?php endif; ?>
         <!-- Mensaje de bienvenida -->
         <div class="text-center mb-4">
             <h5 style="color: #333;">Bienvenido a Estilos Dairo</h5>

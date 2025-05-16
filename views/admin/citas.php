@@ -237,6 +237,6 @@
                 </div>
             </div>
         </div>
-        <script src="../../assets/js/citas.js"></script>
+        <script src="../../assets/js/pedidos.js"></script>
     </body>
 </html>

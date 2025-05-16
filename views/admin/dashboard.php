@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    require_once '../../models/consultas.php';
+    $consultas = new consultas();
+    $citasPendientes = $consultas->traerCitaPendiente();
+    $pedidosPendientes = $consultas->traerPedidoPendiente();
+    $clientes = $consultas->traerConteoCliente();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +15,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
     <!-- Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/admin.css">
     <style>
@@ -67,20 +75,20 @@
         <div class="stats-container">
             <div class="stat-card">
                 <i class="fas fa-calendar-check"></i>
-                <h3>24</h3>
+                <h3><?php echo $citasPendientes; ?></h3>
                 <p>Citas Pendientes</p>
             </div>
             
             <div class="stat-card">
                 <i class="fas fa-shopping-cart"></i>
-                <h3>12</h3>
+                <h3><?php echo $pedidosPendientes; ?></h3>
                 <p>Nuevos Pedidos</p>
             </div>
             
             <div class="stat-card">
                 <i class="fas fa-users"></i>
-                <h3>156</h3>
-                <p>Clientes Activos</p>
+                <h3><?php echo $clientes; ?></h3>
+                <p>Clientes Existentes</p>
             </div>
             
             <div class="stat-card">
@@ -306,6 +314,6 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../assets/js/dashboard.js"></script>
+<script src="../../assets/js/pedidos.js"></script>
 </body>
 </html>

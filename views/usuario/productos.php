@@ -21,57 +21,7 @@
   <link rel="stylesheet" href="../../assets/css/productos.css">
   
   <style>
-    /* Estilos adicionales para el carrito */
-    .carrito-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background-color: goldenrod;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 1000;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    
-    .carrito-btn:hover {
-      transform: scale(1.1);
-    }
-    
-    .badge-carrito {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background-color: red;
-      color: white;
-      border-radius: 50%;
-      width: 25px;
-      height: 25px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 14px;
-      font-weight: bold;
-    }
-    
-    /* Estilos para toast de notificación */
-    .toast {
-      background-color: white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    .toast-header {
-      background-color: #1c1c1c;
-      color: goldenrod;
-    }
+   
   </style>
 </head>
 <body class="fondo">
