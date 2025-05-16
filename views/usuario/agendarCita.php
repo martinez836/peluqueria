@@ -99,7 +99,12 @@
         <!-- Cuerpo del formulario -->
         <div class="px-4 py-5">
             <p class="text-center mb-4">Accede a tu cuenta para agendar una cita</p>
-
+            <?php if (isset($_SESSION['mensaje_error'])): ?>
+                <div class="alert alert-danger text-center fw-semibold">
+                    <?= $_SESSION['mensaje_error']; ?>
+                </div>
+                <?php unset($_SESSION['mensaje_error']); ?>
+            <?php endif; ?>
             <form action="../../controllers/iniciar_sesion.php" method="POST" class="agenda-form">
                 <input type="hidden" name="desdeAgendar" value="1">
 
