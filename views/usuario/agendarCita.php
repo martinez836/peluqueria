@@ -146,8 +146,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="text-center py-3 bg-light mt-5 border-top">
-        &copy; 2025 Peluquería Elegante - Todos los derechos reservados
+    <footer class="text-center py-4 mt-5" style="background-color: #111; color: gold;">
+    &copy; 2025 Peluquería Elegante - Todos los derechos reservados
     </footer>
 
     <!-- Scripts -->
