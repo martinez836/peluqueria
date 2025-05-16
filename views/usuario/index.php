@@ -19,6 +19,9 @@ session_start();
 <header class="text-center py-4" style="background-color: #111; color: gold;">
     <h1>Estilos Dairo</h1>
     <p>¡Reserva tu cita con estilo!</p>
+    <?php if(isset($_SESSION['documento'])) {?>
+    <h4>Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
+    <?php } ?>
 </header>
 
 <nav class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-4 py-3 text-center" style="background-color: #222;">

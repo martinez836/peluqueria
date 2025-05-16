@@ -80,6 +80,9 @@
 <header class="text-center py-4" style="background-color: #111; color: gold;">
   <h1>Estilos Dairo</h1>
   <p>¡Pide tu producto!</p>
+  <?php if(isset($_SESSION['documento'])) {?>
+    <h4>Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
+  <?php } ?>
 </header>
 
 <!-- Navbar personalizada con estilo propio -->
@@ -88,8 +91,7 @@
       <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
       <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
       <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
-      <a href="../../controllers/logOut.php">Cerrar Sesion</a>
-      <h4>Bienvenido: <?php echo $_SESSION['nombres']; ?></h4>
+      <a href="../../controllers/logOut.php">Cerrar Sesion</a>      
   <?php }else{?>
       <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
       <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
