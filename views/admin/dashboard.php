@@ -5,6 +5,7 @@
     $citasPendientes = $consultas->traerCitaPendiente();
     $pedidosPendientes = $consultas->traerPedidoPendiente();
     $clientes = $consultas->traerConteoCliente();
+    $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../assets/css/calendario.css">
     <style>
         
     </style>
@@ -44,16 +46,16 @@
     </div>
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link" href="../dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
+            <a class="nav-link" href="../citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+            <a class="nav-link" href="../pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
+            <a class="nav-link" href="../productos.php"><i class="fas fa-box-open"></i> Productos</a>
         </li>
         <li class="nav-item mt-3">
             <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
@@ -100,62 +102,35 @@
         
         <div class="row">
             <!-- Actividad Reciente -->
-            <div class="col-lg-8">
-                <div class="dashboard-card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="card-title"><i class="fas fa-history me-2"></i> Actividad Reciente</h5>
-                        <div>
-                            <button class="btn btn-sm btn-gold"><i class="fas fa-sync-alt me-1"></i> Actualizar</button>
-                        </div>
-                    </div>
-                    <div class="recent-table">
-                        <div class="table-responsive">
-                            <table class="table table-dark">
-                                <thead>
-                                    <tr>
-                                        <th>Cliente</th>
-                                        <th>Actividad</th>
-                                        <th>Fecha</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>María López</td>
-                                        <td>Cita - Corte y Color</td>
-                                        <td>10/05/2025</td>
-                                        <td><span class="badge bg-warning">Pendiente</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Juan Pérez</td>
-                                        <td>Pedido #1082</td>
-                                        <td>09/05/2025</td>
-                                        <td><span class="badge bg-success">Entregado</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Carlos Sánchez</td>
-                                        <td>Cita - Barbería</td>
-                                        <td>09/05/2025</td>
-                                        <td><span class="badge bg-success">Completada</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Laura Gómez</td>
-                                        <td>Pedido #1081</td>
-                                        <td>08/05/2025</td>
-                                        <td><span class="badge bg-danger">Cancelado</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sofía Martínez</td>
-                                        <td>Cita - Manicure</td>
-                                        <td>08/05/2025</td>
-                                        <td><span class="badge bg-success">Completada</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+<div class="col-lg-8">
+    <div class="dashboard-card bg-dark text-light">
+        <p class="text-light mb-1 text-center">CALENDARIO</p>
+        <div class="card-header">
+            <h5 id="mes-titulo" class="card-title"></h5>
+        </div>
+        <div id="calendar" class="calendar-grid"></div>
+
+        <!-- Formulario real -->
+        <form id="form-fechas" method="POST" action="../../controllers/guardarFechas.php" class="mt-3">
+            <input type="hidden" id="fechas-deshabilitadas" name="fechas_deshabilitadas">
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <button type="submit" name="accion" value="deshabilitar" class="btn btn-danger w-100">
+                        <i class="fas fa-ban me-1"></i> Deshabilitar Fechas Seleccionadas
+                    </button>
+                </div>
+                <div class="col-md-6 mb-2">
+                    <button type="submit" name="accion" value="habilitar" class="btn btn-success w-100">
+                        <i class="fas fa-check-circle me-1"></i> Habilitar Fechas Seleccionadas
+                    </button>
                 </div>
             </div>
+</form>
+    </div>
+</div>
+
+
+
             
             <!-- Citas de Hoy -->
             <div class="col-lg-4">
@@ -313,7 +288,16 @@
 </main>
 
 <!-- Bootstrap JS -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../../assets/js/pedidos.js"></script>
+<!-- Solo incluir el archivo unificado, no ambos -->
+<script src="../../assets/js/calendarioAdmin.js"></script>
+<script>
+    // Esta línea asegura que las fechas deshabilitadas estén disponibles para el script
+    const fechasDeshabilitadas = <?php echo json_encode($fechasDeshabilitadas); ?>;
+    console.log("Fechas deshabilitadas cargadas:", fechasDeshabilitadas);
+</script>
+
 </body>
 </html>

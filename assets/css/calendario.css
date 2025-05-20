@@ -1,0 +1,42 @@
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 10px;
+}
+
+.encabezado-dia {
+    text-align: center;
+    font-weight: bold;
+    background-color: #343a40;
+    color: #ffc107;
+    padding: 8px 0;
+    border: 1px solid #555;
+}
+
+.celda-dia {
+    text-align: center;
+    padding: 12px 0;
+    background-color: #2c2f33;
+    border: 1px solid #444;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.celda-dia:hover {
+    background-color: #3e4247;
+}
+
+.celda-dia.active {
+    background-color: #ffc107;
+    color: #000;
+    font-weight: bold;
+}
+
+.celda-dia.deshabilitado {
+    background-color: #6c757d;
+    color: #ccc;
+    pointer-events: none;
+}

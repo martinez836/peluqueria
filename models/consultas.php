@@ -184,4 +184,28 @@ class consultas
         $this->mysql->desconectar();
         return $row['Clientes'];
     }
+
+    public function insertarFechaDeshabilitada($fecha)
+    {
+    $this->mysql->conectar();
+    $consulta = "INSERT IGNORE INTO fechas_deshabilitadas (fecha) VALUES ('$fecha');";
+    $resultado = $this->mysql->efectuarConsulta($consulta);
+    $this->mysql->desconectar();
+    return $resultado;
+    }
+
+    public function traerFechasDeshabilitadas()
+    {
+    $this->mysql->conectar();
+    $consulta = "SELECT fecha FROM fechas_deshabilitadas;";
+    $resultado = $this->mysql->efectuarConsulta($consulta);
+
+    $fechas = [];
+    while ($row = mysqli_fetch_assoc($resultado)) {
+        $fechas[] = $row['fecha'];
+    }
+
+    $this->mysql->desconectar();
+    return $fechas;
+    }    
 }
