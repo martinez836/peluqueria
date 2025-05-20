@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Estilo personalizado -->
+     
     <link rel="stylesheet" href="../../assets/css/estilo.css">
 </head>
 

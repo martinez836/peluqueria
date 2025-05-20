@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    require_once '../../models/consultas.php';
+    $consultas = new consultas();
+    $citasPendientes = $consultas->traerCitaPendiente();
+    $citaConfirmada = $consultas->traerCitaConfirmada();
+    $citaCancelada = $consultas->traerCitaCancelada();
+    $citas = $consultas->traerCitas();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +15,7 @@
     <title>Admin - Citas</title>
 
     <!-- Font Awesome para iconos -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/citas.css">
@@ -15,7 +25,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="main-header">
+<header class="main-header">
         <button id="sidebarToggle">
             <i class="fas fa-bars"></i>
         </button>
@@ -63,130 +73,78 @@
         </div>
         
         <!-- Stats Cards -->
-        <div class="stats-row">
+        <div class="stats-container">
             <div class="stat-card">
-                <div class="number">32</div>
-                <div class="label">Citas Totales</div>
+                <i class="fas fa-calendar-check"></i>
+                <h3><?php echo $citasPendientes; ?></h3>
+                <p>Citas Pendientes</p>
             </div>
+            
             <div class="stat-card">
-                <div class="number">14</div>
-                <div class="label">Pendientes</div>
+                <i class="fas fa-shopping-cart"></i>
+                <h3><?php echo $citaConfirmada; ?></h3>
+                <p>Citas Confirmadas</p>
             </div>
+            
             <div class="stat-card">
-                <div class="number">18</div>
-                <div class="label">Completadas</div>
+                <i class="fas fa-users"></i>
+                <h3><?php echo $citaCancelada; ?></h3>
+                <p>Citas Canceladas</p>
             </div>
+            
             <div class="stat-card">
-                <div class="number">$1.2M</div>
-                <div class="label">Ingresos</div>
+                <i class="fas fa-dollar-sign"></i>
+                <h3>$2.5M</h3>
+                <p>Ventas Mensuales</p>
             </div>
         </div>
         
         <div class="citas-container">
             <!-- Tabla de Citas (Izquierda) -->
             <div class="table-section">
-                <!-- Barra de búsqueda -->
-                <div class="search-bar">
-                    <input type="text" id="buscarCita" placeholder="Buscar por nombre de cliente..." oninput="buscarCitas()">
-                    <button class="btn btn-gold" onclick="buscarCitas()">
-                        <i class="fas fa-search"></i> Buscar
-                    </button>
-                </div>
-                
+                <!-- Barra de búsqueda -->         
                 <div class="citas-table">
+                    <div class="pedidos-table">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                        <table id="tabla-pedidos" class="table responsive nowrap">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Cliente</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
                                     <th>Fecha</th>
-                                    <th>Servicio</th>
+                                    <th>Total</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Ejemplo de citas -->
-                                <tr class="active" onclick="verDetalle(1001)">
-                                    <td>1001</td>
-                                    <td>Carmen Díaz</td>
-                                    <td>15/05/2025</td>
-                                    <td>Corte y Peinado</td>
-                                    <td><span class="badge badge-confirmed">Confirmada</span></td>
+                                <?php while($cita = mysqli_fetch_assoc($citas)): ?>
+                                <tr class="active">
+                                    <td><?= $cita["idcitas"] ?></td>
+                                    <td><?= $cita["nombres"] ?></td>
+                                    <td><?= $cita["apellidos"] ?></td>
+                                    <td><?= $cita["fecha"] ?></td>
+                                    <td><?= $cita["nombreServicio"] ?></td>
+                                    <td><span class="badge badge-pending"><?= $cita["estado"] ?></span></td>
                                     <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarCita(1001, event)">
-                                            <i class="fas fa-edit"></i>
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye"></i>
                                         </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarCita(1001, event)">
-                                            <i class="fas fa-trash"></i>
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="fas fa-pencil"></i>
                                         </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(1002)">
-                                    <td>1002</td>
-                                    <td>Roberto Fernández</td>
-                                    <td>15/05/2025</td>
-                                    <td>Corte de Cabello</td>
-                                    <td><span class="badge badge-pending">Pendiente</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarCita(1002, event)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarCita(1002, event)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(1003)">
-                                    <td>1003</td>
-                                    <td>Patricia García</td>
-                                    <td>15/05/2025</td>
-                                    <td>Tinte y Peinado</td>
-                                    <td><span class="badge badge-confirmed">Confirmada</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarCita(1003, event)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarCita(1003, event)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(1004)">
-                                    <td>1004</td>
-                                    <td>Javier Ramírez</td>
-                                    <td>16/05/2025</td>
-                                    <td>Corte de Barba</td>
-                                    <td><span class="badge badge-completed">Completada</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarCita(1004, event)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarCita(1004, event)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(1005)">
-                                    <td>1005</td>
-                                    <td>Luisa Martínez</td>
-                                    <td>16/05/2025</td>
-                                    <td>Tratamiento Capilar</td>
-                                    <td><span class="badge badge-cancelled">Cancelada</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarCita(1005, event)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarCita(1005, event)">
+                                        <button class="btn btn-danger btn-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
                                 <!-- PHP generará más filas dinámicamente -->
+                                 <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>
+                </div>
                 </div>
             </div>
             
@@ -199,7 +157,6 @@
                             <p><strong>Email:</strong> carmen@gmail.com</p>
                             <p><strong>Teléfono:</strong> 310-456-7890</p>
                             <p><strong>Fecha:</strong> 15/05/2025</p>
-                            <p><strong>Hora:</strong> 10:00 AM</p>
                             <p><strong>Estado:</strong> <span class="badge badge-confirmed">Confirmada</span></p>
                         </div>
                         
@@ -237,6 +194,8 @@
                 </div>
             </div>
         </div>
-        <script src="../../assets/js/pedidos.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="../../assets/js/citas.js"></script>
     </body>
 </html>
