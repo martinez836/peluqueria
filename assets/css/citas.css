@@ -235,7 +235,7 @@
             font-weight: 500;
         }
         
-        .badge-confirmed {
+        /* .badge-confirmed {
             background-color: #2ecc71;
             color: #fff;
         }
@@ -253,7 +253,7 @@
         .badge-completed {
             background-color: #3498db;
             color: #fff;
-        }
+        } */
         
         .actions {
             display: flex;
