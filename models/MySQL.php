@@ -12,6 +12,12 @@ class MySql
 
     private $conexion;
 
+    public function getConexion()
+    {
+    return $this->conexion;
+    }
+
+
     //metodo para conectar a la base de datos
     public function conectar()
     {

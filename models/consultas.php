@@ -279,6 +279,31 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
-        
 
-}
+    public function eliminarFechasDeshabilitadas($fechas)
+    {
+    $this->mysql->conectar();
+    $conexion = $this->mysql->getConexion(); // Obtener la conexión correctamente
+
+    if (empty($fechas)) {
+        $this->mysql->desconectar();
+        return false;
+    }
+
+    // Escapar cada fecha correctamente
+    $fechasSeguras = array_map(function ($fecha) use ($conexion) {
+        return "'" . mysqli_real_escape_string($conexion, $fecha) . "'";
+    }, $fechas);
+
+    // Convertir el array en una cadena para la consulta SQL
+    $fechasQuery = implode(",", $fechasSeguras);
+
+    // Ejecutar la consulta DELETE en la base de datos
+    $consulta = "DELETE FROM fechas_deshabilitadas WHERE fecha IN ($fechasQuery);";
+
+    $resultado = $this->mysql->efectuarConsulta($consulta);
+
+    $this->mysql->desconectar();
+    return $resultado;
+    }
+};?>

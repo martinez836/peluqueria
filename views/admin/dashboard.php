@@ -110,7 +110,7 @@
         </div>
         <div id="calendar" class="calendar-grid"></div>
 
-        <!-- Formulario real -->
+        <!-- Formulario para habilitar y deshabilitar fechas del calendario-->
         <form id="form-fechas" method="POST" action="../../controllers/guardarFechas.php" class="mt-3">
             <input type="hidden" id="fechas-deshabilitadas" name="fechas_deshabilitadas">
             <div class="row">
@@ -120,18 +120,37 @@
                     </button>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <button type="submit" name="accion" value="habilitar" class="btn btn-success w-100">
+                    <!-- Botón para abrir la modal -->
+                    <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalFechas">
                         <i class="fas fa-check-circle me-1"></i> Habilitar Fechas Seleccionadas
                     </button>
                 </div>
             </div>
-</form>
+        </form>
     </div>
-</div>
+</div>     
 
 
-
-            
+<!-- Modal de Fechas Deshabilitadas -->
+<div class="modal fade" id="modalFechas" tabindex="-1" aria-labelledby="modalFechasLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFechasLabel">Fechas Deshabilitadas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="listaFechasDeshabilitadas" class="list-group">
+                    <!-- Las fechas deshabilitadas se cargarán aquí -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button id="habilitarFechas" class="btn btn-success">Habilitar Seleccionadas</button>
+            </div>
+        </div>
+    </div>
+</div>       
             <!-- Citas de Hoy -->
             <div class="col-lg-4">
                 <div class="dashboard-card">
@@ -286,17 +305,15 @@
         </div>
     </div>
 </main>
-
-<!-- Bootstrap JS -->
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../../assets/js/pedidos.js"></script>
 <!-- Solo incluir el archivo unificado, no ambos -->
 <script src="../../assets/js/calendarioAdmin.js"></script>
+<script src="../../assets/js/habilitarFechas.js"></script>
 <script>
     // Esta línea asegura que las fechas deshabilitadas estén disponibles para el script
     const fechasDeshabilitadas = <?php echo json_encode($fechasDeshabilitadas); ?>;
-    console.log("Fechas deshabilitadas cargadas:", fechasDeshabilitadas);
 </script>
 
 </body>
