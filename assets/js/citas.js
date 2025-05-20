@@ -1,14 +1,18 @@
+
 /* Script para mejorar la funcionalidad responsive */
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle para el sidebar en móviles
+    // Función para alternar el menú lateral
+
+    // Toggle para el sidebar en móviles y desktop
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.main-content');
     
     if (sidebarToggle) {
         sidebarToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            document.body.classList.toggle('sidebar-active');
+            // Cambia 'active' por 'collapsed' para que coincida con tu CSS
+            sidebar.classList.toggle('collapsed');
+            document.body.classList.toggle('sidebar-collapsed');
         });
     }
     
@@ -18,9 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const clickedOutsideSidebar = !sidebar.contains(event.target);
         const clickedOnToggle = sidebarToggle.contains(event.target);
         
-        if (isMobile && sidebar.classList.contains('active') && clickedOutsideSidebar && !clickedOnToggle) {
-            sidebar.classList.remove('active');
-            document.body.classList.remove('sidebar-active');
+        // Actualizado para usar 'collapsed' en lugar de 'active'
+        if (isMobile && sidebar.classList.contains('collapsed') && clickedOutsideSidebar && !clickedOnToggle) {
+            sidebar.classList.remove('collapsed');
+            document.body.classList.remove('sidebar-collapsed');
         }
     });
     
@@ -62,3 +67,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+$(document).ready(function() {
+    $('#tabla-pedidos').DataTable({
+      responsive: true,
+      language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+      }
+    });
+  });

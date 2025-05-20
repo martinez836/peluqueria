@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    require_once '../../models/consultas.php';
+    $consultas = new consultas();
+    $productos = $consultas->traerProducto();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +12,7 @@
     <title>Admin - Productos</title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/crear_producto.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         
@@ -98,82 +105,39 @@
             
             <!-- Tabla de Productos -->
             <div class="table-section">
-                <div class="productos-table">
+                <div class="pedidos-table">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table id="tabla-pedidos" class="table responsive nowrap">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th>Nombre</th>
                                     <th>Precio</th>
                                     <th>Stock</th>
-                                    <th>Categoría</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Ejemplo de productos -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>Shampoo Alisador</td>
-                                    <td>$15.000</td>
-                                    <td>25</td>
-                                    <td>Shampoo</td>
+                                <?php while($producto = mysqli_fetch_assoc($productos)): ?>
+                                <tr class="active">
+                                    <td><?= $producto["id"] ?></td>
+                                    <td><?= $producto["nombre"] ?></td>
+                                    <td><?= $producto["precio"] ?></td>
+                                    <td>$<?= $producto["stock"] ?></td>
                                     <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarProducto(1)">
-                                            <i class="fas fa-edit"></i>
+                                        <button class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye"></i>
                                         </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarProducto(1)">
-                                            <i class="fas fa-trash"></i>
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="fas fa-pencil"></i>
                                         </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Acondicionador Hidratante</td>
-                                    <td>$18.000</td>
-                                    <td>15</td>
-                                    <td>Acondicionador</td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarProducto(2)">
-                                            <i class="fas fa-edit">Editar</i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarProducto(2)">
-                                            <i class="fas fa-trash">Eliminar</i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Mascarilla Reparadora</td>
-                                    <td>$24.000</td>
-                                    <td>10</td>
-                                    <td>Tratamiento</td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarProducto(3)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarProducto(3)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Spray Voluminizador</td>
-                                    <td>$20.000</td>
-                                    <td>8</td>
-                                    <td>Styling</td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="editarProducto(4)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarProducto(4)">
+                                        <button class="btn btn-danger btn-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
                                 <!-- PHP generará más filas dinámicamente -->
+                                 <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>
@@ -182,5 +146,7 @@
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="../../assets/js/pedidos.js"></script>
 </html>

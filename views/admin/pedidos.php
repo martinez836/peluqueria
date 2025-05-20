@@ -1,3 +1,13 @@
+<?php
+    session_start();
+    require_once '../../models/consultas.php';
+    $consultas = new consultas();
+    $totalPedidos = $consultas->traerConteoPedido();
+    $pedidosPendientes = $consultas->traerPedidoPendiente();
+    $pedidosEntregados = $consultas->traerPedidoEntregado();
+
+    $pedidos = $consultas->traerPedidos();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +16,7 @@
     <title>Admin - Pedidos</title>
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/pedidos.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
@@ -60,15 +71,15 @@
         <!-- Stats Cards -->
         <div class="stats-row">
             <div class="stat-card">
-                <div class="number">24</div>
+                <div class="number"><?php echo $totalPedidos; ?></div>
                 <div class="label">Pedidos Totales</div>
             </div>
             <div class="stat-card">
-                <div class="number">8</div>
+                <div class="number"><?php echo $pedidosPendientes; ?></div>
                 <div class="label">Pendientes</div>
             </div>
             <div class="stat-card">
-                <div class="number">12</div>
+                <div class="number"><?php echo $pedidosEntregados; ?></div>
                 <div class="label">Entregados</div>
             </div>
             <div class="stat-card">
@@ -80,21 +91,15 @@
         <div class="pedidos-container">
             <!-- Tabla de Pedidos (Ahora a la izquierda) -->
             <div class="table-section">
-                <!-- Barra de búsqueda simple -->
-                <div class="search-bar">
-                    <input type="text" id="buscarPedido" placeholder="Buscar por nombre de cliente..." oninput="buscarPedidos()">
-                    <button class="btn btn-gold" onclick="buscarPedidos()">
-                        <i class="fas fa-search"></i> Buscar
-                    </button>
-                </div>
-                
+                <!-- Barra de búsqueda simple -->  
                 <div class="pedidos-table">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table id="tabla-pedidos" class="table responsive nowrap">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Cliente</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
                                     <th>Fecha</th>
                                     <th>Total</th>
                                     <th>Estado</th>
@@ -102,83 +107,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Ejemplo de pedidos -->
-                                <tr class="active" onclick="verDetalle(12345)">
-                                    <td>12345</td>
-                                    <td>María Gómez</td>
-                                    <td>10/05/2025</td>
-                                    <td>$54.000</td>
-                                    <td><span class="badge badge-pending">Pendiente</span></td>
+                                <?php while($pedido = mysqli_fetch_assoc($pedidos)): ?>
+                                <tr class="active">
+                                    <td><?= $pedido["idpedidos"] ?></td>
+                                    <td><?= $pedido["nombres"] ?></td>
+                                    <td><?= $pedido["apellidos"] ?></td>
+                                    <td><?= $pedido["fecha"] ?></td>
+                                    <td>$<?= $pedido["total"] ?></td>
+                                    <td><span class="badge badge-pending"><?= $pedido["estado"] ?></span></td>
                                     <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="verDetalle(12345)">
+                                        <button class="btn btn-primary btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarPedido(12345, event)">
-                                            <i class="fas fa-trash"></i>
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="fas fa-pencil"></i>
                                         </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(12346)">
-                                    <td>12346</td>
-                                    <td>Juan Pérez</td>
-                                    <td>09/05/2025</td>
-                                    <td>$78.000</td>
-                                    <td><span class="badge badge-processing">Procesando</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="verDetalle(12346)">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarPedido(12346, event)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(12347)">
-                                    <td>12347</td>
-                                    <td>Ana Martínez</td>
-                                    <td>08/05/2025</td>
-                                    <td>$45.000</td>
-                                    <td><span class="badge badge-shipped">Enviado</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="verDetalle(12347)">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarPedido(12347, event)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(12348)">
-                                    <td>12348</td>
-                                    <td>Carlos Ruiz</td>
-                                    <td>07/05/2025</td>
-                                    <td>$36.000</td>
-                                    <td><span class="badge badge-delivered">Entregado</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="verDetalle(12348)">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarPedido(12348, event)">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr onclick="verDetalle(12349)">
-                                    <td>12349</td>
-                                    <td>Laura González</td>
-                                    <td>05/05/2025</td>
-                                    <td>$62.000</td>
-                                    <td><span class="badge badge-cancelled">Cancelado</span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm" onclick="verDetalle(12349)">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" onclick="eliminarPedido(12349, event)">
+                                        <button class="btn btn-danger btn-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
                                 <!-- PHP generará más filas dinámicamente -->
+                                 <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>
@@ -214,17 +164,22 @@
                     </div>
                     
                     <div style="margin-top: 20px; display: flex; gap: 10px;">
-                        <button class="btn btn-success" onclick="cambiarEstado(12345, 'procesando')">
-                            <i class="fas fa-check"></i> Procesar
+                        <button class="btn btn-primary" onclick="cambiarEstado(12345, 'procesando')">
+                            <i class="fas fa-check"></i> Confirmar
                         </button>
                         <button class="btn btn-danger" onclick="cancelarPedido(12345)">
                             <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button class="btn btn-success" onclick="cancelarPedido(12345)">
+                            <i class="fas fa-box"></i> Entregado
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<script src="../../assets/js/pedidos.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="../../assets/js/pedidos.js"></script>
 </body>
 </html>

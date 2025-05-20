@@ -160,6 +160,30 @@ class consultas
         $this->mysql->desconectar();
         return $row['citasPendientes'];
     }
+    public function traerCitaConfirmada()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as citasConfirmada from citas where estado = 'confirmada';
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['citasConfirmada'];
+    }
+    public function traerCitaCancelada()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as citaCancelada from citas where estado = 'cancelada';
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['citaCancelada'];
+    }
     public function traerPedidoPendiente()
     {
         $this->mysql->conectar();
@@ -172,16 +196,65 @@ class consultas
         $this->mysql->desconectar();
         return $row['pedidoPendiente'];
     }
+    public function traerPedidoEntregado()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as pedidoEntregado from pedidos where estado = 'entregado';
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['pedidoEntregado'];
+    }
     public function traerConteoCliente()
     {
         $this->mysql->conectar();
         $consulta = 
         "
-            Select count(*) as Clientes from clientes where rol = 'cliente';;
+            Select count(*) as Clientes from clientes where rol = 'cliente';
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $row = mysqli_fetch_assoc($resultado);
         $this->mysql->desconectar();
         return $row['Clientes'];
     }
+    public function traerConteoPedido()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as Pedidos from pedidos;
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['Pedidos'];
+    }
+    public function traerPedidos()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select clientes.nombres,clientes.apellidos, pedidos.* from Pedidos join clientes on clientes.documento = clientes_documento;
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+    public function traerCitas()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select clientes.nombres,clientes.apellidos,servicios.nombreServicio, citas.* from citas join clientes on clientes.documento = clientes_documento 
+            JOIN servicios ON citas.servicios_idservicios = servicios.idservicios;
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+        
+
 }

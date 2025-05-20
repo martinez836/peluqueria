@@ -31,7 +31,7 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
     {
 
     $resultado = $consultas->crear_producto($nombre,$descripcion,$precio,$ruta,$stock);
-    header("Location: ../views/admin/dashboard.php");
+    header("Location: ../views/admin/productos.php");
     } else {
     echo "Error al insertar el empleado.";
     }
