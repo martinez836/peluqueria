@@ -47,7 +47,7 @@
             <div class="col-md-6 d-flex flex-column">
                 <div class="bg-white p-4 rounded shadow w-100 h-100">
                     <h2 id="mes-titulo" class="text-center mb-3" style="color: goldenrod;"></h2>
-                    <p class="text-center">Selecciona el Día</p>
+                    <p class="text-center">Selecciona Tu Día</p>
                     <div class="calendar" id="calendar"></div>
                 </div>
             </div>
@@ -147,8 +147,8 @@
     </div>
 
     <!-- Footer -->
-    <footer class="text-center py-3 bg-light mt-5 border-top">
-        &copy; 2025 Peluquería Elegante - Todos los derechos reservados
+    <footer class="text-center py-4 mt-5" style="background-color: #111; color: gold;">
+    &copy; 2025 Peluquería Elegante - Todos los derechos reservados
     </footer>
 
     <!-- Scripts -->

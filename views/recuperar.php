@@ -17,14 +17,14 @@
     <!-- Header -->
     <header class="text-center py-4" style="background-color: #111; color: gold;">
         <h1>Estilos Dairo</h1>
-        <p>¡Crea tu cuenta y reserva con estilo!</p>
+        <p>¡Recuperación de Contraseñas!</p>
     </header>
 
     <!-- Navbar -->
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
-        <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
-        <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
-        <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+        <a href="../views/usuario/index.php" style="color: gold; text-decoration: none;">Inicio</a>
+        <a href="../views/usuario/productos.php" style="color: gold; text-decoration: none;">Productos</a>
+        <a href="../views/usuario/agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
     </nav>
 
     <!-- Contenido principal -->
