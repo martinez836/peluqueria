@@ -128,13 +128,20 @@
                                     <td><?= $cita["nombreServicio"] ?></td>
                                     <td><span class="badge badge-pending"><?= $cita["estado"] ?></span></td>
                                     <td class="actions">
-                                        <button class="btn btn-primary btn-sm">
+                                        <button  class="btn btn-primary btn-sm verDetalle" data-id="<?= $cita['idcitas'] ?>"
+                                            data-nombre="<?= $cita['nombres'] ?>"
+                                            data-apellido="<?= $cita['apellidos'] ?>"
+                                            data-fecha="<?= $cita['fecha'] ?>"
+                                            data-servicio="<?= $cita['nombreServicio'] ?>"
+                                            data-estado="<?= $cita['estado'] ?>"
+                                            data-email="<?= $cita['correo'] ?>"
+                                            data-telefono="<?= $cita['telefono'] ?>">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button class="btn btn-success btn-sm">
+                                        <button class="btn btn-success btn-sm" id="editarCita">
                                             <i class="fas fa-pencil"></i>
                                         </button>
-                                        <button class="btn btn-danger btn-sm">
+                                        <button class="btn btn-danger btn-sm" id="eliminarCita">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -151,51 +158,13 @@
             <!-- Detalles de la Cita (Derecha) -->
                 <div class="detalles-section">
                     <div class="cita-detalles" id="detallesCita">
-                        <h2>Detalles de la Cita #1001</h2>
-                        <div class="cliente-info">
-                            <p><strong>Cliente:</strong> Carmen Díaz</p>
-                            <p><strong>Email:</strong> carmen@gmail.com</p>
-                            <p><strong>Teléfono:</strong> 310-456-7890</p>
-                            <p><strong>Fecha:</strong> 15/05/2025</p>
-                            <p><strong>Estado:</strong> <span class="badge badge-confirmed">Confirmada</span></p>
-                        </div>
-                        
-                        <div class="servicio-info">
-                            <h3>Servicios Solicitados</h3>
-                            <div class="servicio-item">
-                                <div>Corte de Cabello</div>
-                            </div>
-                            <div class="servicio-item">
-                                <div>Peinado</div>
-                            </div>
-                            
-                            <div style="display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold;">
-                                <div>Total</div>
-                            </div>
-                        </div>
-                        
-                        <div class="notas-cita">
-                            <h3>Notas</h3>
-                            <p>Cliente habitual. Prefiere corte en capas y peinado con ondas suaves.</p>
-                        </div>
-                        
-                        <div class="acciones-cita">
-                            <button class="btn btn-success" onclick="cambiarEstado(1001, 'completada')">
-                                <i class="fas fa-check"></i> Completar
-                            </button>
-                            <button class="btn btn-primary" onclick="confirmarCita(1001)">
-                                <i class="fas fa-bell"></i> Confirmar
-                            </button>
-                            <button class="btn btn-danger" onclick="cancelarCita(1001)">
-                                <i class="fas fa-times"></i> Cancelar
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="../../assets/js/detalleCita.js"></script>
         <script src="../../assets/js/citas.js"></script>
     </body>
 </html>

@@ -248,13 +248,21 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Select clientes.nombres,clientes.apellidos,servicios.nombreServicio, citas.* from citas join clientes on clientes.documento = clientes_documento 
+            Select clientes.nombres,clientes.telefono,clientes.correo,clientes.apellidos,servicios.nombreServicio, citas.* from citas join clientes on clientes.documento = clientes_documento 
             JOIN servicios ON citas.servicios_idservicios = servicios.idservicios;
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
     }
-        
+    public function confirmarCita($idcita) {
+    $conn = $this->mysql->conectar();  // Obtenemos la conexión
+
+    $consulta = "UPDATE citas SET estado = 'Confirmado' WHERE idcitas = $idcita";
+    $resultado = $this->mysql->efectuarConsulta($consulta);
+    $this->mysql->desconectar();
+    return $resultado; // true si se ejecutó correctamente, false si no
+}
+
 
 }

@@ -122,8 +122,8 @@
                                 <tr class="active">
                                     <td><?= $producto["id"] ?></td>
                                     <td><?= $producto["nombre"] ?></td>
-                                    <td><?= $producto["precio"] ?></td>
-                                    <td>$<?= $producto["stock"] ?></td>
+                                    <td>$<?= $producto["precio"] ?></td>
+                                    <td><?= $producto["stock"] ?></td>
                                     <td class="actions">
                                         <button class="btn btn-primary btn-sm">
                                             <i class="fas fa-eye"></i>
