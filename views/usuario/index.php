@@ -27,14 +27,13 @@ session_start();
 <nav class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-4 py-3 text-center" style="background-color: #222;">
     <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
     <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
-    <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+    <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Citas</a>
 
     <?php if (isset($_SESSION['documento'])) { ?>
-        <a href="../../controllers/logOut.php" class="btn btn-outline-light btn-sm">
-            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-        </a>
+        <a href="../admin/dashboard.php" style="color: gold; text-decoration: none;">Dashboard Administrador</a>
+        <a href="../../controllers/logOut.php">Cerrar Sesión</a>
     <?php } else { ?>
-        <a href="../admin/iniciarSesion.php" class="btn btn-outline-light btn-sm">
+        <a href="../admin/iniciarSesion.php" class="btn btn-outline-warning btn-sm">
             <i class="bi bi-person-circle"></i> Sesión Administrador
         </a>
     <?php } ?>

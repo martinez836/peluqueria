@@ -34,7 +34,7 @@
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
         <a href="./index.php" style="color: gold; text-decoration: none;">Inicio</a>
         <a href="./productos.php" style="color: gold; text-decoration: none;">Productos</a>
-        <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Agendar Cita</a>
+        <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Citas</a>
         <?php if(isset($_SESSION['documento'])) { ?>
             <a href="../../controllers/logOut.php" style="color: gold; text-decoration: none;">Cerrar Sesión</a>
         <?php } ?>

@@ -9,5 +9,5 @@ session_unset();
 //destruye todo
 session_destroy();
 
-header("Location: ../views/usuario/agendarCita.php");
+header("Location: ../views/usuario/index.php");
 exit();

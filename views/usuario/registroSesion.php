@@ -25,7 +25,7 @@
     <nav class="d-flex justify-content-center gap-4 py-3" style="background-color: #222;">
         <a href="./index.php" class="text-decoration-none" style="color: gold;">Inicio</a>
         <a href="./productos.php" class="text-decoration-none" style="color: gold;">Productos</a>
-        <a href="./agendarCita.php" class="text-decoration-none" style="color: gold;">Agendar Cita</a>
+        <a href="./agendarCita.php" class="text-decoration-none" style="color: gold;">Citas</a>
     </nav>
 
     <!-- Contenido principal -->
