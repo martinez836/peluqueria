@@ -267,6 +267,36 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
+
+    public function traerDetallePedido($idpedido) {
+        $this->mysql->conectar();
+        $consulta = "
+            SELECT 
+                p.idpedidos,
+                p.fecha,
+                p.total,
+                p.estado,
+                dp.cantidad,
+                dp.subtotal,
+                pr.nombre as nombre_producto,
+                pr.descripcion as descripcion_producto,
+                pr.precio as precio_unitario,
+                pr.imagen as imagen_producto,
+                c.direccion,
+                c.barrio,
+                c.nombres,
+                c.apellidos
+            FROM pedidos p
+            INNER JOIN detallepedido dp ON p.idpedidos = dp.pedidos_idpedidos
+            INNER JOIN productos pr ON dp.productos_idproductos = pr.idproductos
+            INNER JOIN clientes c ON p.clientes_documento = c.documento
+            WHERE p.idpedidos = $idpedido
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
     public function traerCitas()
     {
         $this->mysql->conectar();
@@ -279,15 +309,32 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
-    public function confirmarCita($idcita) {
+    public function confirmarCita($idcita){
     $conn = $this->mysql->conectar();  // Obtenemos la conexión
 
     $consulta = "UPDATE citas SET estado = 'Confirmado' WHERE idcitas = $idcita";
     $resultado = $this->mysql->efectuarConsulta($consulta);
     $this->mysql->desconectar();
     return $resultado; // true si se ejecutó correctamente, false si no
-}
+    }
 
+    public function completarCita($idcita) {
+        $conn = $this->mysql->conectar();  // Obtenemos la conexión
+    
+        $consulta = "UPDATE citas SET estado = 'Completado' WHERE idcitas = $idcita";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
+    public function cancelarCita($idcita) {
+        $conn = $this->mysql->conectar();  // Obtenemos la conexión
+    
+        $consulta = "UPDATE citas SET estado = 'Cancelado' WHERE idcitas = $idcita";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
 
     public function eliminarFechasDeshabilitadas($fechas)
     {
@@ -314,5 +361,13 @@ class consultas
 
     $this->mysql->desconectar();
     return $resultado;
+    }
+
+    public function actualizarEstadoPedido($idpedido, $estado) {
+        $this->mysql->conectar();
+        $consulta = "UPDATE pedidos SET estado = '$estado' WHERE idpedidos = $idpedido";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
     }
 };?>

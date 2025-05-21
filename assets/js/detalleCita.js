@@ -2,6 +2,74 @@ document.addEventListener("DOMContentLoaded", function () {
   const botones = document.querySelectorAll(".verDetalle");
   const contenedor = document.getElementById("detallesCita");
 
+  // Definir las funciones primero
+  function cambiarEstado(id, accion) {
+    if (!confirm(`¿Desea ${accion} esta cita?`)) return;
+
+    const formData = new FormData();
+    formData.append('idcita', id);
+    formData.append('accion', accion);
+
+    fetch("../../controllers/actualizarEstado.php", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message);
+        // Actualizar el estado en el detalle visible
+        const badge = document.querySelector("#detallesCita .cliente-info span.badge");
+        if (badge) {
+          badge.textContent = accion === 'confirmar' ? 'Confirmado' : 'Completado';
+          badge.className = `badge text-light ${accion === 'confirmar' ? 'bg-primary' : 'bg-success'}`;
+        }
+        // Actualizar la vista de la tabla
+        location.reload();
+      } else {
+        alert("Error: " + data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Error en la conexión con el servidor.");
+    });
+  }
+
+  function cancelarCita(id) {
+    if (!confirm("¿Está seguro que desea cancelar esta cita?")) return;
+    
+    const formData = new FormData();
+    formData.append('idcita', id);
+    formData.append('accion', 'cancelar');
+
+    fetch("../../controllers/actualizarEstado.php", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message);
+        // Actualizar el estado en el detalle visible
+        const badge = document.querySelector("#detallesCita .cliente-info span.badge");
+        if (badge) {
+          badge.textContent = 'Cancelado';
+          badge.className = 'badge text-light bg-danger';
+        }
+        // Actualizar la vista de la tabla
+        location.reload();
+      } else {
+        alert("Error: " + data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Error en la conexión con el servidor.");
+    });
+  }
+
+  // Luego el código que usa estas funciones
   botones.forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = btn.getAttribute("data-id");
@@ -39,24 +107,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const p4 = document.createElement("p");
       const badge = document.createElement("span");
-        badge.classList.add("badge", "text-light");
+      badge.classList.add("badge", "text-light");
 
-        switch (estado.toLowerCase()) {
-        case "confirmada":
-            badge.classList.add("bg-primary");
-            break;
-        case "completada":
-            badge.classList.add("bg-success");
-            break;
-        case "cancelada":
-            badge.classList.add("bg-danger");
-            break;
-        default:
-            badge.classList.add("bg-secondary");
-            break;
-        }
-
-        badge.textContent = estado.charAt(0).toUpperCase() + estado.slice(1);
+      badge.textContent = estado.charAt(0).toUpperCase() + estado.slice(1);
 
       p4.innerHTML = `<strong>Fecha:</strong> ${fecha} <br><strong>Estado:</strong> `;
       p4.appendChild(badge);
@@ -101,12 +154,12 @@ document.addEventListener("DOMContentLoaded", function () {
       const btnCompletar = document.createElement("button");
       btnCompletar.className = "btn btn-success";
       btnCompletar.innerHTML = `<i class="fas fa-check"></i> Completar`;
-      btnCompletar.onclick = () => cambiarEstado(id, "completada");
+      btnCompletar.onclick = () => cambiarEstado(id, "completar");
 
       const btnConfirmar = document.createElement("button");
       btnConfirmar.className = "btn btn-primary";
       btnConfirmar.innerHTML = `<i class="fas fa-bell"></i> Confirmar`;
-      btnConfirmar.onclick = () => confirmarCita(id);
+      btnConfirmar.onclick = () => cambiarEstado(id, "confirmar");
 
       const btnCancelar = document.createElement("button");
       btnCancelar.className = "btn btn-danger";
@@ -120,41 +173,4 @@ document.addEventListener("DOMContentLoaded", function () {
       contenedor.appendChild(acciones);
     });
   });
-
-  function confirmarCita(id) {
-    if (!confirm("¿Confirmar esta cita?")) return;
-
-    fetch("../../controllers/actualizarEstado.php?id=$idcitas", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `idcita=${encodeURIComponent(id)}`,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          alert(data.message);
-
-          // Actualizar el estado en el detalle visible
-          const badge = document.querySelector(
-            "#detallesCita .cliente-info span.badge");
-          if (badge) {
-            badge.textContent = "Confirmado";
-            badge.className = "badge badge-confirmed";
-          }
-
-          // Opcional: actualizar el estado en la tabla también
-          const fila = document
-            .querySelector(`#tabla-pedidos button[data-id='${id}']`)
-            .closest("tr");
-          const celdaEstado = fila.querySelector("td:nth-child(6) .badge");
-          if (celdaEstado) {
-            celdaEstado.textContent = "Confirmado";
-            celdaEstado.className = "badge badge-confirmed";
-          }
-        } else {
-          alert("Error: " + data.message);
-        }
-      })
-      .catch(() => alert("Error en la conexión con el servidor."));
-  }
 });

@@ -46,16 +46,16 @@
     </div>
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="../dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="../citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
+            <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="../pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+            <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="../productos.php"><i class="fas fa-box-open"></i> Productos</a>
+            <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
         </li>
         <li class="nav-item mt-3">
             <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>

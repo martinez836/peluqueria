@@ -18,6 +18,171 @@
     <link rel="stylesheet" href="../../assets/css/pedidos.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        :root {
+            --gold-color: #f1c40f;
+            --dark-bg: #1e1e1e;
+            --darker-bg: #121212;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #f8f8f8;
+        }
+
+        .pedidos-container {
+            padding: 20px;
+        }
+
+        .table-section {
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            border-left: 4px solid var(--gold-color);
+            margin-bottom: 20px;
+        }
+
+        .detalles-section {
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            border-left: 4px solid var(--gold-color);
+            margin-top: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table thead th {
+            background-color: #242424;
+            color: var(--gold-color);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
+        }
+
+        .table td {
+            padding: 12px 15px;
+            border-top: 1px solid #3a3a3a;
+            color: #f8f8f8;
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            background-color: #2c2c2c;
+        }
+
+        .table tbody tr:hover {
+            background-color: #333;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #262626;
+        }
+
+        .detalles-section .table {
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .detalles-section .table th:first-child,
+        .detalles-section .table td:first-child {
+            padding-left: 20px;
+        }
+
+        .detalles-section .table th:last-child,
+        .detalles-section .table td:last-child {
+            padding-right: 20px;
+        }
+
+        .badge-pending {
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-confirmado {
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-entregado {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-cancelado {
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        .btn-gold {
+            background-color: var(--gold-color);
+            color: #000;
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .pedido-detalles {
+            color: #f8f8f8;
+        }
+
+        .pedido-detalles h2 {
+            color: var(--gold-color);
+            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -89,91 +254,63 @@
         </div>
         
         <div class="pedidos-container">
-            <!-- Tabla de Pedidos (Ahora a la izquierda) -->
+            <!-- Tabla de Pedidos -->
             <div class="table-section">
-                <!-- Barra de búsqueda simple -->  
-                <div class="pedidos-table">
-                    <div class="table-responsive">
-                        <table id="tabla-pedidos" class="table responsive nowrap">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php while($pedido = mysqli_fetch_assoc($pedidos)): ?>
-                                <tr class="active">
-                                    <td><?= $pedido["idpedidos"] ?></td>
-                                    <td><?= $pedido["nombres"] ?></td>
-                                    <td><?= $pedido["apellidos"] ?></td>
-                                    <td><?= $pedido["fecha"] ?></td>
-                                    <td>$<?= $pedido["total"] ?></td>
-                                    <td><span class="badge badge-pending"><?= $pedido["estado"] ?></span></td>
-                                    <td class="actions">
-                                        <button class="btn btn-primary btn-sm">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-success btn-sm">
-                                            <i class="fas fa-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- PHP generará más filas dinámicamente -->
-                                 <?php endwhile; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table-responsive">
+                    <table id="tabla-pedidos" class="table responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while($pedido = mysqli_fetch_assoc($pedidos)): ?>
+                            <tr class="active">
+                                <td><?= $pedido["idpedidos"] ?></td>
+                                <td><?= $pedido["nombres"] ?></td>
+                                <td><?= $pedido["apellidos"] ?></td>
+                                <td><?= $pedido["fecha"] ?></td>
+                                <td>$<?= $pedido["total"] ?></td>
+                                <td><span class="badge badge-pending"><?= $pedido["estado"] ?></span></td>
+                                <td class="actions">
+                                    <button class="btn btn-primary btn-sm verDetallePedido" data-id="<?= $pedido["idpedidos"] ?>">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-success btn-sm">
+                                        <i class="fas fa-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
-            <!-- Detalles del Pedido (Ahora a la derecha) -->
+            <!-- Detalles del Pedido -->
             <div class="detalles-section">
                 <div class="pedido-detalles" id="detallesPedido">
-                    <h2>Detalles del Pedido #12345</h2>
-                    <div class="cliente-info">
-                        <p><strong>Cliente:</strong> María Gómez</p>
-                        <p><strong>Email:</strong> maria@gmail.com</p>
-                        <p><strong>Teléfono:</strong> 300-123-4567</p>
-                        <p><strong>Fecha:</strong> 10/05/2025</p>
-                        <p><strong>Estado:</strong> <span class="badge badge-pending">Pendiente</span></p>
-                        <p><strong>Dirección:</strong> Calle 123 #45-67, Bogotá</p>
-                    </div>
-                    
-                    <h3>Productos</h3>
-                    <div class="detalle-item">
-                        <div>Shampoo Alisador</div>
-                        <div>2 x $15.000</div>
-                    </div>
-                    <div class="detalle-item">
-                        <div>Mascarilla Reparadora</div>
-                        <div>1 x $24.000</div>
-                    </div>
-                    
-                    <div class="detalle-total">
-                        <div class="label">Total</div>
-                        <div>$54.000</div>
-                    </div>
-                    
-                    <div style="margin-top: 20px; display: flex; gap: 10px;">
-                        <button class="btn btn-primary" onclick="cambiarEstado(12345, 'procesando')">
-                            <i class="fas fa-check"></i> Confirmar
-                        </button>
-                        <button class="btn btn-danger" onclick="cancelarPedido(12345)">
-                            <i class="fas fa-times"></i> Cancelar
-                        </button>
-                        <button class="btn btn-success" onclick="cancelarPedido(12345)">
-                            <i class="fas fa-box"></i> Entregado
-                        </button>
-                    </div>
+                    <!-- Los detalles del pedido se cargarán dinámicamente aquí -->
+                </div>
+                <div class="acciones-estado" style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="btn btn-primary" onclick="cambiarEstado(this)" data-estado="confirmado">
+                        <i class="fas fa-check"></i> Confirmar
+                    </button>
+                    <button class="btn btn-success" onclick="cambiarEstado(this)" data-estado="entregado">
+                        <i class="fas fa-truck"></i> Entregado
+                    </button>
+                    <button class="btn btn-danger" onclick="cambiarEstado(this)" data-estado="cancelado">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
                 </div>
             </div>
         </div>
@@ -181,5 +318,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="../../assets/js/pedidos.js"></script>
+    <script src="../../assets/js/detallePedido.js"></script>
 </body>
 </html>
