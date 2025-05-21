@@ -44,13 +44,18 @@
     <div class="container my-5">
         <div class="row align-items-start g-4">
             <!-- Calendario -->
-            <div class="col-md-6 d-flex flex-column">
-                <div class="bg-white p-4 rounded shadow w-100 h-100">
-                    <h2 id="mes-titulo" class="text-center mb-3" style="color: goldenrod;"></h2>
-                    <p class="text-center">Selecciona Tu Día</p>
-                    <div class="calendar" id="calendar"></div>
-                </div>
-            </div>
+<div class="col-md-6 d-flex flex-column">
+    <div class="bg-white p-4 rounded shadow w-100 h-100">
+        <h2 id="mes-titulo" class="text-center mb-3" style="color: goldenrod;"></h2>
+        <p class="text-center">Selecciona Tu Día</p>
+        <div class="calendar" id="calendar"></div>
+        <!-- Botones de navegación del calendario -->
+        <div id="calendar-controls" class="d-flex justify-content-between mt-3">
+            <!-- Botones se insertan desde JS -->
+        </div>
+    </div>
+</div>
+
 
             <!-- Formulario o inicio de sesión -->
             <div class="col-md-6 d-flex flex-column">

@@ -1,113 +1,152 @@
-    /* Reset básico */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body.fondo {
-        background-image: url('../../assets/images/fondo.jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
-    
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #f3f3f3;
-        color: #333;
-        line-height: 1.6;
-    }
-    
-    .container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
-    }
-    
-    /* Encabezado */
-    header {
-        background-color: #1c1c1c;
-        color: #d4af37;
-        padding: 20px 0;
-        text-align: center;
-    }
-    
-    header h1 {
-        margin-bottom: 5px;
-    }
-    
-    /* Navegación */
-    nav {
-        background-color: #2a2a2a;
-        padding: 10px 0;
-        text-align: center;
-    }
-    
-    nav a {
-        color: #d4af37;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: bold;
-        font-size: 1.1em;
-    }
-    
-    nav a:hover {
-        color: #fff3b0;
-    }
-    
-    /* Secciones */
-    section {
-        margin-top: 30px;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    #calendar {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-    }
-    
-    #calendar .encabezado-dia {
-        font-weight: bold;
-        background-color: #f2f2f2;
-        text-align: center;
-        padding: 8px 0;
-        border: 1px solid #ddd;
-    }
-    
-    #calendar .celda-dia {
-        text-align: center;
-        padding: 10px 0;
-        border: 1px solid #ddd;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        background-color: white;
-    }
-    
-    #calendar .celda-dia:hover {
-        background-color: #f9e79f;
-    }
-    
-    #calendar .active {
-        background-color: goldenrod;
-        color: white;
-        font-weight: bold;
-    }
-    
-    /* Footer */
-    footer {
-        background-color: #1c1c1c;
-        color: #d4af37;
-        text-align: center;
-        padding: 15px 0;
-        margin-top: 50px;
-    }
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    .celda-dia.deshabilitado {
-    background-color: #ccc;
+body.fondo {
+    background-image: url('../../assets/images/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f3f3f3;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Encabezado */
+header {
+    background-color: #1c1c1c;
+    color: #d4af37;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 5px;
+}
+
+/* Navegación */
+nav {
+    background-color: #2a2a2a;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav a {
+    color: #d4af37;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+nav a:hover {
+    color: #fff3b0;
+}
+
+/* Secciones */
+section {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Encabezado del calendario con título y botones */
+.calendario-header {
+    grid-column: span 7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+/* Título del mes */
+.titulo-mes {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #333;
+}
+
+/* Botones de navegación (íconos) */
+.btn-icono {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: goldenrod;
+    transition: color 0.2s;
+}
+
+.btn-icono:hover {
+    color: #d4af37;
+}
+
+/* Calendario */
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#calendar .encabezado-dia {
+    font-weight: bold;
+    background-color: #f2f2f2;
+    text-align: center;
+    padding: 8px 0;
+    border: 1px solid #ddd;
+}
+
+#calendar .celda-dia {
+    text-align: center;
+    padding: 10px 0;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: white;
+}
+
+#calendar .celda-dia:hover {
+    background-color: #f9e79f;
+}
+
+#calendar .active {
+    background-color: goldenrod;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #d4af37;
+}
+
+/* Deshabilitados */
+.celda-dia.deshabilitado {
+    background-color: #e0e0e0;
     color: #999;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+/* Footer */
+footer {
+    background-color: #1c1c1c;
+    color: #d4af37;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 50px;
 }
