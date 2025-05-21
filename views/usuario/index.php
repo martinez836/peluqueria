@@ -30,8 +30,12 @@ session_start();
     <a href="./agendarCita.php" style="color: gold; text-decoration: none;">Citas</a>
 
     <?php if (isset($_SESSION['documento'])) { ?>
-        <a href="../admin/dashboard.php" style="color: gold; text-decoration: none;">Dashboard Administrador</a>
-        <a href="../../controllers/logOut.php">Cerrar Sesión</a>
+        <?php if ($_SESSION['rol'] === "administrador") { ?>
+            <a href="../admin/dashboard.php" style="color: gold; text-decoration: none;">Dashboard Administrador</a>
+            <a href="../../controllers/logOut.php">Cerrar Sesión</a>
+        <?php }else{ ?>
+            <a href="../../controllers/logOut.php">Cerrar Sesión</a>
+        <?php } ?>        
     <?php } else { ?>
         <a href="../admin/iniciarSesion.php" class="btn btn-outline-warning btn-sm">
             <i class="bi bi-person-circle"></i> Sesión Administrador

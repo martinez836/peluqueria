@@ -23,6 +23,7 @@ session_start();
                     if ($cliente['rol'] === "administrador") {
                         $_SESSION['documento'] = $cliente['documento'];
                         $_SESSION['nombres'] = $cliente['nombres'];
+                        $_SESSION['rol'] = $cliente['rol'];
                         header("Location: ../views/admin/dashboard.php");
                         exit();
                     } 
@@ -35,6 +36,7 @@ session_start();
                         $_SESSION['barrio'] = $cliente['barrio'];
                         $_SESSION['correo'] = $cliente['correo'];
                         $_SESSION['telefono'] = $cliente['telefono'];
+                        $_SESSION['rol'] = $cliente['rol'];
                         header("Location: ../views/usuario/agendarCita.php");
                         exit();
                     }
