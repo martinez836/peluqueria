@@ -5,6 +5,7 @@
     $citasPendientes = $consultas->traerCitaPendiente();
     $citaConfirmada = $consultas->traerCitaConfirmada();
     $citaCancelada = $consultas->traerCitaCancelada();
+    $citaCompletada = $consultas->traerCitaCompetada();
     $citas = $consultas->traerCitas();
 ?>
 <!DOCTYPE html>
@@ -15,8 +16,9 @@
     <title>Admin - Citas</title>
 
     <!-- Font Awesome para iconos -->
-     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/citas.css">
     <style>
@@ -93,9 +95,9 @@
             </div>
             
             <div class="stat-card">
-                <i class="fas fa-dollar-sign"></i>
-                <h3>$2.5M</h3>
-                <p>Ventas Mensuales</p>
+                <i class="fas fa-calendar-check"></i>
+                <h3><?php echo $citaCompletada; ?></h3>
+                <p>Citas Completadas</p>
             </div>
         </div>
         
@@ -109,24 +111,24 @@
                         <table id="tabla-pedidos" class="table responsive nowrap">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
+                                    <th class="text-gold">#</th>
+                                    <th class="text-gold">Nombres</th>
+                                    <th class="text-gold">Apellidos</th>
+                                    <th class="text-gold">Fecha</th>
+                                    <th class="text-gold">Total</th>
+                                    <th class="text-gold">Estado</th>
+                                    <th class="text-gold">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-white">
                                 <?php while($cita = mysqli_fetch_assoc($citas)): ?>
-                                <tr class="active">
-                                    <td><?= $cita["idcitas"] ?></td>
-                                    <td><?= $cita["nombres"] ?></td>
-                                    <td><?= $cita["apellidos"] ?></td>
-                                    <td><?= $cita["fecha"] ?></td>
-                                    <td><?= $cita["nombreServicio"] ?></td>
-                                    <td><span class="badge badge-pending"><?= $cita["estado"] ?></span></td>
+                                <tr>
+                                    <td class="text-white"><?= $cita["idcitas"] ?></td>
+                                    <td class="text-white"><?= $cita["nombres"] ?></td>
+                                    <td class="text-white"><?= $cita["apellidos"] ?></td>
+                                    <td class="text-white"><?= $cita["fecha"] ?></td>
+                                    <td class="text-white"><?= $cita["nombreServicio"] ?></td>
+                                    <td><span class="badge badge-pending text-white"><?= $cita["estado"] ?></span></td>
                                     <td class="actions">
                                         <button  class="btn btn-primary btn-sm verDetalle" data-id="<?= $cita['idcitas'] ?>"
                                             data-nombre="<?= $cita['nombres'] ?>"
@@ -164,7 +166,62 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../../assets/js/detalleCita.js"></script>
+        <script src="../../assets/js/editarCita.js"></script>
         <script src="../../assets/js/citas.js"></script>
+
+        <!-- Modal para editar cita -->
+        <div class="modal fade" id="editarCitaModal" tabindex="-1" aria-labelledby="editarCitaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-light">
+                    <div class="modal-header border-bottom border-secondary">
+                        <h5 class="modal-title text-gold" id="editarCitaModalLabel">Editar Cita</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editarCitaForm">
+                            <input type="hidden" id="editCitaId" name="idcita">
+                            <div class="mb-3">
+                                <label for="editNombres" class="form-label">Nombres</label>
+                                <input type="text" class="form-control bg-dark text-light" id="editNombres" name="nombres" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editApellidos" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control bg-dark text-light" id="editApellidos" name="apellidos" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editFecha" class="form-label">Fecha y Hora</label>
+                                <input type="datetime-local" class="form-control bg-dark text-light" id="editFecha" name="fecha" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editServicio" class="form-label">Servicio</label>
+                                <select class="form-select bg-dark text-light" id="editServicio" name="servicio" required>
+                                    <?php 
+                                    $servicios = $consultas->traer_servicios();
+                                    while($servicio = mysqli_fetch_assoc($servicios)): 
+                                    ?>
+                                        <option value="<?= $servicio['idservicios'] ?>"><?= $servicio['nombreServicio'] ?></option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editEstado" class="form-label">Estado</label>
+                                <select class="form-select bg-dark text-light" id="editEstado" name="estado" required>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="confirmado">Confirmado</option>
+                                    <option value="completado">Completado</option>
+                                    <option value="cancelado">Cancelado</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer border-top border-secondary">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-gold" id="guardarCambiosCita">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
