@@ -69,7 +69,7 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
 <main class="main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="text-light">Dashboard</h2>
+            <h2 class="text-light">dashboard</h2>
             <div>
                 <span class="text-light me-2"><i class="far fa-calendar-alt me-1"></i> Hoy: <?php echo date('d/m/Y'); ?></span>
             </div>
