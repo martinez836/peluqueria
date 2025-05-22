@@ -102,12 +102,23 @@
         
         <div class="row">
             <!-- Actividad Reciente -->
+<!-- Calendario con navegación mejorada -->
 <div class="col-lg-8">
     <div class="dashboard-card bg-dark text-light">
         <p class="text-light mb-1 text-center">CALENDARIO</p>
-        <div class="card-header">
-            <h5 id="mes-titulo" class="card-title"></h5>
+
+        <!-- Encabezado del calendario con título y navegación -->
+        <div class="calendar-header d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+            <button id="mes-anterior" class="btn btn-sm btn-outline-light">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <h5 id="mes-titulo" class="mb-0 text-center flex-grow-1"> <!-- Título dinámico aquí --> </h5>
+            <button id="mes-siguiente" class="btn btn-sm btn-outline-light">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
+
+        <!-- Cuerpo del calendario -->
         <div id="calendar" class="calendar-grid"></div>
 
         <!-- Formulario para habilitar y deshabilitar fechas del calendario-->
@@ -120,7 +131,6 @@
                     </button>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <!-- Botón para abrir la modal -->
                     <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modalFechas">
                         <i class="fas fa-check-circle me-1"></i> Habilitar Fechas Seleccionadas
                     </button>
@@ -128,7 +138,8 @@
             </div>
         </form>
     </div>
-</div>     
+</div>
+     
 
 
 <!-- Modal de Fechas Deshabilitadas -->
