@@ -183,6 +183,81 @@
             border: 1px solid rgba(241, 196, 15, 0.2) !important;
         }
         
+        /* DataTables específicos */
+        .dataTables_wrapper {
+            background-color: var(--darker-bg) !important;
+            color: #fff !important;
+        }
+
+        .dataTables_length,
+        .dataTables_filter,
+        .dataTables_info,
+        .dataTables_paginate {
+            color: #fff !important;
+            padding: 10px;
+        }
+
+        .dataTables_filter input,
+        .dataTables_length select {
+            background-color: #333 !important;
+            color: #fff !important;
+            border: 1px solid rgba(241, 196, 15, 0.2) !important;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--darker-bg) !important;
+            color: #fff !important;
+        }
+        
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+            background-color: var(--darker-bg) !important;
+            color: #fff !important;
+        }
+        
+        .table th {
+            background-color: rgba(241, 196, 15, 0.1) !important;
+            color: var(--gold-color) !important;
+        }
+        
+        .table tbody tr {
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--darker-bg) !important;
+            color: #fff !important;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(241, 196, 15, 0.05) !important;
+            color: #fff !important;
+        }
+        
+        .table tbody tr.active {
+            background-color: rgba(241, 196, 15, 0.1) !important;
+            border-left: 3px solid var(--gold-color) !important;
+            color: #fff !important;
+        }
+
+        /* Paginación */
+        .paginate_button {
+            color: #fff !important;
+        }
+
+        .paginate_button.current {
+            background: var(--gold-color) !important;
+            border-color: var(--gold-color) !important;
+            color: #000 !important;
+        }
+
+        .paginate_button:hover {
+            background: rgba(241, 196, 15, 0.2) !important;
+            border-color: var(--gold-color) !important;
+        }
+        
         .search-bar {
             display: flex;
             gap: 10px;
@@ -198,36 +273,6 @@
             color: #fff;
         }
         
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .table th, .table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #444;
-        }
-        
-        .table th {
-            background-color: rgba(241, 196, 15, 0.1) !important;
-            color: var(--gold-color) !important;
-        }
-        
-        .table tbody tr {
-            cursor: pointer Im !important;
-            transition: all 0.2s !important;
-        }
-        
-        .table tbody tr:hover {
-            background-color: rgba(241, 196, 15, 0.05) !important;
-        }
-        
-        .table tbody tr.active {
-            background-color: rgba(241, 196, 15, 0.1) !important;
-            border-left: 3px solid var(--gold-color) !important;
-        }
-        
         .badge {
             padding: 4px 8px;
             border-radius: 4px;
@@ -235,25 +280,26 @@
             font-weight: 500;
         }
         
-        /* .badge-confirmed {
-            background-color: #2ecc71;
-            color: #fff;
+        /* Estado badges */
+        .badge-pending {
+            background-color: #f39c12 !important;
+            color: #fff !important;
         }
         
-        .badge-pending {
-            background-color: #f39c12;
-            color: #fff;
+        .badge-confirmed {
+            background-color: #2ecc71 !important;
+            color: #fff !important;
         }
         
         .badge-cancelled {
-            background-color: #e74c3c;
-            color: #fff;
+            background-color: #e74c3c !important;
+            color: #fff !important;
         }
         
         .badge-completed {
-            background-color: #3498db;
-            color: #fff;
-        } */
+            background-color: #3498db !important;
+            color: #fff !important;
+        }
         
         .actions {
             display: flex;
