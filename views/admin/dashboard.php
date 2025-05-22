@@ -1,11 +1,13 @@
 <?php
-    session_start();
-    require_once '../../models/consultas.php';
-    $consultas = new consultas();
-    $citasPendientes = $consultas->traerCitaPendiente();
-    $pedidosPendientes = $consultas->traerPedidoPendiente();
-    $clientes = $consultas->traerConteoCliente();
-    $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
+// Incluir el archivo de autenticación
+require_once 'auth_admin.php';
+
+require_once '../../models/consultas.php';
+$consultas = new consultas();
+$citasPendientes = $consultas->traerCitaPendiente();
+$pedidosPendientes = $consultas->traerPedidoPendiente();
+$clientes = $consultas->traerConteoCliente();
+$fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
 ?>
 <!DOCTYPE html>
 <html lang="es">

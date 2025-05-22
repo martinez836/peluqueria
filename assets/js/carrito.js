@@ -268,54 +268,131 @@ document.getElementById('btn-finalizar-compra').disabled = true;
 
 // Función para finalizar la compra
 function finalizarCompra() {
-// Aquí podrías redirigir a una página de checkout o enviar los datos al servidor
-    const pedido = localStorage.getItem("carrito");
-    const pedidoTotal = JSON.parse(pedido);
-
-    const total = pedidoTotal.reduce((total, item) => total + (item.precio * item.cantidad), 0);
-
-    // 👉 Preparar el objeto completo que se enviará
-    const datosPedido = {
-        productos: pedidoTotal,
-        total: total
-    };
-
-    fetch("../../controllers/agregarPedido.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(datosPedido)
-    })
-    .then(res => res.text())
-.then(texto => {
-    console.log("Respuesta cruda del servidor:", texto);
-    try {
-        const data = JSON.parse(texto);
-        console.log("Respuesta parseada como JSON:", data);
-    } catch (e) {
-        console.error("Error al parsear JSON:", e.message);
+    if (carrito.length === 0) {
+        mostrarNotificacion('El carrito está vacío');
+        return;
     }
-})
 
-    alert('¡Gracias por tu compra! Total: $' + pedidoTotal.reduce((total, item) => total + (item.precio * item.cantidad), 0).toLocaleString());
+    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+    
+    // Obtener el documento del usuario
+    const btnFinalizarCompra = document.getElementById('btn-finalizar-compra');
+    const documento = btnFinalizarCompra.getAttribute('data-documento');
 
-    vaciarCarrito();
+    if (!documento) {
+        mostrarNotificacion('Error: No se encontró el documento del usuario');
+        return;
+    }
 
-    // Cerrar el modal
-    bootstrap.Modal.getInstance(document.getElementById('carritoModal')).hide();
+    // Primero crear el pedido
+    fetch('../../controllers/crear_pedido.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            total: total,
+            documento: documento
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const idPedido = data.idPedido;
+            
+            // Crear los detalles del pedido
+            const promesasDetalles = carrito.map(item => {
+                return fetch('../../controllers/crear_detalle_pedido.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        idPedido: idPedido,
+                        idProducto: item.id,
+                        cantidad: item.cantidad,
+                        subTotal: item.precio * item.cantidad
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                });
+            });
+
+            // Actualizar el stock de los productos
+            const actualizarStock = fetch('../../controllers/actualizar_stock.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productos: carrito.map(item => ({
+                        id: item.id,
+                        cantidad: item.cantidad
+                    }))
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            });
+
+            // Esperar a que se completen todas las operaciones
+            Promise.all([...promesasDetalles, actualizarStock])
+                .then(() => {
+                    // Limpiar el carrito
+                    carrito = [];
+                    guardarCarrito();
+                    actualizarBadgeCarrito();
+                    
+                    // Cerrar el modal
+                    const modalCarrito = document.getElementById('carritoModal');
+                    const modalBootstrap = bootstrap.Modal.getInstance(modalCarrito);
+                    modalBootstrap.hide();
+                    
+                    // Mostrar mensaje de éxito
+                    mostrarNotificacion('¡Compra realizada con éxito!');
+                    
+                    // Recargar la página para actualizar el stock mostrado
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.error('Error al procesar la compra:', error);
+                    mostrarNotificacion('Error al procesar la compra: ' + error.message);
+                });
+        } else {
+            throw new Error(data.error || 'Error desconocido al crear el pedido');
+        }
+    })
+    .catch(error => {
+        console.error('Error al crear el pedido:', error);
+        mostrarNotificacion('Error al crear el pedido: ' + error.message);
+    });
 }
 
 // Función para verificar si el usuario ha iniciado sesión y realizar la compra
 function verificarSesionYComprar() {
     const btnFinalizarCompra = document.getElementById('btn-finalizar-compra');
     const haySesion = btnFinalizarCompra.getAttribute('data-sesion') === '1';
+    const documento = btnFinalizarCompra.getAttribute('data-documento');
     
-    if (haySesion) {
-        // Si hay sesión, continuar con la compra
+    if (haySesion && documento) {
+        // Si hay sesión y tenemos el documento, continuar con la compra
         finalizarCompra();
     } else {
-        // Si no hay sesión, cerrar el modal del carrito y abrir el modal de login
+        // Si no hay sesión o no hay documento, cerrar el modal del carrito y abrir el modal de login
         const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
         carritoModal.hide();
         

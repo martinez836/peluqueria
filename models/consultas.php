@@ -395,4 +395,12 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
+
+    public function actualizarStock($idProducto, $cantidad) {
+        $this->mysql->conectar();
+        $consulta = "UPDATE productos SET stock = stock - $cantidad WHERE idproductos = $idProducto";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
 };?>
