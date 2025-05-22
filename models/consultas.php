@@ -165,7 +165,7 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Select count(*) as citasConfirmada from citas where estado = 'confirmada';
+            Select count(*) as citasConfirmada from citas where estado = 'confirmado';
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $row = mysqli_fetch_assoc($resultado);
@@ -177,13 +177,26 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Select count(*) as citaCancelada from citas where estado = 'cancelada';
+            Select count(*) as citaCancelada from citas where estado = 'cancelado';
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $row = mysqli_fetch_assoc($resultado);
         $this->mysql->desconectar();
         return $row['citaCancelada'];
     }
+    public function traerCitaCompetada()
+    {
+        $this->mysql->conectar();
+        $consulta = 
+        "
+            Select count(*) as citaCancelada from citas where estado = 'completado';
+        ";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $row = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $row['citaCancelada'];
+    }
+    
     public function traerPedidoPendiente()
     {
         $this->mysql->conectar();
@@ -310,12 +323,24 @@ class consultas
         return $resultado;
     }
     public function confirmarCita($idcita){
-    $conn = $this->mysql->conectar();  // Obtenemos la conexión
+        $conn = $this->mysql->conectar();  // Obtenemos la conexión
 
-    $consulta = "UPDATE citas SET estado = 'Confirmado' WHERE idcitas = $idcita";
-    $resultado = $this->mysql->efectuarConsulta($consulta);
-    $this->mysql->desconectar();
-    return $resultado; // true si se ejecutó correctamente, false si no
+        $consulta = "UPDATE citas SET estado = 'Confirmado' WHERE idcitas = $idcita";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado; // true si se ejecutó correctamente, false si no
+    }
+
+    public function actualizarCita($idcita, $fecha, $servicio, $estado) {
+        $this->mysql->conectar();
+        $consulta = "UPDATE citas SET 
+            fecha = '$fecha',
+            servicios_idservicios = $servicio,
+            estado = '$estado'
+            WHERE idcitas = $idcita";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
     }
 
     public function completarCita($idcita) {

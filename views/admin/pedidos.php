@@ -14,10 +14,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Pedidos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/pedidos.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
         :root {
             --gold-color: #f1c40f;
@@ -256,43 +256,42 @@
         <div class="pedidos-container">
             <!-- Tabla de Pedidos -->
             <div class="table-section">
-                <div class="table-responsive">
-                    <table id="tabla-pedidos" class="table responsive nowrap">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Fecha</th>
-                                <th>Total</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while($pedido = mysqli_fetch_assoc($pedidos)): ?>
-                            <tr class="active">
-                                <td><?= $pedido["idpedidos"] ?></td>
-                                <td><?= $pedido["nombres"] ?></td>
-                                <td><?= $pedido["apellidos"] ?></td>
-                                <td><?= $pedido["fecha"] ?></td>
-                                <td>$<?= $pedido["total"] ?></td>
-                                <td><span class="badge badge-pending"><?= $pedido["estado"] ?></span></td>
-                                <td class="actions">
-                                    <button class="btn btn-primary btn-sm verDetallePedido" data-id="<?= $pedido["idpedidos"] ?>">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-success btn-sm">
-                                        <i class="fas fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
+                <div class="pedidos-table">
+                    <div class="table-responsive">
+                        <table id="tabla-pedidos" class="table responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="text-gold">#</th>
+                                    <th class="text-gold">Nombres</th>
+                                    <th class="text-gold">Apellidos</th>
+                                    <th class="text-gold">Fecha</th>
+                                    <th class="text-gold">Total</th>
+                                    <th class="text-gold">Estado</th>
+                                    <th class="text-gold">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-white">
+                                <?php while($pedido = mysqli_fetch_assoc($pedidos)): ?>
+                                <tr>
+                                    <td class="text-white"><?= $pedido["idpedidos"] ?></td>
+                                    <td class="text-white"><?= $pedido["nombres"] ?></td>
+                                    <td class="text-white"><?= $pedido["apellidos"] ?></td>
+                                    <td class="text-white"><?= $pedido["fecha"] ?></td>
+                                    <td class="text-white">$<?= number_format($pedido["total"], 2) ?></td>
+                                    <td><span class="badge badge-pending text-white"><?= $pedido["estado"] ?></span></td>
+                                    <td class="actions">
+                                        <button class="btn btn-primary btn-sm verDetallePedido" data-id="<?= $pedido["idpedidos"] ?>">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
