@@ -1,11 +1,21 @@
 let fechasSeleccionadas = [];
 let mesActual = new Date().getMonth();
 let anioActual = new Date().getFullYear();
+let fechasDeshabilitadasGlobal = [];
 
 // Cargar las fechas deshabilitadas desde el servidor
 function cargarFechasDeshabilitadas() {
     return fetch("/peluqueria/controllers/fechasDeshabilitadas.php")
         .then(response => response.json())
+        .then(data => {
+            // Asegurar que el dato es un array de strings y limpio espacios si los hubiera
+            if (Array.isArray(data)) {
+                return data.map(f => f.trim());
+            } else {
+                console.error('El formato de las fechas deshabilitadas no es un array:', data);
+                return [];
+            }
+        })
         .catch(error => {
             console.error('Error al cargar las fechas deshabilitadas:', error);
             return [];
@@ -63,6 +73,7 @@ function generarCalendario(fechasDeshabilitadas) {
         // Deshabilitar fechas pasadas
         if (fecha < hoy) {
             celda.classList.add('deshabilitado');
+            celda.style.cursor = 'not-allowed';
         }
 
         // Deshabilitar fechas desde el servidor
@@ -71,7 +82,13 @@ function generarCalendario(fechasDeshabilitadas) {
             celda.style.cursor = 'not-allowed';
         }
 
-        // Selección de fechas
+        // Marcar fechas seleccionadas previamente
+        if (fechasSeleccionadas.includes(fechaTexto) && !celda.classList.contains('deshabilitado')) {
+            celda.classList.add('active');
+            celda.style.cursor = 'pointer';
+        }
+
+        // Selección de fechas (solo si no está deshabilitado ni es pasado)
         celda.addEventListener('click', () => {
             if (fecha < hoy || celda.classList.contains('deshabilitado')) return;
 
@@ -97,7 +114,7 @@ document.getElementById('mes-anterior').addEventListener('click', () => {
         mesActual = 11;
         anioActual--;
     }
-    cargarFechasDeshabilitadas().then(generarCalendario);
+    generarCalendario(fechasDeshabilitadasGlobal);
 });
 
 // Navegar al mes siguiente
@@ -107,12 +124,16 @@ document.getElementById('mes-siguiente').addEventListener('click', () => {
         mesActual = 0;
         anioActual++;
     }
-    cargarFechasDeshabilitadas().then(generarCalendario);
+    generarCalendario(fechasDeshabilitadasGlobal);
 });
 
 // Inicializar calendario
 document.addEventListener('DOMContentLoaded', () => {
-    cargarFechasDeshabilitadas().then(generarCalendario);
+    cargarFechasDeshabilitadas().then(fechas => {
+        fechasDeshabilitadasGlobal = fechas;
+        console.log('Fechas deshabilitadas recibidas:', fechasDeshabilitadasGlobal);
+        generarCalendario(fechasDeshabilitadasGlobal);
+    });
 });
 
 // Manejo del formulario
