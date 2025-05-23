@@ -323,7 +323,7 @@ class consultas
         return $resultado;
     }
     public function confirmarCita($idcita){
-        $conn = $this->mysql->conectar();  // Obtenemos la conexión
+        $this->mysql->conectar();  // Obtenemos la conexión
 
         $consulta = "UPDATE citas SET estado = 'Confirmado' WHERE idcitas = $idcita";
         $resultado = $this->mysql->efectuarConsulta($consulta);
@@ -344,7 +344,7 @@ class consultas
     }
 
     public function completarCita($idcita) {
-        $conn = $this->mysql->conectar();  // Obtenemos la conexión
+        $this->mysql->conectar();  // Obtenemos la conexión
     
         $consulta = "UPDATE citas SET estado = 'Completado' WHERE idcitas = $idcita";
         $resultado = $this->mysql->efectuarConsulta($consulta);
@@ -353,7 +353,7 @@ class consultas
     }
 
     public function cancelarCita($idcita) {
-        $conn = $this->mysql->conectar();  // Obtenemos la conexión
+        $this->mysql->conectar();  // Obtenemos la conexión
     
         $consulta = "UPDATE citas SET estado = 'Cancelado' WHERE idcitas = $idcita";
         $resultado = $this->mysql->efectuarConsulta($consulta);
