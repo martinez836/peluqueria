@@ -59,6 +59,7 @@
           <img src="../../<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre']; ?>" class="img-fluid mb-3" style="max-height: 200px; object-fit: contain;">
           <h3 class="fw-bold"><?php echo $producto['nombre']; ?></h3>
           <p><?php echo $producto['descripcion']; ?></p>
+          <p>Cantidad Disponible:     <?php echo $producto['stock']; ?></p>
           <span class="precio fw-bold" style="color: goldenrod;">$<?php echo $producto['precio']; ?></span>
           <div class="mt-3 d-flex justify-content-center align-items-center gap-2">
             <input type="number" placeholder="Cantidad" min="1" value="1" class="form-control form-control-sm w-50">
@@ -176,8 +177,11 @@
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
         <button type="button" class="btn btn-danger" onclick="vaciarCarrito()">Vaciar Carrito</button>
         <button 
-          type="button" class="btn btn-primary" id="btn-finalizar-compra" data-sesion="<?= isset($_SESSION['documento']) ? '1' : '0' ?>"
-          > Finalizar Compra
+          type="button" class="btn btn-primary" id="btn-finalizar-compra" 
+          data-sesion="<?= isset($_SESSION['documento']) ? '1' : '0' ?>"
+          data-documento="<?= isset($_SESSION['documento']) ? $_SESSION['documento'] : '' ?>"
+        >
+          Finalizar Compra
         </button>
       </div>
     </div>

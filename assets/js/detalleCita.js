@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const estado = btn.getAttribute("data-estado");
       const email = btn.getAttribute("data-email");
       const telefono = btn.getAttribute("data-telefono");
+      const fechaNacimiento = btn.getAttribute("data-fechaNacimiento");
 
       // Limpiar el contenedor
       contenedor.innerHTML = "";
@@ -104,6 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const p3 = document.createElement("p");
       p3.innerHTML = `<strong>Teléfono:</strong> ${telefono}`;
       clienteInfo.appendChild(p3);
+
+      const fechaNace = document.createElement("p");
+      fechaNace.innerHTML = `<strong>Fecha de Nacimiento:</strong> ${fechaNacimiento}`;
+      clienteInfo.appendChild(fechaNace);
 
       const p4 = document.createElement("p");
       const badge = document.createElement("span");

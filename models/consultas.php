@@ -63,26 +63,26 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
-    public function crear_servicio($nombre,$descripcion)
+    public function crear_servicio($nombreServicio,$descripcion)
     {
         $this->mysql->conectar();
         $consulta = 
         "
-            Insert into servicios (nombre,descripcion) values 
+            Insert into servicios (nombreServicio, descripcion) values 
             (
-                '$nombre',
+                '$nombreServicio',
                 '$descripcion'
             );
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
-            $this->mysql->desconectar();
-            return $resultado;
+        $this->mysql->desconectar();
+        return $resultado;
     }
 
     public function traer_servicios()
     {
         $this->mysql->conectar();
-        $consulta = "SELECT nombreServicio, idservicios from servicios;";
+        $consulta = "SELECT * from servicios;";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
@@ -315,7 +315,7 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Select clientes.nombres,clientes.telefono,clientes.correo,clientes.apellidos,servicios.nombreServicio, citas.* from citas join clientes on clientes.documento = clientes_documento 
+            Select clientes.nombres,clientes.telefono,clientes.correo,clientes.apellidos,clientes.fechaNacimiento,servicios.nombreServicio, citas.* from citas join clientes on clientes.documento = clientes_documento 
             JOIN servicios ON citas.servicios_idservicios = servicios.idservicios;
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
@@ -394,5 +394,91 @@ class consultas
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
+    }
+
+    public function actualizarStock($idProducto, $cantidad) {
+        $this->mysql->conectar();
+        $consulta = "UPDATE productos SET stock = stock - $cantidad WHERE idproductos = $idProducto";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
+    public function traerProductosStockBajo($limite = 5)
+    {
+        $this->mysql->conectar();
+        $consulta = "SELECT idproductos as id, nombre, descripcion, precio, stock FROM productos WHERE stock <= $limite ORDER BY stock ASC";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
+    public function obtenerProductoPorId($id)
+    {
+        $this->mysql->conectar();
+        $consulta = "SELECT idproductos as id, nombre, descripcion, precio, imagen, stock FROM productos WHERE idproductos = $id";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $producto = mysqli_fetch_assoc($resultado);
+        $this->mysql->desconectar();
+        return $producto;
+    }
+
+    public function actualizarProducto($id, $nombre, $descripcion, $precio, $stock, $imagen = null)
+    {
+        $this->mysql->conectar();
+        
+        $set_imagen = "";
+        if ($imagen !== null) {
+            $set_imagen = ", imagen = '$imagen'";
+        }
+        
+        $consulta = "UPDATE productos SET 
+            nombre = '$nombre',
+            descripcion = '$descripcion',
+            precio = $precio,
+            stock = $stock
+            $set_imagen
+            WHERE idproductos = $id";
+            
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
+    public function actualizar_servicio($id, $nombreServicio, $descripcion) {
+        try {
+            $this->mysql->conectar();
+            $conexion = $this->mysql->getConexion();
+            
+            if (!$conexion) {
+                throw new Exception("No se pudo establecer la conexión con la base de datos");
+            }
+
+            $sql = "UPDATE servicios SET nombreServicio = ?, descripcion = ? WHERE idservicios = ?";
+            $stmt = $conexion->prepare($sql);
+            
+            if (!$stmt) {
+                throw new Exception("Error al preparar la consulta: " . $conexion->error);
+            }
+
+            $stmt->bind_param("ssi", $nombreServicio, $descripcion, $id);
+            $resultado = $stmt->execute();
+            
+            if (!$resultado) {
+                throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
+            }
+
+            $stmt->close();
+            $this->mysql->desconectar();
+            return $resultado;
+        } catch (Exception $e) {
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if ($this->mysql->getConexion()) {
+                $this->mysql->desconectar();
+            }
+            throw new Exception("Error al actualizar el servicio: " . $e->getMessage());
+        }
     }
 };?>
