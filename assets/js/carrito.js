@@ -351,3 +351,168 @@ document.addEventListener('DOMContentLoaded', function() {
         btnFinalizarCompra.addEventListener('click', verificarSesionYComprar);
     }
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const botonesAgregar = document.querySelectorAll('.btn-agregar');
+    const contenedorCarrito = document.getElementById('carrito');
+    const listaCarrito = document.getElementById('lista-carrito');
+    const btnVaciarCarrito = document.getElementById('vaciar-carrito');
+    const btnFinalizarCompra = document.getElementById('finalizar-compra');
+
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    botonesAgregar.forEach(boton => {
+        boton.addEventListener('click', agregarAlCarrito);
+    });
+
+    btnVaciarCarrito.addEventListener('click', () => {
+        carrito = [];
+        actualizarCarrito();
+        mostrarToast('Carrito vaciado');
+    });
+
+    btnFinalizarCompra.addEventListener('click', () => {
+        if (carrito.length === 0) {
+            mostrarToast('El carrito está vacío');
+            return;
+        }
+
+        fetch('finalizar_compra.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(carrito),
+        })
+            .then(response => response.json())
+            .then(data => {
+                mostrarToast(data.message);
+                if (data.success) {
+                    carrito = [];
+                    actualizarCarrito();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarToast('Error al finalizar la compra');
+            });
+    });
+
+    function agregarAlCarrito(e) {
+        const producto = e.target.closest('.producto');
+        const id = producto.dataset.id;
+        const nombre = producto.querySelector('h3').textContent;
+        const precio = parseFloat(producto.querySelector('.precio').textContent.replace('$', ''));
+        const imagen = producto.querySelector('img').src;
+        const cantidadInput = producto.querySelector('input[type="number"]');
+        const cantidad = parseInt(cantidadInput.value);
+        const stock = parseInt(producto.dataset.stock);
+
+        if (cantidad > stock) {
+            mostrarToast(`No puedes agregar más de ${stock} unidades`);
+            return;
+        }
+
+        const productoExistente = carrito.find(item => item.id === id);
+
+        if (productoExistente) {
+            if (productoExistente.cantidad + cantidad > stock) {
+                mostrarToast(`No puedes agregar más de ${stock} unidades en total`);
+                return;
+            }
+            productoExistente.cantidad += cantidad;
+        } else {
+            carrito.push({ id, nombre, precio, imagen, cantidad, stock });
+        }
+
+        actualizarCarrito();
+        mostrarToast('Producto agregado al carrito');
+    }
+
+    function actualizarCarrito() {
+        listaCarrito.innerHTML = '';
+        carrito.forEach(producto => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td><img src="${producto.imagen}" width="50"></td>
+                <td>${producto.nombre}</td>
+                <td>$${producto.precio}</td>
+                <td>
+                    <input type="number" value="${producto.cantidad}" min="1" max="${producto.stock}" data-id="${producto.id}" class="input-cantidad">
+                </td>
+                <td>$${(producto.precio * producto.cantidad).toFixed(2)}</td>
+                <td><button class="btn btn-danger btn-sm eliminar-producto" data-id="${producto.id}">Eliminar</button></td>
+            `;
+            listaCarrito.appendChild(fila);
+        });
+
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        agregarEventosCantidad();
+        agregarEventosEliminar();
+    }
+
+    function agregarEventosCantidad() {
+        document.querySelectorAll('.input-cantidad').forEach(input => {
+            input.addEventListener('change', function () {
+                const id = this.dataset.id;
+                const nuevaCantidad = parseInt(this.value);
+                const producto = carrito.find(item => item.id === id);
+
+                if (nuevaCantidad > producto.stock) {
+                    mostrarToast(`Solo hay ${producto.stock} unidades disponibles`);
+                    this.value = producto.stock;
+                    return;
+                }
+
+                if (nuevaCantidad < 1) {
+                    this.value = producto.cantidad;
+                    return;
+                }
+
+                producto.cantidad = nuevaCantidad;
+                actualizarCarrito();
+            });
+        });
+    }
+
+    function agregarEventosEliminar() {
+        document.querySelectorAll('.eliminar-producto').forEach(boton => {
+            boton.addEventListener('click', function () {
+                const id = this.dataset.id;
+                carrito = carrito.filter(item => item.id !== id);
+                actualizarCarrito();
+                mostrarToast('Producto eliminado');
+            });
+        });
+    }
+
+    function mostrarToast(mensaje) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = mensaje;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('visible');
+        }, 100);
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+
+    // Inicializar carrito al cargar
+    actualizarCarrito();
+
+    // Desactivar botones si el stock es 0
+    document.querySelectorAll('.producto').forEach(producto => {
+        const stock = parseInt(producto.dataset.stock);
+        const botonAgregar = producto.querySelector('.btn-agregar');
+        if (stock === 0) {
+            botonAgregar.disabled = true;
+            botonAgregar.textContent = 'Sin stock';
+            botonAgregar.classList.add('btn-secondary');
+            botonAgregar.classList.remove('btn-primary');
+        }
+    });
+});
