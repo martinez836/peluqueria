@@ -62,7 +62,7 @@
           <p>Cantidad Disponible:     <?php echo $producto['stock']; ?></p>
           <span class="precio fw-bold" style="color: goldenrod;">$<?php echo $producto['precio']; ?></span>
           <div class="mt-3 d-flex justify-content-center align-items-center gap-2">
-            <input type="number" placeholder="Cantidad" min="1" value="1" class="form-control form-control-sm w-50">
+            <input type="number" placeholder="Cantidad" min="1" max="<?php echo $producto['stock']; ?>" onkeydown="return false;" value="1" class="form-control form-control-sm w-50">
             <button class="btn btn-secondary btn-sm btn-agregar">Agregar</button>
           </div>
         </div>
