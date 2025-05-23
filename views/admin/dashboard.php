@@ -8,6 +8,7 @@ $citasPendientes = $consultas->traerCitaPendiente();
 $pedidosPendientes = $consultas->traerPedidoPendiente();
 $clientes = $consultas->traerConteoCliente();
 $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
+$productosStockBajo = $consultas->traerProductosStockBajo();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,7 +24,56 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
     <link rel="stylesheet" href="../../assets/css/admin.css">
     <link rel="stylesheet" href="../../assets/css/calendario.css">
     <style>
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
         
+        .stat-card {
+            flex: 1;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: #1E1E1E;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #FFD700;
+        }
+        
+        .stat-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            margin: 0.5rem 0;
+            color: #fff;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -59,6 +109,9 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
         <li class="nav-item">
             <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./servicios.php"><i class="fas fa-cut"></i> Servicios</a>
+        </li>
         <li class="nav-item mt-3">
             <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
         </li>
@@ -78,27 +131,21 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
         <!-- Stats Cards -->
         <div class="stats-container">
             <div class="stat-card">
-                <i class="fas fa-calendar-check"></i>
+                <i class="fas fa-calendar-check" style="color: #FFD700;"></i>
                 <h3><?php echo $citasPendientes; ?></h3>
                 <p>Citas Pendientes</p>
             </div>
             
             <div class="stat-card">
-                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-shopping-cart" style="color: #FFD700;"></i>
                 <h3><?php echo $pedidosPendientes; ?></h3>
                 <p>Nuevos Pedidos</p>
             </div>
             
             <div class="stat-card">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-users" style="color: #FFD700;"></i>
                 <h3><?php echo $clientes; ?></h3>
                 <p>Clientes Existentes</p>
-            </div>
-            
-            <div class="stat-card">
-                <i class="fas fa-dollar-sign"></i>
-                <h3>$2.5M</h3>
-                <p>Ventas Mensuales</p>
             </div>
         </div>
         
@@ -225,58 +272,50 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
             </div>
         </div>
         
-        <!-- Stock Bajo y Últimos Productos -->
+        <!-- Stock Bajo y Recordatorios -->
         <div class="row mt-4">
+            <!-- Productos con Stock Bajo -->
             <div class="col-lg-6">
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <h5 class="card-title"><i class="fas fa-exclamation-triangle me-2"></i> Productos con Stock Bajo</h5>
+                        <h5 class="card-title">
+                            <i class="fas fa-exclamation-triangle me-2 text-warning"></i> 
+                            Productos con Stock Bajo
+                        </h5>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-dark table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Categoría</th>
-                                    <th>Stock Actual</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Shampoo Hidratante</td>
-                                    <td>Cabello</td>
-                                    <td><span class="text-danger">2 uds</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-gold">Reponer</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Aceite para Barba</td>
-                                    <td>Cuidado Facial</td>
-                                    <td><span class="text-danger">3 uds</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-gold">Reponer</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tinte Color #5</td>
-                                    <td>Coloración</td>
-                                    <td><span class="text-danger">1 ud</span></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-gold">Reponer</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="list-group list-group-flush bg-transparent">
+                        <?php while($producto = mysqli_fetch_assoc($productosStockBajo)): ?>
+                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1 text-gold"><?= $producto['nombre'] ?></h6>
+                                <small class="text-danger">Stock: <?= $producto['stock'] ?></small>
+                            </div>
+                            <p class="mb-1">Precio: $<?= number_format($producto['precio'], 2) ?></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: <?= $producto['id'] ?></small>
+                                <?php if($producto['stock'] <= 5): ?>
+                                    <span class="badge bg-danger">Crítico</span>
+                                <?php else: ?>
+                                    <span class="badge bg-warning">Bajo</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php endwhile; ?>
                     </div>
                 </div>
             </div>
             
-            <div class="col-lg-6">
+            <!-- Separador invisible para mejor espaciado -->
+            <div class="col-lg-1"></div>
+            
+            <!-- Recordatorios -->
+            <div class="col-lg-5">
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <h5 class="card-title"><i class="fas fa-bell me-2"></i> Recordatorios</h5>
+                        <h5 class="card-title">
+                            <i class="fas fa-bell me-2 text-warning"></i> 
+                            Recordatorios
+                        </h5>
                     </div>
                     <div class="list-group list-group-flush bg-transparent">
                         <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">

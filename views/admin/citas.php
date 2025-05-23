@@ -27,7 +27,7 @@
 </head>
 <body>
     <!-- Header -->
-<header class="main-header">
+    <header class="main-header">
         <button id="sidebarToggle">
             <i class="fas fa-bars"></i>
         </button>
@@ -38,31 +38,34 @@
     </header>
     
     <!-- Sidebar -->
-<nav id="sidebar" >
-    <div class="user-info">
-        <img src="/api/placeholder/150/150" alt="Admin">
-        <h5>Administrador</h5>
-        <p>Administrador Principal</p>
-    </div>
-    <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-            <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
-        </li>
-        <li class="nav-item mt-3">
-            <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
-        </li>
-    </ul>
-</nav>
-    
+    <nav id="sidebar" >
+        <div class="user-info">
+            <img src="/api/placeholder/150/150" alt="Admin">
+            <h5>Administrador</h5>
+            <p>Administrador Principal</p>
+        </div>
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="./dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./citas.php"><i class="fas fa-calendar-check"></i> Citas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./pedidos.php"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./servicios.php"><i class="fas fa-cut"></i> Servicios</a>
+            </li>
+            <li class="nav-item mt-3">
+                <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
+            </li>
+        </ul>
+    </nav>
+
     <!-- Main Content -->
     <div class="main-content">
         <div class="content-header">
@@ -130,14 +133,15 @@
                                     <td class="text-white"><?= $cita["nombreServicio"] ?></td>
                                     <td><span class="badge badge-pending text-white"><?= $cita["estado"] ?></span></td>
                                     <td class="actions">
-                                        <button  class="btn btn-primary btn-sm verDetalle" data-id="<?= $cita['idcitas'] ?>"
+                                        <button class="btn btn-primary btn-sm verDetalle" data-id="<?= $cita['idcitas'] ?>"
                                             data-nombre="<?= $cita['nombres'] ?>"
                                             data-apellido="<?= $cita['apellidos'] ?>"
                                             data-fecha="<?= $cita['fecha'] ?>"
                                             data-servicio="<?= $cita['nombreServicio'] ?>"
                                             data-estado="<?= $cita['estado'] ?>"
                                             data-email="<?= $cita['correo'] ?>"
-                                            data-telefono="<?= $cita['telefono'] ?>">
+                                            data-telefono="<?= $cita['telefono'] ?>"
+                                            data-fechaNacimiento="<?= $cita['fechaNacimiento'] ?>">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         <button class="btn btn-success btn-sm" id="editarCita">
@@ -149,7 +153,7 @@
                                     </td>
                                 </tr>
                                 <!-- PHP generará más filas dinámicamente -->
-                                 <?php endwhile; ?>
+                                <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>
@@ -158,19 +162,12 @@
             </div>
             
             <!-- Detalles de la Cita (Derecha) -->
-                <div class="detalles-section">
-                    <div class="cita-detalles" id="detallesCita">
-                    </div>
+            <div class="detalles-section">
+                <div class="cita-detalles" id="detallesCita">
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../../assets/js/detalleCita.js"></script>
-        <script src="../../assets/js/editarCita.js"></script>
-        <script src="../../assets/js/citas.js"></script>
-
+    </div>
         <!-- Modal para editar cita -->
         <div class="modal fade" id="editarCitaModal" tabindex="-1" aria-labelledby="editarCitaModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -223,5 +220,11 @@
                 </div>
             </div>
         </div>
-    </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/detalleCita.js"></script>
+        <script src="../../assets/js/editarCita.js"></script>
+        <script src="../../assets/js/citas.js"></script>
+</body>
 </html>

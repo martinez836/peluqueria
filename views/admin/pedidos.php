@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/pedidos.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    
     <style>
         :root {
             --gold-color: #f1c40f;
@@ -215,6 +216,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./productos.php"><i class="fas fa-box-open"></i> Productos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./servicios.php"><i class="fas fa-cut"></i> Servicios</a>
         </li>
         <li class="nav-item mt-3">
             <a class="nav-link text-danger" href="../usuario/index.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
