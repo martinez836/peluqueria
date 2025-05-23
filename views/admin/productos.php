@@ -16,111 +16,7 @@
     <link rel="stylesheet" href="../../assets/css/tablas.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <style>
-        /* Estilos para la tabla */
-        .table {
-            color: #fff !important;
-            background-color: #1a1a1a !important;
-            margin-bottom: 0 !important;
-        }
-        
-        /* Contenedor de la tabla */
-        .table-responsive {
-            background-color: #1a1a1a !important;
-            border-radius: 5px;
-            overflow: hidden;
-        }
 
-        /* Encabezados */
-        .table thead th {
-            background-color: rgba(241, 196, 15, 0.1) !important;
-            color: #f1c40f !important;
-            font-weight: 500 !important;
-            border: none !important;
-            padding: 15px 10px !important;
-        }
-
-        /* Celdas del cuerpo */
-        .table tbody td {
-            color: #fff !important;
-            background-color: #1a1a1a !important;
-            border-bottom: 1px solid #2c2c2c !important;
-            padding: 12px 10px !important;
-        }
-
-        /* Controles de DataTables */
-        .dataTables_wrapper {
-            background-color: #1a1a1a !important;
-            padding: 15px !important;
-            border-radius: 5px !important;
-        }
-
-        /* Selector de registros y búsqueda */
-        .dataTables_length,
-        .dataTables_filter {
-            color: #fff !important;
-            margin-bottom: 15px !important;
-        }
-
-        .dataTables_length select,
-        .dataTables_filter input {
-            background-color: #2c2c2c !important;
-            border: 1px solid #3c3c3c !important;
-            color: #fff !important;
-            border-radius: 4px !important;
-            padding: 5px 10px !important;
-        }
-
-        /* Paginación */
-        .dataTables_paginate {
-            margin-top: 15px !important;
-        }
-
-        .paginate_button {
-            padding: 5px 10px !important;
-            margin: 0 2px !important;
-            border-radius: 4px !important;
-            background-color: #2c2c2c !important;
-            border: none !important;
-            color: #fff !important;
-        }
-
-        .paginate_button.current {
-            background-color: #f1c40f !important;
-            color: #000 !important;
-        }
-
-        .paginate_button:hover {
-            background-color: #3c3c3c !important;
-            color: #fff !important;
-        }
-
-        /* Info de registros */
-        .dataTables_info {
-            color: #fff !important;
-            margin-top: 15px !important;
-        }
-
-        /* Botones de acciones */
-        .btn-sm {
-            padding: 5px 10px !important;
-            margin: 0 2px !important;
-            border-radius: 4px !important;
-        }
-
-        /* Estado pendiente */
-        .badge-pending {
-            background-color: #f39c12 !important;
-            color: #fff !important;
-            padding: 5px 10px !important;
-            border-radius: 4px !important;
-        }
-
-        /* Fila activa/hover */
-        .table tbody tr:hover td {
-            background-color: #2c2c2c !important;
-        }
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -137,7 +33,7 @@
     <!-- Sidebar -->
     <nav id="sidebar" >
         <div class="user-info">
-            <img src="/api/placeholder/150/150" alt="Admin">
+
             <h5>Administrador</h5>
             <p>Administrador Principal</p>
         </div>

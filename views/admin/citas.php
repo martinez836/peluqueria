@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/citas.css">
     <style>
@@ -40,7 +42,6 @@
     <!-- Sidebar -->
     <nav id="sidebar" >
         <div class="user-info">
-            <img src="/api/placeholder/150/150" alt="Admin">
             <h5>Administrador</h5>
             <p>Administrador Principal</p>
         </div>
@@ -220,11 +221,156 @@
                 </div>
             </div>
         </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../../assets/js/detalleCita.js"></script>
-        <script src="../../assets/js/editarCita.js"></script>
-        <script src="../../assets/js/citas.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/detalleCita.js"></script>
+    <script src="../../assets/js/editarCita.js"></script>
+    <script src="../../assets/js/citas.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Función para manejar el detalle de la cita
+        document.querySelectorAll('.verDetalle').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const data = this.dataset;
+                const detallesCita = document.getElementById('detallesCita');
+                
+                // HTML para los detalles de la cita
+                const html = `
+                    <h3 class="text-gold mb-4">Detalles de la Cita</h3>
+                    <div class="info-group">
+                        <p><strong>Cliente:</strong> ${data.nombre} ${data.apellido}</p>
+                        <p><strong>Fecha:</strong> ${data.fecha}</p>
+                        <p><strong>Servicio:</strong> ${data.servicio}</p>
+                        <p><strong>Estado:</strong> ${data.estado}</p>
+                        <p><strong>Email:</strong> ${data.email}</p>
+                        <p><strong>Teléfono:</strong> ${data.telefono}</p>
+                    </div>
+                    <div class="actions-group mt-4">
+                        <button class="btn btn-success" onclick="confirmarCita(${data.id})">Confirmar</button>
+                        <button class="btn btn-primary" onclick="completarCita(${data.id})">Completar</button>
+                        <button class="btn btn-danger" onclick="cancelarCita(${data.id})">Cancelar</button>
+                    </div>
+                `;
+                
+                detallesCita.innerHTML = html;
+            });
+        });
+    });
+
+    // Función para confirmar cita
+    function confirmarCita(idCita) {
+        Swal.fire({
+            title: '¿Confirmar esta cita?',
+            text: "¿Estás seguro de que deseas confirmar esta cita?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, confirmar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('../../controllers/confirmarCita.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'idcita=' + idCita
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        Swal.fire({
+                            title: '¡Confirmada!',
+                            text: 'La cita ha sido confirmada',
+                            icon: 'success',
+                            confirmButtonColor: '#daa520'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    // Función para completar cita
+    function completarCita(idCita) {
+        Swal.fire({
+            title: '¿Completar esta cita?',
+            text: "¿Estás seguro de que deseas marcar esta cita como completada?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, completar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('../../controllers/completarCita.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'idcita=' + idCita
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        Swal.fire({
+                            title: '¡Completada!',
+                            text: 'La cita ha sido completada',
+                            icon: 'success',
+                            confirmButtonColor: '#daa520'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    // Función para cancelar cita
+    function cancelarCita(idCita) {
+        Swal.fire({
+            title: '¿Cancelar esta cita?',
+            text: "¿Estás seguro de que deseas cancelar esta cita?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'No, mantener'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('../../controllers/cancelarCita.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'idcita=' + idCita
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        Swal.fire({
+                            title: '¡Cancelada!',
+                            text: 'La cita ha sido cancelada',
+                            icon: 'success',
+                            confirmButtonColor: '#daa520'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    }
+                });
+            }
+        });
+    }
+    </script>
 </body>
 </html>

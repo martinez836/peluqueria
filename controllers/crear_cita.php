@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../models/consultas.php';
 $consultas = new consultas();
 if(
@@ -21,9 +22,9 @@ if(
     // Verificar si la cita se creó correctamente
     // Redirigir a la página de citas o mostrar un mensaje de éxito
     if($resultado) {
-        
-        header("Location: ../views/usuario/index.php");
-        
+        $_SESSION['cita_registrada'] = true;
+        header("Location: ../views/usuario/agendarCita.php");
+        exit();
     } else {
         echo "Error al crear la cita";
     }

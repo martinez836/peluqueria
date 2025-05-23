@@ -1,24 +1,15 @@
 <?php
+header('Content-Type: application/json');
 require_once '../models/consultas.php';
 
-header('Content-Type: application/json');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $idpedido = $_POST['idpedido'] ?? null;
-    $estado = $_POST['estado'] ?? null;
-
-    if (!$idpedido || !$estado) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Faltan datos requeridos'
-        ]);
-        exit;
-    }
-
+if(isset($_POST['idpedido']) && isset($_POST['estado'])) {
+    $idpedido = $_POST['idpedido'];
+    $estado = $_POST['estado'];
+    
     $consultas = new consultas();
     $resultado = $consultas->actualizarEstadoPedido($idpedido, $estado);
-
-    if ($resultado) {
+    
+    if($resultado) {
         echo json_encode([
             'success' => true,
             'message' => 'Estado del pedido actualizado correctamente'
@@ -32,6 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido'
+        'message' => 'Faltan datos requeridos'
     ]);
 } 

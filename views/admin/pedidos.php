@@ -18,172 +18,8 @@
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/pedidos.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    
-    <style>
-        :root {
-            --gold-color: #f1c40f;
-            --dark-bg: #1e1e1e;
-            --darker-bg: #121212;
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            color: #f8f8f8;
-        }
-
-        .pedidos-container {
-            padding: 20px;
-        }
-
-        .table-section {
-            background-color: #2c2c2c;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            border-left: 4px solid var(--gold-color);
-            margin-bottom: 20px;
-        }
-
-        .detalles-section {
-            background-color: #2c2c2c;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            border-left: 4px solid var(--gold-color);
-            margin-top: 20px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .table thead th {
-            background-color: #242424;
-            color: var(--gold-color);
-            padding: 12px 15px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
-        }
-
-        .table td {
-            padding: 12px 15px;
-            border-top: 1px solid #3a3a3a;
-            color: #f8f8f8;
-            vertical-align: middle;
-        }
-
-        .table tbody tr {
-            background-color: #2c2c2c;
-        }
-
-        .table tbody tr:hover {
-            background-color: #333;
-        }
-
-        .table tbody tr:nth-child(even) {
-            background-color: #262626;
-        }
-
-        .detalles-section .table {
-            background-color: #2c2c2c;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .detalles-section .table th:first-child,
-        .detalles-section .table td:first-child {
-            padding-left: 20px;
-        }
-
-        .detalles-section .table th:last-child,
-        .detalles-section .table td:last-child {
-            padding-right: 20px;
-        }
-
-        .badge-pending {
-            background-color: #3498db;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .badge-confirmado {
-            background-color: #3498db;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .badge-entregado {
-            background-color: #2ecc71;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .badge-cancelado {
-            background-color: #e74c3c;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background-color: #3498db;
-            color: #fff;
-        }
-
-        .btn-success {
-            background-color: #2ecc71;
-            color: #fff;
-        }
-
-        .btn-danger {
-            background-color: #e74c3c;
-            color: #fff;
-        }
-
-        .btn-gold {
-            background-color: var(--gold-color);
-            color: #000;
-        }
-
-        .actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .pedido-detalles {
-            color: #f8f8f8;
-        }
-
-        .pedido-detalles h2 {
-            color: var(--gold-color);
-            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
@@ -200,7 +36,7 @@
     <!-- Sidebar -->
     <nav id="sidebar" class="bg-dark">
     <div class="user-info">
-        <img src="/api/placeholder/150/150" alt="Admin">
+
         <h5>Administrador</h5>
         <p>Administrador Principal</p>
     </div>
@@ -320,7 +156,82 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../assets/js/pedidos.js"></script>
     <script src="../../assets/js/detallePedido.js"></script>
+
+    <script>
+    function cambiarEstado(btn) {
+        const estado = btn.dataset.estado;
+        const idPedido = btn.closest('.acciones-estado').dataset.pedidoId;
+        let titulo, texto, icono;
+
+        switch(estado) {
+            case 'confirmado':
+                titulo = '¿Confirmar este pedido?';
+                texto = '¿Estás seguro de que deseas confirmar este pedido?';
+                icono = 'question';
+                break;
+            case 'entregado':
+                titulo = '¿Marcar como entregado?';
+                texto = '¿Estás seguro de que deseas marcar este pedido como entregado?';
+                icono = 'question';
+                break;
+            case 'cancelado':
+                titulo = '¿Cancelar este pedido?';
+                texto = '¿Estás seguro de que deseas cancelar este pedido?';
+                icono = 'warning';
+                break;
+        }
+
+        Swal.fire({
+            title: titulo,
+            text: texto,
+            icon: icono,
+            showCancelButton: true,
+            confirmButtonColor: estado === 'cancelado' ? '#d33' : '#28a745',
+            cancelButtonColor: estado === 'cancelado' ? '#3085d6' : '#d33',
+            confirmButtonText: 'Sí, confirmar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('../../controllers/actualizarEstadoPedido.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `idpedido=${idPedido}&estado=${estado}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        let mensajeExito;
+                        switch(estado) {
+                            case 'confirmado':
+                                mensajeExito = 'El pedido ha sido confirmado';
+                                break;
+                            case 'entregado':
+                                mensajeExito = 'El pedido ha sido marcado como entregado';
+                                break;
+                            case 'cancelado':
+                                mensajeExito = 'El pedido ha sido cancelado';
+                                break;
+                        }
+
+                        Swal.fire({
+                            title: '¡Completado!',
+                            text: mensajeExito,
+                            icon: 'success',
+                            confirmButtonColor: '#daa520'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    }
+                });
+            }
+        });
+    }
+    </script>
 </body>
 </html>

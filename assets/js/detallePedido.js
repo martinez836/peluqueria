@@ -6,7 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
     function cambiarEstado(boton) {
         const estado = boton.getAttribute('data-estado');
         if (!pedidoActualId) {
-            alert('Por favor, seleccione un pedido primero');
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Por favor, seleccione un pedido primero',
+                icon: 'error',
+                confirmButtonColor: '#daa520'
+            });
             return;
         }
 
@@ -21,22 +26,38 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert(data.message);
-                // Actualizar el estado en el detalle visible
-                const badge = document.querySelector(".info-pedido .badge");
-                if (badge) {
-                    badge.textContent = estado.charAt(0).toUpperCase() + estado.slice(1);
-                    badge.className = `badge badge-${estado}`;
-                }
-                // Actualizar la vista de la tabla
-                location.reload();
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: data.message,
+                    icon: 'success',
+                    confirmButtonColor: '#daa520'
+                }).then(() => {
+                    // Actualizar el estado en el detalle visible
+                    const badge = document.querySelector(".info-pedido .badge");
+                    if (badge) {
+                        badge.textContent = estado.charAt(0).toUpperCase() + estado.slice(1);
+                        badge.className = `badge badge-${estado}`;
+                    }
+                    // Actualizar la vista de la tabla
+                    location.reload();
+                });
             } else {
-                alert("Error: " + data.message);
+                Swal.fire({
+                    title: '¡Error!',
+                    text: data.message,
+                    icon: 'error',
+                    confirmButtonColor: '#daa520'
+                });
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("Error en la conexión con el servidor.");
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Error en la conexión con el servidor.',
+                icon: 'error',
+                confirmButtonColor: '#daa520'
+            });
         });
     }
 
@@ -56,12 +77,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.success) {
                     mostrarDetallesPedido(data.detalles);
                 } else {
-                    alert("Error: " + data.message);
+                    Swal.fire({
+                        title: '¡Error!',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonColor: '#daa520'
+                    });
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("Error en la conexión con el servidor.");
+                Swal.fire({
+                    title: '¡Error!',
+                    text: 'Error en la conexión con el servidor.',
+                    icon: 'error',
+                    confirmButtonColor: '#daa520'
+                });
             });
         });
     });
@@ -210,6 +241,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         tabla.appendChild(tbody);
         contenedor.appendChild(tabla);
+
+        // Agregar los botones de acción con el ID del pedido
+        const accionesEstado = document.querySelector('.acciones-estado');
+        if (accionesEstado) {
+            accionesEstado.dataset.pedidoId = detalles[0].idpedidos;
+        }
     }
 
     // Exponer la función cambiarEstado globalmente

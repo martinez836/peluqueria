@@ -53,27 +53,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const formData = new FormData(form);
 
-        fetch('../../controllers/editarCita.php', {
+        fetch('../../controllers/actualizarCita.php', {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error en la conexión con el servidor');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Cita actualizada correctamente');
-                location.reload();
+                // Mostrar SweetAlert2 de éxito
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: 'Datos Actualizados',
+                    icon: 'success',
+                    confirmButtonColor: '#daa520'
+                }).then(() => {
+                    // Cerrar el modal y recargar la página
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('editarCitaModal'));
+                    modal.hide();
+                    window.location.reload();
+                });
             } else {
-                throw new Error(data.message || 'Error al actualizar la cita');
+                // Mostrar SweetAlert2 de error
+                Swal.fire({
+                    title: '¡Error!',
+                    text: 'No se pudieron actualizar los datos',
+                    icon: 'error',
+                    confirmButtonColor: '#daa520'
+                });
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error: ' + error.message);
+            Swal.fire({
+                title: '¡Error!',
+                text: 'Hubo un error al procesar la solicitud',
+                icon: 'error',
+                confirmButtonColor: '#daa520'
+            });
         })
         .finally(() => {
             // Restaurar el botón

@@ -23,58 +23,7 @@ $productosStockBajo = $consultas->traerProductosStockBajo();
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/admin.css">
     <link rel="stylesheet" href="../../assets/css/calendario.css">
-    <style>
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            flex: 1;
-            padding: 1.5rem;
-            border-radius: 10px;
-            background: #1E1E1E;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
 
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: #FFD700;
-        }
-        
-        .stat-card i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .stat-card h3 {
-            font-size: 2rem;
-            margin: 0.5rem 0;
-            color: #fff;
-        }
-        
-        .stat-card p {
-            margin: 0;
-            color: #fff;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .stats-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -92,7 +41,7 @@ $productosStockBajo = $consultas->traerProductosStockBajo();
 <!-- Sidebar -->
 <nav id="sidebar" >
     <div class="user-info">
-        <img src="/api/placeholder/150/150" alt="Admin">
+
         <h5>Administrador</h5>
         <p>Administrador Principal</p>
     </div>

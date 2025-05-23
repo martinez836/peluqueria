@@ -269,7 +269,12 @@ document.getElementById('btn-finalizar-compra').disabled = true;
 // Función para finalizar la compra
 function finalizarCompra() {
     if (carrito.length === 0) {
-        mostrarNotificacion('El carrito está vacío');
+        Swal.fire({
+            icon: 'warning',
+            title: 'Carrito Vacío',
+            text: 'El carrito está vacío',
+            confirmButtonColor: '#daa520'
+        });
         return;
     }
 
@@ -280,7 +285,12 @@ function finalizarCompra() {
     const documento = btnFinalizarCompra.getAttribute('data-documento');
 
     if (!documento) {
-        mostrarNotificacion('Error: No se encontró el documento del usuario');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se encontró el documento del usuario',
+            confirmButtonColor: '#daa520'
+        });
         return;
     }
 
@@ -347,38 +357,50 @@ function finalizarCompra() {
                 return response.json();
             });
 
-            // Esperar a que se completen todas las operaciones
+            // Esperar a que todas las operaciones terminen
             Promise.all([...promesasDetalles, actualizarStock])
                 .then(() => {
                     // Limpiar el carrito
                     carrito = [];
-                    guardarCarrito();
                     actualizarBadgeCarrito();
+                    guardarCarrito();
                     
-                    // Cerrar el modal
-                    const modalCarrito = document.getElementById('carritoModal');
-                    const modalBootstrap = bootstrap.Modal.getInstance(modalCarrito);
-                    modalBootstrap.hide();
-                    
+                    // Cerrar el modal del carrito
+                    const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+                    carritoModal.hide();
+
                     // Mostrar mensaje de éxito
-                    mostrarNotificacion('¡Compra realizada con éxito!');
-                    
-                    // Recargar la página para actualizar el stock mostrado
-                    setTimeout(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Pedido Registrado!',
+                        text: 'Tu pedido ha sido registrado exitosamente',
+                        confirmButtonColor: '#daa520'
+                    }).then(() => {
+                        // Recargar la página para actualizar el stock mostrado
                         window.location.reload();
-                    }, 2000);
+                    });
                 })
                 .catch(error => {
-                    console.error('Error al procesar la compra:', error);
-                    mostrarNotificacion('Error al procesar la compra: ' + error.message);
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un error al procesar tu pedido',
+                        confirmButtonColor: '#daa520'
+                    });
                 });
         } else {
-            throw new Error(data.error || 'Error desconocido al crear el pedido');
+            throw new Error(data.error || 'Error al crear el pedido');
         }
     })
     .catch(error => {
-        console.error('Error al crear el pedido:', error);
-        mostrarNotificacion('Error al crear el pedido: ' + error.message);
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un error al procesar tu pedido',
+            confirmButtonColor: '#daa520'
+        });
     });
 }
 

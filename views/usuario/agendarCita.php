@@ -15,6 +15,9 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas(); // array ['YYYY
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
     <!-- Estilo personalizado -->
     <link rel="stylesheet" href="../../assets/css/estilo.css" />
 
@@ -177,6 +180,21 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas(); // array ['YYYY
     <script>
         window.fechasDeshabilitadas = <?php echo json_encode($fechasDeshabilitadas); ?> || [];
     </script>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <?php if (isset($_SESSION['cita_registrada']) && $_SESSION['cita_registrada']): ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡Cita Registrada!',
+            text: 'Tu cita ha sido registrada exitosamente',
+            confirmButtonColor: '#daa520'
+        });
+        <?php unset($_SESSION['cita_registrada']); ?>
+    </script>
+    <?php endif; ?>
 
     <!-- Aquí debes incluir tu JS externo que renderiza el calendario -->
     <script src="../../assets/js/agendar.js"></script>

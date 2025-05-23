@@ -32,7 +32,6 @@
     <!-- Sidebar -->
     <nav id="sidebar" >
         <div class="user-info">
-            <img src="/api/placeholder/150/150" alt="Admin">
             <h5>Administrador</h5>
             <p>Administrador Principal</p>
         </div>
