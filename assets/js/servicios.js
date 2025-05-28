@@ -42,15 +42,63 @@ $(document).ready(function() {
         $('#editarServicioModal').modal('show');
     });
 
-    // Función para eliminar servicio
+    // Manejar clic en botón de eliminar
     $(document).on('click', '.btn-danger', function() {
         const fila = $(this).closest('tr');
         const id = fila.find('td:eq(0)').text();
-        
-        if (confirm('¿Está seguro de que desea eliminar este servicio?')) {
-            // Aquí puedes implementar la lógica para eliminar
-            // Por ejemplo, hacer una petición AJAX al servidor
-        }
+        const nombre = fila.find('td:eq(1)').text();
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: `¿Deseas eliminar el servicio "${nombre}"?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Realizar la petición AJAX para cambiar el estado
+                fetch('../../controllers/cambiar_estado_servicio.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        estado: 'inactivo'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire(
+                            '¡Eliminado!',
+                            'El servicio ha sido eliminado.',
+                            'success'
+                        ).then(() => {
+                            // Eliminar la fila de la tabla
+                            tablaServicios.row(fila).remove().draw();
+                        });
+                    } else {
+                        Swal.fire(
+                            'Error',
+                            'No se pudo eliminar el servicio.',
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire(
+                        'Error',
+                        'Hubo un error al procesar la solicitud.',
+                        'error'
+                    );
+                });
+            }
+        });
     });
 
     // Mostrar mensajes de éxito o error si existen en la URL

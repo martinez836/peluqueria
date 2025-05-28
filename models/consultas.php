@@ -15,13 +15,14 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Insert into productos (nombre,descripcion,precio,imagen,stock) values 
+            Insert into productos (nombre,descripcion,precio,imagen,stock,estado) values 
             (
                 '$nombre',
                 '$descripcion',
                 $precio,
                 '$imagen',
-                $stock
+                $stock,
+                'activo'
             );
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
@@ -68,10 +69,11 @@ class consultas
         $this->mysql->conectar();
         $consulta = 
         "
-            Insert into servicios (nombreServicio, descripcion) values 
+            Insert into servicios (nombreServicio, descripcion, estado) values 
             (
                 '$nombreServicio',
-                '$descripcion'
+                '$descripcion',
+                'activo'
             );
         ";
         $resultado = $this->mysql->efectuarConsulta($consulta);
@@ -82,7 +84,7 @@ class consultas
     public function traer_servicios()
     {
         $this->mysql->conectar();
-        $consulta = "SELECT * from servicios;";
+        $consulta = "SELECT * from servicios WHERE estado = 'activo';";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
@@ -91,7 +93,7 @@ class consultas
     public function traerProducto()
     {
         $this->mysql->conectar();
-        $consulta = "SELECT idproductos as id, nombre, descripcion, precio, imagen, stock FROM productos";
+        $consulta = "SELECT idproductos as id, nombre, descripcion, precio, imagen, stock FROM productos WHERE estado = 'activo'";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
@@ -272,10 +274,11 @@ class consultas
     public function traerPedidos()
     {
         $this->mysql->conectar();
-        $consulta = 
-        "
-            Select clientes.nombres,clientes.apellidos, pedidos.* from Pedidos join clientes on clientes.documento = clientes_documento;
-        ";
+        $consulta = "SELECT p.*, c.nombres, c.apellidos 
+                    FROM pedidos p 
+                    INNER JOIN clientes c ON p.clientes_documento = c.documento 
+                    WHERE p.estado != 'inactivo'
+                    ORDER BY p.fecha DESC";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
@@ -313,11 +316,12 @@ class consultas
     public function traerCitas()
     {
         $this->mysql->conectar();
-        $consulta = 
-        "
-            Select clientes.nombres,clientes.telefono,clientes.correo,clientes.apellidos,clientes.fechaNacimiento,servicios.nombreServicio, citas.* from citas join clientes on clientes.documento = clientes_documento 
-            JOIN servicios ON citas.servicios_idservicios = servicios.idservicios;
-        ";
+        $consulta = "SELECT c.*, cl.nombres, cl.apellidos, cl.telefono, cl.correo, cl.fechaNacimiento, s.nombreServicio 
+                    FROM citas c 
+                    INNER JOIN clientes cl ON c.clientes_documento = cl.documento 
+                    INNER JOIN servicios s ON c.servicios_idservicios = s.idservicios 
+                    WHERE c.estado != 'inactivo'
+                    ORDER BY c.fecha DESC";
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
@@ -480,5 +484,41 @@ class consultas
             }
             throw new Exception("Error al actualizar el servicio: " . $e->getMessage());
         }
+    }
+
+    public function cambiarEstadoProducto($id, $estado)
+    {
+        $this->mysql->conectar();
+        $consulta = "UPDATE productos SET estado = '$estado' WHERE idproductos = $id";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
+    public function cambiarEstadoServicio($id, $estado)
+    {
+        $this->mysql->conectar();
+        $consulta = "UPDATE servicios SET estado = '$estado' WHERE idservicios = $id";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
+    public function cambiarEstadoPedido($id, $estado)
+    {
+        $this->mysql->conectar();
+        $consulta = "UPDATE pedidos SET estado = '$estado' WHERE idpedidos = $id";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
+
+    public function cambiarEstadoCita($id, $estado)
+    {
+        $this->mysql->conectar();
+        $consulta = "UPDATE citas SET estado = '$estado' WHERE idcitas = $id";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
     }
 };?>

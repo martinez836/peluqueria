@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../../assets/css/tablas.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 </head>
 <body>
@@ -85,12 +87,25 @@
                         
                         <div class="form-group">
                             <label for="precio">Precio</label>
-                            <input type="number" id="precio" name="precio" class="form-control" step="0.01" required>
+                            <input type="number" 
+                                   id="precio" 
+                                   name="precio" 
+                                   class="form-control" 
+                                   step="0.01" 
+                                   min="1" 
+                                   oninput="validarNumeroPositivo(this)"
+                                   required>
                         </div>
                         
                         <div class="form-group">
                             <label for="stock">Stock</label>
-                            <input type="number" id="stock" name="stock" class="form-control" required>
+                            <input type="number" 
+                                   id="stock" 
+                                   name="stock" 
+                                   class="form-control" 
+                                   min="1" 
+                                   oninput="validarNumeroPositivo(this)"
+                                   required>
                         </div>                         
                         <div class="form-group">
                             <label for="imagen">Imagen del Producto</label>
@@ -168,12 +183,25 @@
                             <label for="editPrecio" class="form-label">Precio</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-dark text-light border-secondary">$</span>
-                                <input type="number" class="form-control bg-dark text-light border-secondary" id="editPrecio" name="precio" step="0.01" required>
+                                <input type="number" 
+                                       class="form-control bg-dark text-light border-secondary" 
+                                       id="editPrecio" 
+                                       name="precio" 
+                                       step="0.01" 
+                                       min="1"
+                                       oninput="validarNumeroPositivo(this)"
+                                       required>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="editStock" class="form-label">Stock</label>
-                            <input type="number" class="form-control bg-dark text-light border-secondary" id="editStock" name="stock" required>
+                            <input type="number" 
+                                   class="form-control bg-dark text-light border-secondary" 
+                                   id="editStock" 
+                                   name="stock" 
+                                   min="1"
+                                   oninput="validarNumeroPositivo(this)"
+                                   required>
                         </div>
                         <div class="mb-3">
                             <label for="editImagen" class="form-label">Nueva Imagen (opcional)</label>
@@ -195,5 +223,32 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../../assets/js/productos.js"></script>
+
+<script>
+    // Función para validar números positivos
+    function validarNumeroPositivo(input) {
+        if (input.value <= 0) {
+            input.value = 1;
+        }
+    }
+
+    // Validar el formulario antes de enviar
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const precio = document.getElementById('precio');
+        const stock = document.getElementById('stock');
+        
+        if (precio.value <= 0 || stock.value <= 0) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El precio y el stock deben ser mayores a 0',
+                confirmButtonColor: '#daa520'
+            });
+        }
+    });
+</script>
 </html>

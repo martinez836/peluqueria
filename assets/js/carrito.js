@@ -6,31 +6,48 @@ localStorage.removeItem('carrito'); // borrar los datos del carrito
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
 // Función para añadir productos al carrito
-function agregarAlCarrito(id, nombre, precio, imagen, cantidad) {
-// Verificar si el producto ya está en el carrito
-const productoExistente = carrito.find(item => item.id === id);
+function agregarAlCarrito(id, nombre, precio, imagen, cantidad, stockDisponible) {
+    // Verificar si el producto ya está en el carrito
+    const productoExistente = carrito.find(item => item.id === id);
+    
+    // Calcular la cantidad total que tendría el producto
+    const cantidadTotal = productoExistente 
+        ? productoExistente.cantidad + cantidad 
+        : cantidad;
+    
+    // Verificar si la cantidad total supera el stock disponible
+    if (cantidadTotal > stockDisponible) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Solo hay ${stockDisponible} unidades disponibles de este producto`,
+            confirmButtonColor: '#daa520'
+        });
+        return;
+    }
 
-if (productoExistente) {
-    // Si existe, aumentar la cantidad
-    productoExistente.cantidad += cantidad;
-} else {
-    // Si no existe, añadirlo como nuevo producto
-    carrito.push({
-    id: id,
-    nombre: nombre,
-    precio: precio,
-    imagen: imagen,
-    cantidad: cantidad,
-    subTotal: cantidad*precio
-    });
-}
+    if (productoExistente) {
+        // Si existe, aumentar la cantidad
+        productoExistente.cantidad = cantidadTotal;
+        productoExistente.subTotal = cantidadTotal * precio;
+    } else {
+        // Si no existe, añadirlo como nuevo producto
+        carrito.push({
+            id: id,
+            nombre: nombre,
+            precio: precio,
+            imagen: imagen,
+            cantidad: cantidad,
+            subTotal: cantidad * precio
+        });
+    }
 
-// Guardar en localStorage y actualizar la vista
-guardarCarrito();
-actualizarBadgeCarrito();
+    // Guardar en localStorage y actualizar la vista
+    guardarCarrito();
+    actualizarBadgeCarrito();
 
-// Mostrar mensaje de confirmación
-mostrarNotificacion(`${nombre} añadido al carrito`);
+    // Mostrar mensaje de confirmación
+    mostrarNotificacion(`${nombre} añadido al carrito`);
 }
 
 // Función para guardar el carrito en localStorage
@@ -488,9 +505,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const precio = parseFloat(producto.querySelector('.precio').textContent.replace('$', '').replace(',', ''));
             const imagen = producto.querySelector('img').src;
             const cantidad = parseInt(producto.querySelector('input[type="number"]').value) || 1;
+            const stockDisponible = parseInt(producto.querySelector('input[type="number"]').getAttribute('max'));
             
             if (cantidad > 0) {
-                agregarAlCarrito(id, nombre, precio, imagen, cantidad);
+                agregarAlCarrito(id, nombre, precio, imagen, cantidad, stockDisponible);
             } else {
                 mostrarNotificacion('Por favor selecciona una cantidad válida');
             }

@@ -23,6 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/sidebar.css">
     <link rel="stylesheet" href="../../assets/css/citas.css">
+    <link rel="stylesheet" href="../../assets/css/tablas.css">
     <style>
         
     </style>
@@ -145,10 +146,7 @@
                                             data-fechaNacimiento="<?= $cita['fechaNacimiento'] ?>">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button class="btn btn-success btn-sm" id="editarCita">
-                                            <i class="fas fa-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" id="eliminarCita">
+                                        <button class="btn btn-danger btn-sm eliminarCita" data-id="<?= $cita['idcitas'] ?>">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -257,6 +255,54 @@
                 `;
                 
                 detallesCita.innerHTML = html;
+            });
+        });
+
+        // Manejador para eliminar citas
+        document.querySelectorAll('.eliminarCita').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const idCita = this.getAttribute('data-id');
+                
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Esta acción no se puede deshacer",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch('../../controllers/cambiar_estado_cita.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `idcita=${idCita}&estado=inactivo`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.success) {
+                                Swal.fire({
+                                    title: '¡Eliminada!',
+                                    text: 'La cita ha sido eliminada',
+                                    icon: 'success',
+                                    confirmButtonColor: '#daa520'
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'No se pudo eliminar la cita',
+                                    icon: 'error',
+                                    confirmButtonColor: '#daa520'
+                                });
+                            }
+                        });
+                    }
+                });
             });
         });
     });
