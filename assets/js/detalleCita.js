@@ -1,10 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const botones = document.querySelectorAll(".verDetalle");
-  const contenedor = document.getElementById("detallesCita");
-
-  // Definir las funciones primero
-  function cambiarEstado(id, accion) {
-    if (!confirm(`¿Desea ${accion} esta cita?`)) return;
+// Definir las funciones globalmente
+function cambiarEstado(id, accion) {
+  Swal.fire({
+    title: `¿Desea ${accion} esta cita?`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#28a745',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, continuar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (!result.isConfirmed) return;
 
     const formData = new FormData();
     formData.append('idcita', id);
@@ -17,27 +22,47 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        alert(data.message);
-        // Actualizar el estado en el detalle visible
-        const badge = document.querySelector("#detallesCita .cliente-info span.badge");
-        if (badge) {
-          badge.textContent = accion === 'confirmar' ? 'Confirmado' : 'Completado';
-          badge.className = `badge text-light ${accion === 'confirmar' ? 'bg-primary' : 'bg-success'}`;
-        }
-        // Actualizar la vista de la tabla
-        location.reload();
+        Swal.fire({
+          title: '¡Éxito!',
+          text: data.message,
+          icon: 'success',
+          confirmButtonColor: '#daa520'
+        }).then(() => {
+          location.reload();
+        });
       } else {
-        alert("Error: " + data.message);
+        Swal.fire({
+          title: 'Error',
+          text: data.message,
+          icon: 'error',
+          confirmButtonColor: '#daa520'
+        });
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert("Error en la conexión con el servidor.");
+      Swal.fire({
+        title: 'Error',
+        text: 'Error en la conexión con el servidor.',
+        icon: 'error',
+        confirmButtonColor: '#daa520'
+      });
     });
-  }
+  });
+}
 
-  function cancelarCita(id) {
-    if (!confirm("¿Está seguro que desea cancelar esta cita?")) return;
+function cancelarCita(id) {
+  Swal.fire({
+    title: '¿Está seguro que desea cancelar esta cita?',
+    text: "Esta acción no se puede deshacer",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Sí, cancelar',
+    cancelButtonText: 'No, mantener'
+  }).then((result) => {
+    if (!result.isConfirmed) return;
     
     const formData = new FormData();
     formData.append('idcita', id);
@@ -50,24 +75,96 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        alert(data.message);
-        // Actualizar el estado en el detalle visible
-        const badge = document.querySelector("#detallesCita .cliente-info span.badge");
-        if (badge) {
-          badge.textContent = 'Cancelado';
-          badge.className = 'badge text-light bg-danger';
-        }
-        // Actualizar la vista de la tabla
-        location.reload();
+        Swal.fire({
+          title: '¡Cancelada!',
+          text: data.message,
+          icon: 'success',
+          confirmButtonColor: '#daa520'
+        }).then(() => {
+          location.reload();
+        });
       } else {
-        alert("Error: " + data.message);
+        Swal.fire({
+          title: 'Error',
+          text: data.message,
+          icon: 'error',
+          confirmButtonColor: '#daa520'
+        });
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert("Error en la conexión con el servidor.");
+      Swal.fire({
+        title: 'Error',
+        text: 'Error en la conexión con el servidor.',
+        icon: 'error',
+        confirmButtonColor: '#daa520'
+      });
     });
-  }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const botones = document.querySelectorAll(".verDetalle");
+  const botonesEliminar = document.querySelectorAll(".eliminarCita");
+  const contenedor = document.getElementById("detallesCita");
+
+  // Manejador para eliminar citas
+  botonesEliminar.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idCita = this.getAttribute('data-id');
+      
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción no se puede deshacer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch('../../controllers/cambiar_estado_cita.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `idcita=${idCita}&estado=inactivo`
+          })
+          .then(response => response.json())
+          .then(data => {
+            if(data.success) {
+              Swal.fire({
+                title: '¡Eliminada!',
+                text: 'La cita ha sido eliminada',
+                icon: 'success',
+                confirmButtonColor: '#daa520'
+              }).then(() => {
+                window.location.reload();
+              });
+            } else {
+              Swal.fire({
+                title: 'Error',
+                text: 'No se pudo eliminar la cita',
+                icon: 'error',
+                confirmButtonColor: '#daa520'
+              });
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'Error en la conexión con el servidor',
+              icon: 'error',
+              confirmButtonColor: '#daa520'
+            });
+          });
+        }
+      });
+    });
+  });
 
   // Luego el código que usa estas funciones
   botones.forEach((btn) => {
@@ -82,100 +179,76 @@ document.addEventListener("DOMContentLoaded", function () {
       const telefono = btn.getAttribute("data-telefono");
       const fechaNacimiento = btn.getAttribute("data-fechaNacimiento");
 
-      // Limpiar el contenedor
-      contenedor.innerHTML = "";
+      // Generar el HTML con la nueva estructura
+      const html = `
+        <h3>Detalles de la Cita #${id}</h3>
+        <div class="info-group">
+          <div class="info-item">
+            <i class="fas fa-user"></i>
+            <span class="label">Cliente:</span>
+            <span class="value">${nombre} ${apellido}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <span class="label">Email:</span>
+            <span class="value">${email}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <span class="label">Teléfono:</span>
+            <span class="value">${telefono}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-birthday-cake"></i>
+            <span class="label">Nacimiento:</span>
+            <span class="value">${fechaNacimiento}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-calendar"></i>
+            <span class="label">Fecha:</span>
+            <span class="value">${fecha}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-info-circle"></i>
+            <span class="label">Estado:</span>
+            <span class="value">
+              <span class="badge ${getBadgeClass(estado)}">${estado.charAt(0).toUpperCase() + estado.slice(1)}</span>
+            </span>
+          </div>
+        </div>
 
-      // Título
-      const titulo = document.createElement("h2");
-      titulo.textContent = `Detalles de la Cita #${id}`;
-      contenedor.appendChild(titulo);
+        <div class="servicios-solicitados">
+          <h4><i class="fas fa-cut"></i> Servicios Solicitados</h4>
+          <div class="servicio-item">
+            ${servicio}
+          </div>
+        </div>
 
-      // Info del cliente
-      const clienteInfo = document.createElement("div");
-      clienteInfo.className = "cliente-info";
+        <div class="actions-group">
+          <button onclick="cambiarEstado(${id}, 'completar')" class="btn btn-completar">
+            <i class="fas fa-check"></i> Completar
+          </button>
+          <button onclick="cambiarEstado(${id}, 'confirmar')" class="btn btn-confirmar">
+            <i class="fas fa-bell"></i> Confirmar
+          </button>
+          <button onclick="cancelarCita(${id})" class="btn btn-cancelar">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      `;
 
-      const p1 = document.createElement("p");
-      p1.innerHTML = `<strong>Cliente:</strong> ${nombre} ${apellido}`;
-      clienteInfo.appendChild(p1);
-
-      const p2 = document.createElement("p");
-      p2.innerHTML = `<strong>Email:</strong> ${email}`;
-      clienteInfo.appendChild(p2);
-
-      const p3 = document.createElement("p");
-      p3.innerHTML = `<strong>Teléfono:</strong> ${telefono}`;
-      clienteInfo.appendChild(p3);
-
-      const fechaNace = document.createElement("p");
-      fechaNace.innerHTML = `<strong>Fecha de Nacimiento:</strong> ${fechaNacimiento}`;
-      clienteInfo.appendChild(fechaNace);
-
-      const p4 = document.createElement("p");
-      const badge = document.createElement("span");
-      badge.classList.add("badge", "text-light");
-
-      badge.textContent = estado.charAt(0).toUpperCase() + estado.slice(1);
-
-      p4.innerHTML = `<strong>Fecha:</strong> ${fecha} <br><strong>Estado:</strong> `;
-      p4.appendChild(badge);
-
-      clienteInfo.appendChild(p4);
-      contenedor.appendChild(clienteInfo);
-
-      // Info de servicio
-      const servicioInfo = document.createElement("div");
-      servicioInfo.className = "servicio-info";
-
-      const h3 = document.createElement("h3");
-      h3.textContent = "Servicios Solicitados";
-      servicioInfo.appendChild(h3);
-
-      const servicioItem = document.createElement("div");
-      servicioItem.className = "servicio-item";
-      servicioItem.textContent = servicio;
-      servicioInfo.appendChild(servicioItem);
-
-      contenedor.appendChild(servicioInfo);
-
-      // Notas (estáticas por ahora)
-      const notas = document.createElement("div");
-      notas.className = "notas-cita";
-
-      const hNotas = document.createElement("h3");
-      hNotas.textContent = "Notas";
-      notas.appendChild(hNotas);
-
-      const pNotas = document.createElement("p");
-      pNotas.textContent =
-        "Cliente habitual. Prefiere corte en capas y peinado con ondas suaves.";
-      notas.appendChild(pNotas);
-
-      contenedor.appendChild(notas);
-
-      // Botones de acción
-      const acciones = document.createElement("div");
-      acciones.className = "acciones-cita";
-
-      const btnCompletar = document.createElement("button");
-      btnCompletar.className = "btn btn-success";
-      btnCompletar.innerHTML = `<i class="fas fa-check"></i> Completar`;
-      btnCompletar.onclick = () => cambiarEstado(id, "completar");
-
-      const btnConfirmar = document.createElement("button");
-      btnConfirmar.className = "btn btn-primary";
-      btnConfirmar.innerHTML = `<i class="fas fa-bell"></i> Confirmar`;
-      btnConfirmar.onclick = () => cambiarEstado(id, "confirmar");
-
-      const btnCancelar = document.createElement("button");
-      btnCancelar.className = "btn btn-danger";
-      btnCancelar.innerHTML = `<i class="fas fa-times"></i> Cancelar`;
-      btnCancelar.onclick = () => cancelarCita(id);
-
-      acciones.appendChild(btnCompletar);
-      acciones.appendChild(btnConfirmar);
-      acciones.appendChild(btnCancelar);
-
-      contenedor.appendChild(acciones);
+      contenedor.innerHTML = html;
     });
   });
+
+  // Función auxiliar para obtener la clase del badge según el estado
+  function getBadgeClass(estado) {
+    const clases = {
+      'pendiente': 'bg-warning',
+      'confirmado': 'bg-primary',
+      'completado': 'bg-success',
+      'cancelado': 'bg-danger'
+    };
+    return clases[estado.toLowerCase()] || 'bg-secondary';
+  }
 });

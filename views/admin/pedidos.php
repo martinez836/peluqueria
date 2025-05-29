@@ -22,6 +22,184 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        .pedidos-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .table-section {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .detalles-section {
+            background: #1a1a1a;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 350px;
+            max-width: 500px;
+            flex: 0 0 auto;
+        }
+
+        .pedido-detalles {
+            color: #fff;
+        }
+
+        .pedido-detalles h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #daa520;
+            color: #daa520;
+        }
+
+        .info-group {
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .info-item i {
+            width: 24px;
+            color: #daa520;
+            margin-right: 10px;
+        }
+
+        .info-item .label {
+            font-weight: bold;
+            color: #daa520;
+            min-width: 120px;
+            margin-right: 10px;
+        }
+
+        .info-item .value {
+            color: #fff;
+            flex: 1;
+        }
+
+        .productos-list {
+            margin-top: 2rem;
+        }
+
+        .productos-list h4 {
+            color: #daa520;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .producto-item {
+            background: rgba(218, 165, 32, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #daa520;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .producto-item .producto-info {
+            flex: 1;
+        }
+
+        .producto-item .producto-cantidad {
+            background: rgba(218, 165, 32, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            color: #daa520;
+        }
+
+        .producto-item .producto-precio {
+            color: #daa520;
+            margin-left: 10px;
+        }
+
+        .total-section {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: right;
+        }
+
+        .total-section .total-label {
+            color: #daa520;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .total-section .total-amount {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        .acciones-estado {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .acciones-estado button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .acciones-estado button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 1200px) {
+            .pedidos-container {
+                flex-direction: column;
+            }
+
+            .detalles-section {
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .producto-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .producto-item .producto-cantidad,
+            .producto-item .producto-precio {
+                margin-top: 10px;
+                margin-left: 0;
+            }
+
+            .acciones-estado {
+                flex-direction: column;
+            }
+
+            .acciones-estado button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->

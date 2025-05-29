@@ -98,155 +98,96 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function mostrarDetallesPedido(detalles) {
-        // Limpiar el contenedor
-        contenedor.innerHTML = "";
-
         if (detalles.length === 0) {
-            const mensaje = document.createElement("p");
-            mensaje.textContent = "No se encontraron detalles para este pedido.";
-            contenedor.appendChild(mensaje);
+            contenedor.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-box-open fa-3x text-muted"></i>
+                    <p class="mt-3">No se encontraron detalles para este pedido.</p>
+                </div>
+            `;
             return;
         }
 
-        // Título
-        const titulo = document.createElement("h2");
-        titulo.textContent = `Detalles del Pedido #${detalles[0].idpedidos}`;
-        contenedor.appendChild(titulo);
-
-        // Información general del pedido
-        const infoGeneral = document.createElement("div");
-        infoGeneral.className = "info-pedido mb-4";
-
-        // Cliente
-        const clienteParrafo = document.createElement("p");
-        const clienteLabel = document.createElement("strong");
-        clienteLabel.textContent = "Cliente: ";
-        clienteParrafo.appendChild(clienteLabel);
-        clienteParrafo.appendChild(document.createTextNode(`${detalles[0].nombres} ${detalles[0].apellidos}`));
-        infoGeneral.appendChild(clienteParrafo);
-
-        // Fecha
-        const fechaParrafo = document.createElement("p");
-        const fechaLabel = document.createElement("strong");
-        fechaLabel.textContent = "Fecha: ";
-        fechaParrafo.appendChild(fechaLabel);
-        fechaParrafo.appendChild(document.createTextNode(new Date(detalles[0].fecha).toLocaleDateString()));
-        infoGeneral.appendChild(fechaParrafo);
-
-        // Estado
-        const estadoParrafo = document.createElement("p");
-        const estadoLabel = document.createElement("strong");
-        estadoLabel.textContent = "Estado: ";
-        const estadoBadge = document.createElement("span");
-        estadoBadge.className = `badge badge-${detalles[0].estado}`;
-        estadoBadge.textContent = detalles[0].estado;
-        estadoParrafo.appendChild(estadoLabel);
-        estadoParrafo.appendChild(estadoBadge);
-        infoGeneral.appendChild(estadoParrafo);
-
-        // Dirección
-        if (detalles[0].direccion) {
-            const direccionParrafo = document.createElement("p");
-            const direccionLabel = document.createElement("strong");
-            direccionLabel.textContent = "Dirección: ";
-            direccionParrafo.appendChild(direccionLabel);
-            direccionParrafo.appendChild(document.createTextNode(detalles[0].direccion));
-            infoGeneral.appendChild(direccionParrafo);
-        }
-
-        // Barrio
-        if (detalles[0].barrio) {
-            const barrioParrafo = document.createElement("p");
-            const barrioLabel = document.createElement("strong");
-            barrioLabel.textContent = "Barrio: ";
-            barrioParrafo.appendChild(barrioLabel);
-            barrioParrafo.appendChild(document.createTextNode(detalles[0].barrio));
-            infoGeneral.appendChild(barrioParrafo);
-        }
-
-        // Total
-        const totalParrafo = document.createElement("p");
-        const totalLabel = document.createElement("strong");
-        totalLabel.textContent = "Total del Pedido: ";
-        totalParrafo.appendChild(totalLabel);
-        totalParrafo.appendChild(document.createTextNode(`$${detalles[0].total}`));
-        infoGeneral.appendChild(totalParrafo);
-
-        contenedor.appendChild(infoGeneral);
-
-        // Tabla de productos
-        const tabla = document.createElement("table");
-        tabla.className = "table table-striped";
-
-        // Crear encabezado
-        const thead = document.createElement("thead");
-        const headerRow = document.createElement("tr");
-        const headers = ["Producto", "Descripción", "Precio Unitario", "Cantidad", "Subtotal"];
-        
-        headers.forEach(headerText => {
-            const th = document.createElement("th");
-            th.textContent = headerText;
-            headerRow.appendChild(th);
-        });
-        
-        thead.appendChild(headerRow);
-        tabla.appendChild(thead);
-
-        // Crear cuerpo de la tabla
-        const tbody = document.createElement("tbody");
-        
-        detalles.forEach(item => {
-            const tr = document.createElement("tr");
-
-            // Celda del producto con imagen
-            const tdProducto = document.createElement("td");
-            const divProducto = document.createElement("div");
-            divProducto.className = "d-flex align-items-center";
+        const pedido = detalles[0];
+        const html = `
+            <h3>Detalles del Pedido #${pedido.idpedidos}</h3>
             
-            const img = document.createElement("img");
-            img.src = item.imagen_producto;
-            img.alt = item.nombre_producto;
-            img.className = "img-thumbnail me-2";
-            img.style.width = "50px";
-            img.style.height = "50px";
-            img.style.objectFit = "cover";
-            
-            divProducto.appendChild(img);
-            divProducto.appendChild(document.createTextNode(item.nombre_producto));
-            tdProducto.appendChild(divProducto);
-            tr.appendChild(tdProducto);
+            <div class="info-group">
+                <div class="info-item">
+                    <i class="fas fa-user"></i>
+                    <span class="label">Cliente:</span>
+                    <span class="value">${pedido.nombres} ${pedido.apellidos}</span>
+                </div>
+                
+                <div class="info-item">
+                    <i class="fas fa-calendar"></i>
+                    <span class="label">Fecha:</span>
+                    <span class="value">${new Date(pedido.fecha).toLocaleDateString()}</span>
+                </div>
 
-            // Descripción
-            const tdDescripcion = document.createElement("td");
-            tdDescripcion.textContent = item.descripcion_producto;
-            tr.appendChild(tdDescripcion);
+                <div class="info-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="label">Estado:</span>
+                    <span class="value">
+                        <span class="badge bg-${getBadgeClass(pedido.estado)}">${pedido.estado.charAt(0).toUpperCase() + pedido.estado.slice(1)}</span>
+                    </span>
+                </div>
 
-            // Precio unitario
-            const tdPrecio = document.createElement("td");
-            tdPrecio.textContent = `$${item.precio_unitario}`;
-            tr.appendChild(tdPrecio);
+                ${pedido.direccion ? `
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="label">Dirección:</span>
+                    <span class="value">${pedido.direccion}</span>
+                </div>
+                ` : ''}
 
-            // Cantidad
-            const tdCantidad = document.createElement("td");
-            tdCantidad.textContent = item.cantidad;
-            tr.appendChild(tdCantidad);
+                ${pedido.barrio ? `
+                <div class="info-item">
+                    <i class="fas fa-map"></i>
+                    <span class="label">Barrio:</span>
+                    <span class="value">${pedido.barrio}</span>
+                </div>
+                ` : ''}
+            </div>
 
-            // Subtotal
-            const tdSubtotal = document.createElement("td");
-            tdSubtotal.textContent = `$${item.subtotal}`;
-            tr.appendChild(tdSubtotal);
+            <div class="productos-list">
+                <h4><i class="fas fa-shopping-cart"></i> Productos del Pedido</h4>
+                ${detalles.map(item => `
+                    <div class="producto-item">
+                        <div class="producto-info">
+                            <img src="${item.imagen_producto}" alt="${item.nombre_producto}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                            <span>${item.nombre_producto}</span>
+                            <small class="d-block text-muted">${item.descripcion_producto}</small>
+                        </div>
+                        <span class="producto-cantidad">x${item.cantidad}</span>
+                        <span class="producto-precio">$${item.precio_unitario}</span>
+                    </div>
+                `).join('')}
+            </div>
 
-            tbody.appendChild(tr);
-        });
+            <div class="total-section">
+                <span class="total-label">Total del Pedido:</span>
+                <span class="total-amount">$${pedido.total}</span>
+            </div>
+        `;
 
-        tabla.appendChild(tbody);
-        contenedor.appendChild(tabla);
+        contenedor.innerHTML = html;
 
-        // Agregar los botones de acción con el ID del pedido
+        // Actualizar el dataset para los botones de acción
         const accionesEstado = document.querySelector('.acciones-estado');
         if (accionesEstado) {
-            accionesEstado.dataset.pedidoId = detalles[0].idpedidos;
+            accionesEstado.dataset.pedidoId = pedido.idpedidos;
         }
+    }
+
+    function getBadgeClass(estado) {
+        const clases = {
+            'pendiente': 'warning',
+            'confirmado': 'primary',
+            'entregado': 'success',
+            'cancelado': 'danger'
+        };
+        return clases[estado.toLowerCase()] || 'secondary';
     }
 
     // Exponer la función cambiarEstado globalmente

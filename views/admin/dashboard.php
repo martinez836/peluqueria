@@ -309,13 +309,17 @@ $productosStockBajo = $consultas->traerProductosStockBajo();
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../../assets/js/pedidos.js"></script>
-<!-- Solo incluir el archivo unificado, no ambos -->
+
+<!-- Asegurar que las fechas deshabilitadas estén disponibles -->
+<script>
+    // Esta línea asegura que las fechas deshabilitadas estén disponibles para los scripts
+    window.fechasDeshabilitadas = <?php echo json_encode($fechasDeshabilitadas); ?>;
+    console.log('Fechas deshabilitadas iniciales:', window.fechasDeshabilitadas);
+</script>
+
+<!-- Scripts del calendario -->
 <script src="../../assets/js/calendarioAdmin.js"></script>
 <script src="../../assets/js/habilitarFechas.js"></script>
-<script>
-    // Esta línea asegura que las fechas deshabilitadas estén disponibles para el script
-    const fechasDeshabilitadas = <?php echo json_encode($fechasDeshabilitadas); ?>;
-</script>
 
 </body>
 </html>

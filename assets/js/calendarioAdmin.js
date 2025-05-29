@@ -5,9 +5,15 @@ let fechasDeshabilitadasGlobal = [];
 
 // Cargar las fechas deshabilitadas desde el servidor
 function cargarFechasDeshabilitadas() {
-    return fetch("/peluqueria/controllers/fechasDeshabilitadas.php")
-        .then(response => response.json())
+    return fetch("../../controllers/fechasDeshabilitadas.php")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Datos recibidos:', data);
             // Asegurar que el dato es un array de strings y limpio espacios si los hubiera
             if (Array.isArray(data)) {
                 return data.map(f => f.trim());
