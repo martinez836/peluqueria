@@ -99,7 +99,7 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas(); // array ['YYYY
                         <div class="px-4 py-5">
                             <p class="text-center">Fecha Elegida: <span id="fecha-seleccionada" class="fw-bold text-dark"></span></p>
 
-                            <form action="../../controllers/crear_cita.php" method="POST" class="agenda-form mt-4">
+                            <form action="../../controllers/crear_cita.php" method="POST" class="agenda-form mt-4" id="formCita">
                                 <input type="hidden" name="fecha" id="input-fecha" />
                                 <input type="hidden" name="cedula" class="form-control" value="<?php echo htmlspecialchars($_SESSION['documento']); ?>" required />
 
@@ -195,6 +195,59 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas(); // array ['YYYY
         <?php unset($_SESSION['cita_registrada']); ?>
     </script>
     <?php endif; ?>
+
+    <script>
+        document.getElementById('formCita')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fechaSeleccionada = document.getElementById('input-fecha').value;
+            
+            if (!fechaSeleccionada) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Por favor selecciona una fecha para tu cita',
+                    confirmButtonColor: '#daa520'
+                });
+                return;
+            }
+            
+            // Enviar el formulario usando fetch
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: data.message,
+                        confirmButtonColor: '#daa520'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message,
+                        confirmButtonColor: '#daa520'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al procesar tu solicitud',
+                    confirmButtonColor: '#daa520'
+                });
+            });
+        });
+    </script>
 
     <!-- Aquí debes incluir tu JS externo que renderiza el calendario -->
     <script src="../../assets/js/agendar.js"></script>

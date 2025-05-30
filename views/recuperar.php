@@ -8,6 +8,9 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
     <!-- Tu estilo personalizado -->
     <link rel="stylesheet" href="../../assets/css/estilo.css">
 </head>
@@ -28,42 +31,84 @@
     </nav>
 
     <!-- Contenido principal -->
-<div class="container py-5">
-    <div class="bg-white rounded shadow mx-auto" style="max-width: 600px;">
-        
-        <!-- Encabezado del formulario -->
-        <div class="w-100 py-3 px-4" style="background-color: #1c1c1c; color: white; border-bottom: 2px solid goldenrod;">
-            <div class="d-flex align-items-center justify-content-center">
-                <i class="bi bi-envelope-fill me-2" style="color: goldenrod; font-size: 1.5rem;"></i>
-                <h4 class="mb-0 fw-bold">Recuperar Contraseña</h4>
-            </div>
-        </div>
-
-        <!-- Cuerpo del formulario -->
-        <div class="px-4 py-5">
-            <div class="text-center mb-4">
-                <h5 style="color: #333;">¿Olvidaste tu contraseña?</h5>
-                <p class="text-muted">Ingresa tu correo electrónico y te enviaremos las instrucciones para recuperarla.</p>
+    <div class="container py-5">
+        <div class="bg-white rounded shadow mx-auto" style="max-width: 600px;">
+            
+            <!-- Encabezado del formulario -->
+            <div class="w-100 py-3 px-4" style="background-color: #1c1c1c; color: white; border-bottom: 2px solid goldenrod;">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="bi bi-envelope-fill me-2" style="color: goldenrod; font-size: 1.5rem;"></i>
+                    <h4 class="mb-0 fw-bold">Recuperar Contraseña</h4>
+                </div>
             </div>
 
-            <form action="../controllers/recuperar_contrasena.php" method="POST" class="form-recuperar">
-                <div class="mb-4">
-                    <label for="correo" class="form-label fw-semibold">Correo Electrónico:</label>
-                    <input type="email" name="correo" id="correo" class="form-control" placeholder="Introduce tu correo electrónico" required>
+            <!-- Cuerpo del formulario -->
+            <div class="px-4 py-5">
+                <div class="text-center mb-4">
+                    <h5 style="color: #333;">¿Olvidaste tu contraseña?</h5>
+                    <p class="text-muted">Ingresa tu correo electrónico y te enviaremos las instrucciones para recuperarla.</p>
                 </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-lg w-100" style="background-color: goldenrod; color: white; border: none;">
-                        Recuperar Contraseña
-                    </button>
-                </div>
-            </form>
+                <form id="formRecuperar" class="form-recuperar">
+                    <div class="mb-4">
+                        <label for="correo" class="form-label fw-semibold">Correo Electrónico:</label>
+                        <input type="email" name="correo" id="correo" class="form-control" placeholder="Introduce tu correo electrónico" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-lg w-100" style="background-color: goldenrod; color: white; border: none;">
+                            Recuperar Contraseña
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('formRecuperar').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            fetch('../controllers/recuperar_contrasena.php', {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes("Se ha enviado un correo")) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Correo Enviado!',
+                        text: 'Se ha enviado un correo con las instrucciones para recuperar tu contraseña.',
+                        confirmButtonColor: '#daa520'
+                    }).then(() => {
+                        window.location.href = '../views/usuario/index.php';
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data || 'Hubo un error al procesar tu solicitud.',
+                        confirmButtonColor: '#daa520'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al procesar tu solicitud.',
+                    confirmButtonColor: '#daa520'
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
