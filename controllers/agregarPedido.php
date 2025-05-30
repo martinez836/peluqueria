@@ -24,6 +24,17 @@ $total = $datos['total'];
 $documento = $_SESSION["documento"];
 
 try {
+    // Verificar stock disponible antes de crear el pedido
+    foreach ($productos as $producto) {
+        $productoInfo = $consulta->obtenerProductoPorId($producto['id']);
+        if (!$productoInfo) {
+            throw new Exception("Producto no encontrado");
+        }
+        if ($productoInfo['stock'] < $producto['cantidad']) {
+            throw new Exception("Stock insuficiente para el producto: " . $productoInfo['nombre']);
+        }
+    }
+
     $resultado = $consulta->agregarPedido($total, $documento);
     if (!$resultado) {
         throw new Exception("Error al crear el pedido");
@@ -42,9 +53,16 @@ try {
         $cantidad = $producto['cantidad'];
         $subTotal = $producto['precio'] * $producto['cantidad'];
 
+        // Agregar el detalle del pedido
         $resultadoDetalle = $consulta->agregarDetallePedido($idPedido, $id, $cantidad, $subTotal);
         if (!$resultadoDetalle) {
             throw new Exception("Error al agregar el detalle del pedido");
+        }
+
+        // Actualizar el stock del producto
+        $resultadoStock = $consulta->actualizarStock($id, $cantidad);
+        if (!$resultadoStock) {
+            throw new Exception("Error al actualizar el stock del producto");
         }
     }
 

@@ -237,53 +237,6 @@ $citasHoy = $consultas->traerCitasHoy();
             
             <!-- Separador invisible para mejor espaciado -->
             <div class="col-lg-1"></div>
-            
-            <!-- Recordatorios -->
-            <div class="col-lg-5">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h5 class="card-title">
-                            <i class="fas fa-bell me-2 text-warning"></i> 
-                            Recordatorios
-                        </h5>
-                    </div>
-                    <div class="list-group list-group-flush bg-transparent">
-                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <i class="fas fa-truck text-warning fa-2x"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="text-gold">Pedido de productos</h6>
-                                    <p class="mb-0">Confirmar llegada del pedido #A245 para mañana</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <i class="fas fa-money-bill-wave text-success fa-2x"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="text-gold">Pago de servicios</h6>
-                                    <p class="mb-0">Recordatorio de pago servicios básicos - vence 15/05</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item bg-transparent text-light p-3">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <i class="fas fa-user-friends text-info fa-2x"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="text-gold">Reunión de equipo</h6>
-                                    <p class="mb-0">Programada para el 12/05 a las 9:00 AM</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </main>
