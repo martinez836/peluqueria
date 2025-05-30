@@ -1,6 +1,8 @@
 <?php
 require_once '../models/consultas.php';
 
+header('Content-Type: application/json');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verificar que los campos requeridos estén presentes
     if (isset($_POST['nombreServicio']) && isset($_POST['descripcion'])) {
@@ -17,26 +19,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $resultado = $consultas->crear_servicio($nombreServicio, $descripcion);
             
             if ($resultado) {
-                // Redirigir con mensaje de éxito
-                header('Location: ../views/admin/servicios.php?mensaje=Servicio creado exitosamente');
-                exit();
+                echo json_encode([
+                    'success' => true,
+                    'message' => '¡Servicio creado exitosamente!'
+                ]);
             } else {
-                // Redirigir con mensaje de error
-                header('Location: ../views/admin/servicios.php?error=No se pudo crear el servicio');
-                exit();
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Error al crear el servicio'
+                ]);
             }
         } else {
-            // Redirigir con mensaje de error si faltan campos
-            header('Location: ../views/admin/servicios.php?error=El nombre del servicio es requerido');
-            exit();
+            echo json_encode([
+                'success' => false,
+                'message' => 'El nombre del servicio es requerido'
+            ]);
         }
     } else {
-        // Redirigir con mensaje de error si faltan campos
-        header('Location: ../views/admin/servicios.php?error=Faltan campos requeridos');
-        exit();
+        echo json_encode([
+            'success' => false,
+            'message' => 'Faltan campos requeridos'
+        ]);
     }
 } else {
-    // Redirigir si no es una petición POST
-    header('Location: ../views/admin/servicios.php');
-    exit();
+    echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido'
+    ]);
 } 

@@ -74,7 +74,7 @@
                     <div class="form-header">
                         <h2><i class="fas fa-plus-circle"></i> Crear Producto</h2>
                     </div>
-                    <form action="../../controllers/crear_producto.php" method="POST" enctype="multipart/form-data">
+                    <form id="formCrearProducto" action="../../controllers/crear_producto.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="nombre">Nombre del Producto</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" required>
@@ -109,7 +109,7 @@
                         </div>                         
                         <div class="form-group">
                             <label for="imagen">Imagen del Producto</label>
-                            <input type="file" id="imagen" name="imagen" class="form-control">
+                            <input type="file" id="imagen" name="imagen" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
@@ -249,6 +249,50 @@
                 confirmButtonColor: '#daa520'
             });
         }
+    });
+
+    // Manejar el envío del formulario de crear producto
+    $('#formCrearProducto').on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Éxito!',
+                        text: response.message,
+                        confirmButtonColor: '#daa520'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.message,
+                        confirmButtonColor: '#daa520'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al procesar la solicitud',
+                    confirmButtonColor: '#daa520'
+                });
+            }
+        });
     });
 </script>
 </html>

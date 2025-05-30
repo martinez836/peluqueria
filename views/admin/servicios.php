@@ -72,7 +72,7 @@
                     <div class="form-header">
                         <h2><i class="fas fa-plus-circle"></i> Crear Servicio</h2>
                     </div>
-                    <form action="../../controllers/crear_servicio.php" method="POST">
+                    <form id="formCrearServicio" action="../../controllers/crear_servicio.php" method="POST">
                         <div class="form-group">
                             <label for="nombreServicio">Nombre del Servicio</label>
                             <input type="text" id="nombreServicio" name="nombreServicio" class="form-control" required>
@@ -167,5 +167,50 @@
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../assets/js/servicios.js"></script>
+    <script>
+        // Manejar el envío del formulario de crear servicio
+        $('#formCrearServicio').on('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: response.message,
+                            confirmButtonColor: '#daa520'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message,
+                            confirmButtonColor: '#daa520'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un error al procesar la solicitud',
+                        confirmButtonColor: '#daa520'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html> 
