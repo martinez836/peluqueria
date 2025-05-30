@@ -9,6 +9,7 @@ $pedidosPendientes = $consultas->traerPedidoPendiente();
 $clientes = $consultas->traerConteoCliente();
 $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas();
 $productosStockBajo = $consultas->traerProductosStockBajo();
+$citasHoy = $consultas->traerCitasHoy();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -167,50 +168,30 @@ $productosStockBajo = $consultas->traerProductosStockBajo();
                         <h5 class="card-title"><i class="fas fa-calendar-day me-2"></i> Citas de Hoy</h5>
                     </div>
                     <div class="list-group list-group-flush bg-transparent">
-                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1 text-gold">Ana Herrera</h6>
-                                <small>10:00 AM</small>
+                        <?php 
+                        if(mysqli_num_rows($citasHoy) > 0) {
+                            while($cita = mysqli_fetch_assoc($citasHoy)) {
+                        ?>
+                            <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1 text-gold"><?php echo htmlspecialchars($cita['nombres'] . ' ' . $cita['apellidos']); ?></h6>
+                                </div>
+                                <p class="mb-1"><?php echo htmlspecialchars($cita['nombreServicio']); ?></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">Tel: <?php echo htmlspecialchars($cita['telefono']); ?></small>
+                                    <span class="badge bg-warning"><?php echo htmlspecialchars($cita['estado']); ?></span>
+                                </div>
                             </div>
-                            <p class="mb-1">Corte de cabello</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">Tel: 123-456-7890</small>
-                                <span class="badge bg-warning">Pendiente</span>
+                        <?php 
+                            }
+                        } else {
+                        ?>
+                            <div class="list-group-item bg-transparent text-light p-3 text-center">
+                                <p class="mb-0">No hay citas programadas para hoy</p>
                             </div>
-                        </div>
-                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1 text-gold">Luis Mendoza</h6>
-                                <small>11:30 AM</small>
-                            </div>
-                            <p class="mb-1">Barba y bigote</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">Tel: 123-456-7890</small>
-                                <span class="badge bg-warning">Pendiente</span>
-                            </div>
-                        </div>
-                        <div class="list-group-item bg-transparent border-bottom border-secondary text-light p-3">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1 text-gold">Carmen Diaz</h6>
-                                <small>2:00 PM</small>
-                            </div>
-                            <p class="mb-1">Coloración</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">Tel: 123-456-7890</small>
-                                <span class="badge bg-warning">Pendiente</span>
-                            </div>
-                        </div>
-                        <div class="list-group-item bg-transparent text-light p-3">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1 text-gold">Roberto Paz</h6>
-                                <small>4:30 PM</small>
-                            </div>
-                            <p class="mb-1">Corte y afeitado</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">Tel: 123-456-7890</small>
-                                <span class="badge bg-warning">Pendiente</span>
-                            </div>
-                        </div>
+                        <?php
+                        }
+                        ?>
                     </div>
                     <div class="card-footer bg-transparent border-top border-secondary p-3">
                         <a href="./citas.php" class="btn btn-gold w-100">

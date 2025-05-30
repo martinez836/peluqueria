@@ -521,4 +521,19 @@ class consultas
         $this->mysql->desconectar();
         return $resultado;
     }
+
+    public function traerCitasHoy()
+    {
+        $this->mysql->conectar();
+        $consulta = "SELECT c.*, cl.nombres, cl.apellidos, cl.telefono, s.nombreServicio 
+                    FROM citas c 
+                    INNER JOIN clientes cl ON c.clientes_documento = cl.documento 
+                    INNER JOIN servicios s ON c.servicios_idservicios = s.idservicios 
+                    WHERE DATE(c.fecha) = CURDATE() 
+                    AND c.estado != 'inactivo'
+                    ORDER BY c.fecha ASC";
+        $resultado = $this->mysql->efectuarConsulta($consulta);
+        $this->mysql->desconectar();
+        return $resultado;
+    }
 };?>
