@@ -2,6 +2,9 @@
 session_start();
 require_once '../models/consultas.php';
 $consultas = new consultas();
+
+header('Content-Type: application/json');
+
 if(
     isset($_POST["cedula"]) &&
     isset($_POST["servicio"]) && 
@@ -16,18 +19,18 @@ if(
     $cedula = filter_var(trim($_POST["cedula"]), FILTER_SANITIZE_NUMBER_INT);
     $servicio = filter_var(trim($_POST["servicio"]), FILTER_SANITIZE_SPECIAL_CHARS);
     
-
     // Aquí puedes llamar a tu método de la clase consultas para guardar la cita
     $resultado = $consultas->registrar_cita($fecha,$cedula, $servicio);
-    // Verificar si la cita se creó correctamente
-    // Redirigir a la página de citas o mostrar un mensaje de éxito
+    
     if($resultado) {
         $_SESSION['cita_registrada'] = true;
-        header("Location: ../views/usuario/agendarCita.php");
+        echo json_encode(['success' => true, 'message' => 'Cita registrada exitosamente']);
         exit();
     } else {
-        echo "Error al crear la cita";
+        echo json_encode(['success' => false, 'message' => 'Error al crear la cita']);
+        exit();
     }
 } else {
-    echo "Por favor complete todos los campos";
+    echo json_encode(['success' => false, 'message' => 'Por favor complete todos los campos']);
+    exit();
 }

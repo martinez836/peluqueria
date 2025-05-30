@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ${detalles.map(item => `
                     <div class="producto-item">
                         <div class="producto-info">
-                            <img src="${item.imagen_producto}" alt="${item.nombre_producto}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                            <img src="../../${item.imagen_producto}" alt="${item.nombre_producto}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
                             <span>${item.nombre_producto}</span>
                             <small class="d-block text-muted">${item.descripcion_producto}</small>
                         </div>
