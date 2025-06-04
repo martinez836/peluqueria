@@ -104,6 +104,58 @@ function cancelarCita(id) {
   });
 }
 
+function eliminarCita(id) {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "Esta acción no se puede deshacer",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch('../../controllers/cambiar_estado_cita.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `idcita=${id}&estado=inactivo`
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.success) {
+          Swal.fire({
+            title: '¡Eliminada!',
+            text: 'La cita ha sido eliminada',
+            icon: 'success',
+            confirmButtonColor: '#daa520'
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo eliminar la cita',
+            icon: 'error',
+            confirmButtonColor: '#daa520'
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error en la conexión con el servidor',
+          icon: 'error',
+          confirmButtonColor: '#daa520'
+        });
+      });
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const botones = document.querySelectorAll(".verDetalle");
   const botonesEliminar = document.querySelectorAll(".eliminarCita");
@@ -233,6 +285,9 @@ document.addEventListener("DOMContentLoaded", function () {
           </button>
           <button onclick="cancelarCita(${id})" class="btn btn-cancelar">
             <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button onclick="eliminarCita(${id})" class="btn btn-eliminar">
+            <i class="fas fa-trash"></i> Eliminar Cita
           </button>
         </div>
       `;

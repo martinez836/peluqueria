@@ -246,11 +246,7 @@
     <div class="main-content">
         <div class="content-header">
             <h1>Gestión de Pedidos</h1>
-            <div>
-                <button class="btn btn-gold" onclick="exportarPedidos()">
-                    <i class="fas fa-download"></i> Exportar
-                </button>
-            </div>
+            
         </div>
         
         <!-- Stats Cards -->

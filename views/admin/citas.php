@@ -178,11 +178,7 @@
     <div class="main-content">
         <div class="content-header">
             <h1>Gestión de Citas</h1>
-            <div>
-                <button class="btn btn-primary" onclick="nuevaCita()">
-                    <i class="fas fa-plus"></i> Nueva Cita
-                </button>
-            </div>
+            
         </div>
         
         <!-- Stats Cards -->

@@ -160,10 +160,11 @@
         
         /* Citas Container */
         .citas-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             margin-top: 20px;
+            width: 100%;
         }
         
         /* Table Section */
@@ -174,6 +175,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
             border: 1px solid rgba(241, 196, 15, 0.2) !important;
             overflow-x: auto;
+            width: 100%;
         }
         
         .table {
@@ -286,6 +288,9 @@
             background: #1a1a1a;
             border-radius: 8px;
             padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .cita-detalles {
@@ -303,23 +308,84 @@
         .actions-group {
             display: flex;
             gap: 10px;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             flex-wrap: wrap;
+        }
+        
+        .actions-group button {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .actions-group button i {
+            font-size: 1rem;
+        }
+        
+        .actions-group button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-completar {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-completar:hover {
+            background-color: #218838;
+        }
+        
+        .btn-confirmar {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-confirmar:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-cancelar {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-cancelar:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-eliminar {
+            background-color: #dc3545;
+            color: white;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .btn-eliminar:hover {
+            background-color: #c82333;
         }
         
         /* Responsive */
         @media (max-width: 1200px) {
             .citas-container {
-                grid-template-columns: 1.5fr 1fr;
+                gap: 15px;
             }
         }
         
         @media (max-width: 992px) {
             .main-content {
                 margin-left: 0;
-            }
-            
-            .citas-container {
-                grid-template-columns: 1fr;
             }
             
             .content-header {
