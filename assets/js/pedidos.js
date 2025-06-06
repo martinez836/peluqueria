@@ -7,21 +7,21 @@ document.getElementById("sidebarToggle").addEventListener("click", function () {
 $(document).ready(function() {
     // Inicializar DataTable
     const tablaPedidos = $('#tabla-pedidos').DataTable({
-        responsive: true,
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
-        }
+        },
+        responsive: true,
+        pageLength: 10,
+        order: [[0, 'desc']]
     });
 
     // Manejar clic en botón de eliminar
-    $(document).on('click', '.btn-danger', function() {
-        const fila = $(this).closest('tr');
-        const id = fila.find('td:eq(0)').text();
-        const cliente = fila.find('td:eq(1)').text();
-
+    $(document).on('click', '.eliminarPedido', function() {
+        const idPedido = $(this).data('id');
+        
         Swal.fire({
             title: '¿Estás seguro?',
-            text: `¿Deseas eliminar el pedido de "${cliente}"?`,
+            text: "¿Deseas eliminar este pedido? Esta acción no se puede deshacer.",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -30,43 +30,38 @@ $(document).ready(function() {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Realizar la petición AJAX para cambiar el estado
-                fetch('../../controllers/cambiar_estado_pedido.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
+                // Enviar solicitud para eliminar el pedido
+                $.ajax({
+                    url: '../../controllers/eliminarPedido.php',
+                    type: 'POST',
+                    data: { idPedido: idPedido },
+                    success: function(response) {
+                        if(response.success) {
+                            Swal.fire({
+                                title: '¡Eliminado!',
+                                text: 'El pedido ha sido eliminado correctamente.',
+                                icon: 'success',
+                                confirmButtonColor: '#daa520'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.message || 'Hubo un error al eliminar el pedido.',
+                                icon: 'error',
+                                confirmButtonColor: '#daa520'
+                            });
+                        }
                     },
-                    body: JSON.stringify({
-                        id: id,
-                        estado: 'inactivo'
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire(
-                            '¡Eliminado!',
-                            'El pedido ha sido eliminado.',
-                            'success'
-                        ).then(() => {
-                            // Eliminar la fila de la tabla
-                            tablaPedidos.row(fila).remove().draw();
+                    error: function() {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un error en la conexión con el servidor.',
+                            icon: 'error',
+                            confirmButtonColor: '#daa520'
                         });
-                    } else {
-                        Swal.fire(
-                            'Error',
-                            'No se pudo eliminar el pedido.',
-                            'error'
-                        );
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire(
-                        'Error',
-                        'Hubo un error al procesar la solicitud.',
-                        'error'
-                    );
                 });
             }
         });
