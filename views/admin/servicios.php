@@ -1,8 +1,12 @@
 <?php
-    session_start();
-    require_once '../../models/consultas.php';
-    $consultas = new consultas();
-    $servicios = $consultas->traer_servicios();
+require_once '../../middleware/auth.php';
+
+// Verificar que el usuario esté autenticado y sea administrador
+verificarSesion('administrador');
+
+require_once '../../models/consultas.php';
+$consultas = new consultas();
+$servicios = $consultas->traer_servicios();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,6 +32,7 @@
         <div class="logo">Estilos Dairo</div>
         <div>
             <span>Admin</span>
+            <a href="../../controllers/logOut.php" style="color: gold; text-decoration: none;">Cerrar Sesión</a>
         </div>
     </header>
     

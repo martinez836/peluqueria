@@ -1,4 +1,9 @@
 <?php
+require_once '../../middleware/auth.php';
+
+// Verificar que el usuario esté autenticado y sea administrador
+verificarSesion('administrador');
+
 // Incluir el archivo de autenticación
 require_once 'auth_admin.php';
 
@@ -36,6 +41,7 @@ $citasHoy = $consultas->traerCitasHoy();
         <div class="logo">Estilos Dairo</div>
         <div>
             <span>Admin</span>
+            <a href="../../controllers/logOut.php" style="color: gold; text-decoration: none;">Cerrar Sesión</a>
         </div>
     </header>
 

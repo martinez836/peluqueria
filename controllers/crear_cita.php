@@ -23,7 +23,6 @@ if(
     $resultado = $consultas->registrar_cita($fecha,$cedula, $servicio);
     
     if($resultado) {
-        $_SESSION['cita_registrada'] = true;
         echo json_encode(['success' => true, 'message' => 'Cita registrada exitosamente']);
         exit();
     } else {

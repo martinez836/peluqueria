@@ -110,12 +110,17 @@ class consultas
     public function agregarDetallePedido($idPedido, $idProducto, $cantidad, $subTotal)
     {
         $this->mysql->conectar();
-        $consulta = "insert into detallePedido (cantidad,subtotal,pedidos_idpedidos,productos_idproductos) values (
-            $cantidad,
-            $subTotal,
-            $idPedido,
-            $idProducto
-        )";
+        
+        // Primero obtenemos el precio actual del producto
+        $consultaPrecio = "SELECT precio FROM productos WHERE idproductos = $idProducto";
+        $resultadoPrecio = $this->mysql->efectuarConsulta($consultaPrecio);
+        $producto = mysqli_fetch_assoc($resultadoPrecio);
+        $precioUnitario = $producto['precio'];
+        
+        // Insertamos el detalle del pedido incluyendo el precio unitario
+        $consulta = "INSERT INTO detallepedido (cantidad, precio_unitario, subtotal, pedidos_idpedidos, productos_idproductos) 
+                     VALUES ($cantidad, $precioUnitario, $subTotal, $idPedido, $idProducto)";
+        
         $resultado = $this->mysql->efectuarConsulta($consulta);
         $this->mysql->desconectar();
         return $resultado;
@@ -293,10 +298,10 @@ class consultas
                 p.total,
                 p.estado,
                 dp.cantidad,
+                dp.precio_unitario,
                 dp.subtotal,
                 pr.nombre as nombre_producto,
                 pr.descripcion as descripcion_producto,
-                pr.precio as precio_unitario,
                 pr.imagen as imagen_producto,
                 c.direccion,
                 c.barrio,

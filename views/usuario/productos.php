@@ -1,8 +1,8 @@
 <?php 
-  session_start();
-  require_once '../../models/consultas.php'; 
-  $consultas = new consultas(); 
-  $resultado = $consultas->traerProducto(); 
+require_once '../../middleware/auth.php';
+require_once '../../models/consultas.php'; 
+$consultas = new consultas(); 
+$resultado = $consultas->traerProducto(); 
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -178,6 +178,18 @@ document.addEventListener("DOMContentLoaded", function () {
         if (accionesEstado) {
             accionesEstado.dataset.pedidoId = pedido.idpedidos;
         }
+
+        // Manejar el estado del botón de cancelar
+        const btnCancelar = document.getElementById('btnCancelar');
+        if (btnCancelar) {
+            if (pedido.estado === 'entregado') {
+                btnCancelar.disabled = true;
+                btnCancelar.title = 'No se puede cancelar un pedido entregado';
+            } else {
+                btnCancelar.disabled = false;
+                btnCancelar.removeAttribute('title');
+            }
+        }
     }
 
     function getBadgeClass(estado) {

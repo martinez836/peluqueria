@@ -184,18 +184,6 @@ $fechasDeshabilitadas = $consultas->traerFechasDeshabilitadas(); // array ['YYYY
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <?php if (isset($_SESSION['cita_registrada']) && $_SESSION['cita_registrada']): ?>
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: '¡Cita Registrada!',
-            text: 'Tu cita ha sido registrada exitosamente',
-            confirmButtonColor: '#daa520'
-        });
-        <?php unset($_SESSION['cita_registrada']); ?>
-    </script>
-    <?php endif; ?>
-
     <script>
         document.getElementById('formCita')?.addEventListener('submit', function(e) {
             e.preventDefault();

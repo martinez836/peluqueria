@@ -52,6 +52,18 @@ function cambiarEstado(id, accion) {
 }
 
 function cancelarCita(id) {
+  // Verificar si la cita está completada
+  const citaEstado = document.querySelector(`[data-id="${id}"]`).getAttribute('data-estado');
+  if (citaEstado.toLowerCase() === 'completado') {
+    Swal.fire({
+      title: 'No permitido',
+      text: 'No se puede cancelar una cita que ya está completada',
+      icon: 'warning',
+      confirmButtonColor: '#daa520'
+    });
+    return;
+  }
+
   Swal.fire({
     title: '¿Está seguro que desea cancelar esta cita?',
     text: "Esta acción no se puede deshacer",
@@ -283,11 +295,8 @@ document.addEventListener("DOMContentLoaded", function () {
           <button onclick="cambiarEstado(${id}, 'confirmar')" class="btn btn-confirmar">
             <i class="fas fa-bell"></i> Confirmar
           </button>
-          <button onclick="cancelarCita(${id})" class="btn btn-cancelar">
+          <button onclick="cancelarCita(${id})" class="btn btn-cancelar" ${estado.toLowerCase() === 'completado' ? 'disabled title="No se puede cancelar una cita completada"' : ''}>
             <i class="fas fa-times"></i> Cancelar
-          </button>
-          <button onclick="eliminarCita(${id})" class="btn btn-eliminar">
-            <i class="fas fa-trash"></i> Eliminar Cita
           </button>
         </div>
       `;

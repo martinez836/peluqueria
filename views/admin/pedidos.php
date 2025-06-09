@@ -1,12 +1,15 @@
 <?php
-    session_start();
-    require_once '../../models/consultas.php';
-    $consultas = new consultas();
-    $totalPedidos = $consultas->traerConteoPedido();
-    $pedidosPendientes = $consultas->traerPedidoPendiente();
-    $pedidosEntregados = $consultas->traerPedidoEntregado();
+require_once '../../middleware/auth.php';
 
-    $pedidos = $consultas->traerPedidos();
+// Verificar que el usuario esté autenticado y sea administrador
+verificarSesion('administrador');
+
+require_once '../../models/consultas.php';
+$consultas = new consultas();
+$totalPedidos = $consultas->traerConteoPedido();
+$pedidosPendientes = $consultas->traerPedidoPendiente();
+$pedidosEntregados = $consultas->traerPedidoEntregado();
+$pedidos = $consultas->traerPedidos();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -210,6 +213,7 @@
         <div class="logo">Estilos Dairo</div>
         <div>
             <span>Admin</span>
+            <a href="../../controllers/logOut.php" style="color: gold; text-decoration: none;">Cerrar Sesión</a>
         </div>
     </header>
     
@@ -299,9 +303,15 @@
                                         <button class="btn btn-primary btn-sm verDetallePedido" data-id="<?= $pedido["idpedidos"] ?>">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button class="btn btn-danger btn-sm">
+                                        <?php if($pedido["estado"] !== 'entregado'): ?>
+                                        <button class="btn btn-danger btn-sm eliminarPedido" data-id="<?= $pedido["idpedidos"] ?>">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        <?php else: ?>
+                                        <button class="btn btn-danger btn-sm" disabled title="No se puede eliminar un pedido entregado">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                                 <?php endwhile; ?>
@@ -323,7 +333,7 @@
                     <button class="btn btn-success" onclick="cambiarEstado(this)" data-estado="entregado">
                         <i class="fas fa-truck"></i> Entregado
                     </button>
-                    <button class="btn btn-danger" onclick="cambiarEstado(this)" data-estado="cancelado">
+                    <button class="btn btn-danger" onclick="cambiarEstado(this)" data-estado="cancelado" id="btnCancelar">
                         <i class="fas fa-times"></i> Cancelar
                     </button>
                 </div>
